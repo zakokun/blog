@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>设计模式 on 杂鱼君的博客</title>
-    <link>http://localhost:1313/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
+    <link>https://notes.wen.moe/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
     <description>Recent content in 设计模式 on 杂鱼君的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Thu, 29 Jan 2015 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://localhost:1313/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://notes.wen.moe/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>设计模式的学习--观察者模式</title>
-      <link>http://localhost:1313/2015/learn-design-patterns-observer/</link>
+      <link>https://notes.wen.moe/2015/learn-design-patterns-observer/</link>
       <pubDate>Thu, 29 Jan 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/2015/learn-design-patterns-observer/</guid>
+      <guid>https://notes.wen.moe/2015/learn-design-patterns-observer/</guid>
       <description>&lt;p&gt;为了更愉快的装逼,开始学习php的设计模式之二.&lt;/p&gt;
 &lt;h3 id=&#34;特点&#34;&gt;特点&lt;/h3&gt;
 &lt;ol&gt;
@@ -27,10 +27,10 @@
     
     <item>
       <title>设计模式的学习--单例模式</title>
-      <link>http://localhost:1313/2015/learn-design-patterns-singleton/</link>
+      <link>https://notes.wen.moe/2015/learn-design-patterns-singleton/</link>
       <pubDate>Wed, 28 Jan 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/2015/learn-design-patterns-singleton/</guid>
+      <guid>https://notes.wen.moe/2015/learn-design-patterns-singleton/</guid>
       <description>&lt;p&gt;为了更愉快的装逼,开始学习php的设计模式.&lt;/p&gt;
 &lt;h3 id=&#34;特点&#34;&gt;特点&lt;/h3&gt;
 &lt;ol&gt;

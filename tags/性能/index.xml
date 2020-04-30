@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>性能 on 杂鱼君的博客</title>
-    <link>http://localhost:1313/tags/%E6%80%A7%E8%83%BD/</link>
+    <link>https://notes.wen.moe/tags/%E6%80%A7%E8%83%BD/</link>
     <description>Recent content in 性能 on 杂鱼君的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Thu, 20 Oct 2016 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://localhost:1313/tags/%E6%80%A7%E8%83%BD/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://notes.wen.moe/tags/%E6%80%A7%E8%83%BD/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>php 中 session_name 不能有句号的问题</title>
-      <link>http://localhost:1313/2016/php-session-bug/</link>
+      <link>https://notes.wen.moe/2016/php-session-bug/</link>
       <pubDate>Thu, 20 Oct 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/2016/php-session-bug/</guid>
+      <guid>https://notes.wen.moe/2016/php-session-bug/</guid>
       <description>&lt;p&gt;和朋友写一个 php 项目, 发现当设置的 session_name 包含 &lt;code&gt;.&lt;/code&gt; 的时候,用户的登录状态无法保存了.具体是什么原因导致的呢?&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>使用 http_load 测试服务器的负载</title>
-      <link>http://localhost:1313/2016/linux-pressure-testing-tool/</link>
+      <link>https://notes.wen.moe/2016/linux-pressure-testing-tool/</link>
       <pubDate>Thu, 14 Jul 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/2016/linux-pressure-testing-tool/</guid>
+      <guid>https://notes.wen.moe/2016/linux-pressure-testing-tool/</guid>
       <description>&lt;p&gt;http_load是一款linux,OSX下的性能检测工具,通过简单的参数就能测试Web服务器的负载和性能.对于日常的代码自测已经足够了.&lt;/p&gt;</description>
     </item>
     
