@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MySQL on 杂鱼君的博客</title>
+    <link>http://localhost:1313/tags/mysql/</link>
+    <description>Recent content in MySQL on 杂鱼君的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 17 Jul 2017 22:40:28 +0000</lastBuildDate>
+    
+	<atom:link href="http://localhost:1313/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>用 force index 调教 MySQL 查询优化器</title>
+      <link>http://localhost:1313/2017/use-force-index/</link>
+      <pubDate>Mon, 17 Jul 2017 22:40:28 +0000</pubDate>
+      
+      <guid>http://localhost:1313/2017/use-force-index/</guid>
+      <description>&lt;p&gt;mysql 有查询优化器，在我们发起一个查询的时候， msql 会尝试分析他，看看是否能做一些优化手段来加快查询速度。最常见的比如说有个 (a,b)的联合索引，无论我们使用&lt;code&gt;SELECT * FROM t WHERE a=? AND b=?&lt;/code&gt;还是&lt;code&gt;SELECT * FROM t WHERE b=? AND a=?&lt;/code&gt;都能利用到&lt;code&gt;(a,b)&lt;/code&gt;这个联合索引，又或者是在很多复杂的查询条件中，分析出使用哪个索引能最大化查询速度，这都是查询优化器做的事情。&lt;/p&gt;
+&lt;p&gt;然而毕竟程序是死的，有的时候查询优化器并不如我们想象中的那么聪明。这时候就需要我们强制 mysql 按照我们的意愿去查询了。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>一个慢查询引发的联合索引的思考</title>
+      <link>http://localhost:1313/2017/slow-query-with-clustered-index/</link>
+      <pubDate>Wed, 24 May 2017 20:41:31 +0000</pubDate>
+      
+      <guid>http://localhost:1313/2017/slow-query-with-clustered-index/</guid>
+      <description>&lt;p&gt;上周开始我司完善了 mysql 慢查询的报警机制,然后很快陆陆续续的一些业务的慢查询报警开始出现了.其中有一个慢查询是对联合索引使用不当引起的,解决这个问题的过程中也让我重新认识了联合索引的特点.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

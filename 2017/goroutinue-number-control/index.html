@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-cn" lang="zh-cn">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.69.2" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>通过带缓冲的channel来控制并发数 &middot; 杂鱼君的博客</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class="theme-base-0b ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://localhost:1313/"><h1>杂鱼君的博客</h1></a>
+      <p class="lead">
+       好吃懒做,眼高手低 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://localhost:1313/">Home</a> </li>
+        <li><a href="/tags/"> Tags </a></li><li><a href="/about/about"> About </a></li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>通过带缓冲的channel来控制并发数</h1>
+  <time datetime=2017-02-19T00:00:00Z class="post-date">Sun, Feb 19, 2017</time>
+  <p>最近和搜索的同事一起用 golang 重构他们的 Elasticsearch 客户端.在用 Goroutines 去异步更新索引的时候并发量太大导致 ES
+进程挂掉的情况(真弱).因此在更新索引的时候考虑如何手动控制并发的协程数量.</p>
+<p>原始的代码是这样的:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#f92672">import</span> (
+    <span style="color:#e6db74">&#34;sync&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">esJob</span>() {
+    <span style="color:#a6e22e">wg</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">WaitGroup</span>{}
+    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">job</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">jobSlice</span> {
+        <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Add</span>(<span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">esIndex</span>(<span style="color:#a6e22e">job</span>, <span style="color:#a6e22e">wg</span>)
+    }
+    <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Wait</span>()
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">esIndex</span>(<span style="color:#a6e22e">j</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">job</span>, <span style="color:#a6e22e">wg</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">WaitGroup</span>) {
+    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Done</span>()
+    <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>}  
+</code></pre></div><p>我们先在<code>esJob</code>这个函数中遍历<code>jobSlice</code>切片,每一个 job
+都启动一个协程去处理,然后在循环外部通过<code>wg.Wait()</code>等待所有的协程处理完成以后退出.</p>
+<p>一般情况下上面的代码是OK的,实际上我们生产环境很多业务就是这样处理并发(或者使用<code>ErrorGroup</code>代替<code>WaitGroup</code>).但是如果<code>jobSlice</code>元素非常多,启动了过多的协程会给我们对接的业务造成很大的压力,导致自己打死自己的囧况.所以很多时候我我们需要手动控制并发的协程数量.</p>
+<p>比较好的控制并发数的方法是利用 channel 的缓冲区来实现,<code>WaitGroup</code>负责管理产生的 goroutinue,而 <code>channel</code>
+负责当并发数达到阈值的时候阻塞，从而避免继续产生多余的 goroutinue.</p>
+<p>具体代码如下:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">
+    <span style="color:#f92672">import</span> (
+    
+        <span style="color:#e6db74">&#34;sync&#34;</span>
+    
+    )
+    
+    <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">esJob</span>() {
+    
+        <span style="color:#a6e22e">wg</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">WaitGroup</span>{}
+    
+        <span style="color:#a6e22e">limit</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">bool</span>, <span style="color:#ae81ff">10</span>)
+    
+        <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">job</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">jobSlice</span> {
+    
+            <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Add</span>(<span style="color:#ae81ff">1</span>)
+    
+            <span style="color:#a6e22e">limit</span> <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">true</span>
+    
+            <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">esIndex</span>(<span style="color:#a6e22e">job</span>, <span style="color:#a6e22e">wg</span>)
+    
+        }
+    
+        <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Wait</span>()
+    
+    }
+    
+    <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">esIndex</span>(<span style="color:#a6e22e">j</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">job</span>, <span style="color:#a6e22e">wg</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">WaitGroup</span>, <span style="color:#a6e22e">limit</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">bool</span>) {
+    
+        <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Done</span>()
+    
+        <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">limit</span>
+    
+    }  
+  
+</code></pre></div><p>因为<code>channel</code>本身是带锁的,因此当<code>limit</code>这个 chan 缓冲数据达到10个满了以后,程序会阻塞在<code>limit &lt;- true</code>这里,直到<code>esIndex</code>函数从<code>limit</code>中取出数据(同时也意味着一个协程执行结束退出),那么将会继续创建新的协程,这样就能将协程一直控制在10个,虽然会有一些额外的创建协程的开销,但是都是在可接受范围内的.</p>
+</div>
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zakokun" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-62768625-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+  </body>
+</html>
