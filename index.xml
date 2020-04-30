@@ -214,15 +214,6 @@ if !data {
     </item>
     
     <item>
-      <title>About</title>
-      <link>https://notes.wen.moe/about/about/</link>
-      <pubDate>Tue, 20 Jan 2015 21:38:52 +0800</pubDate>
-      
-      <guid>https://notes.wen.moe/about/about/</guid>
-      <description>Working&amp;hellip;</description>
-    </item>
-    
-    <item>
       <title>strtr()和str_replace()的区别</title>
       <link>https://notes.wen.moe/2014/different-between-strtr-and-str_replace/</link>
       <pubDate>Thu, 25 Dec 2014 00:00:00 +0000</pubDate>
@@ -278,6 +269,15 @@ if !data {
       <guid>https://notes.wen.moe/2014/how-to-print-all-five-letters-string-by-php/</guid>
       <description>&lt;p&gt;逛v2的时候看到一个帖子:&lt;a href=&#34;http://v2ex.com/t/133080#reply45&#34;&gt;点击这里&lt;/a&gt;
 各个码农都在秀自家的语言,身为php程序员,也尝试着写了一个,没想到这么一个简单的问题也踩了不少的坑.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>https://notes.wen.moe/about/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://notes.wen.moe/about/about/</guid>
+      <description>Working&amp;hellip;</description>
     </item>
     
   </channel>
