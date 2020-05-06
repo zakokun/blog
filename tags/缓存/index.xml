@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>缓存 on 杂鱼君的博客</title>
-    <link>https://notes.wen.moe/tags/%E7%BC%93%E5%AD%98/</link>
+    <link>/tags/%E7%BC%93%E5%AD%98/</link>
     <description>Recent content in 缓存 on 杂鱼君的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Mon, 12 Jun 2017 17:39:20 +0000</lastBuildDate>
     
-	<atom:link href="https://notes.wen.moe/tags/%E7%BC%93%E5%AD%98/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/%E7%BC%93%E5%AD%98/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>使用 singleflight 代替传统的并发锁</title>
-      <link>https://notes.wen.moe/2017/use-singleflight-instead-lock/</link>
+      <link>/2017/use-singleflight-instead-lock/</link>
       <pubDate>Mon, 12 Jun 2017 17:39:20 +0000</pubDate>
       
-      <guid>https://notes.wen.moe/2017/use-singleflight-instead-lock/</guid>
+      <guid>/2017/use-singleflight-instead-lock/</guid>
       <description>&lt;p&gt;一般来说高并发，或者 sql 查询很重的业务，缓存都是少不了的。业务代码中，读取缓存的时候一般会这样处理：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;data = getCache(key)
 if !data {

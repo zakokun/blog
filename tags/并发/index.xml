@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>并发 on 杂鱼君的博客</title>
-    <link>https://notes.wen.moe/tags/%E5%B9%B6%E5%8F%91/</link>
+    <link>/tags/%E5%B9%B6%E5%8F%91/</link>
     <description>Recent content in 并发 on 杂鱼君的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Mon, 12 Jun 2017 17:39:20 +0000</lastBuildDate>
     
-	<atom:link href="https://notes.wen.moe/tags/%E5%B9%B6%E5%8F%91/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/%E5%B9%B6%E5%8F%91/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>使用 singleflight 代替传统的并发锁</title>
-      <link>https://notes.wen.moe/2017/use-singleflight-instead-lock/</link>
+      <link>/2017/use-singleflight-instead-lock/</link>
       <pubDate>Mon, 12 Jun 2017 17:39:20 +0000</pubDate>
       
-      <guid>https://notes.wen.moe/2017/use-singleflight-instead-lock/</guid>
+      <guid>/2017/use-singleflight-instead-lock/</guid>
       <description>&lt;p&gt;一般来说高并发，或者 sql 查询很重的业务，缓存都是少不了的。业务代码中，读取缓存的时候一般会这样处理：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;data = getCache(key)
 if !data {
@@ -27,10 +27,10 @@ if !data {
     
     <item>
       <title>通过带缓冲的channel来控制并发数</title>
-      <link>https://notes.wen.moe/2017/goroutinue-number-control/</link>
+      <link>/2017/goroutinue-number-control/</link>
       <pubDate>Sun, 19 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://notes.wen.moe/2017/goroutinue-number-control/</guid>
+      <guid>/2017/goroutinue-number-control/</guid>
       <description>&lt;p&gt;最近和搜索的同事一起用 golang 重构他们的 Elasticsearch 客户端.在用 Goroutines 去异步更新索引的时候并发量太大导致 ES
 进程挂掉的情况(真弱).因此在更新索引的时候考虑如何手动控制并发的协程数量.&lt;/p&gt;</description>
     </item>
