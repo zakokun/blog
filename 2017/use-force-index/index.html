@@ -59,9 +59,9 @@
 </code></pre><p>id 为弹幕的主键。（oid 是视频 id，与弹幕 id 是一对多的关系。）在一个循环中，先初始化 startID = 0，从查询出来的结果中找到最大的 id 赋值给 startID，作为下次查询的最小弹幕 id，这样以分页的方式分批转移弹幕。</p>
 <p>数据库中有 oid 的索引，那么我理所应当的认为这次查询走 oid 索引，找到这个 oid 下的所有弹幕 id 以后再进行排序，筛选。然而这个功能上线以后，很快就收到了数据库的报警，提醒我『扫描行数大于XX万行』。但是这些报警的 oid 对应的弹幕 id 数量只有几千个，理论上只会扫描这个 oid 下的弹幕数量的行数的。那为什么数据库还是扫描了这么多行呢？</p>
 <p>一般这种情况无需瞎猜，<code>explain</code>就能发现很多信息，如图：</p>
-<p><img src="https://i.imgur.com/dkkZynK.png" alt=""></p>
+<p><img src="https://static.zakokun.com/images/dkkZynK.png" alt=""></p>
 <p>问题就在于，mysql 自作聪明的使用了主键索引，可以设想一下如果条件是<code>id &gt; 0</code>那么就相当于全表扫描了，明显是很不效率的行为。因为我们期望 MySQL 通过<code>oid_state</code>的索引来查询，所以我们可以通过<code>force index(ix_oid_state)</code>来强制MySQL使用这个索引：</p>
-<p><img src="https://i.imgur.com/mM53AyK.png" alt=""></p>
+<p><img src="https://static.zakokun.com/images/mM53AyK.png" alt=""></p>
 <p>这样就符合我们的预期了，可以看到扫描的行数只有几千行，使用的索引也是我们指定的<code>oid_state</code>索引。</p>
 <p>但是要注意的是，因为使用了<code>oid_state</code>索引，而这个索引里面字段顺序并不是完全的 id 顺序的，因此会导致额外的<code>filesort</code>。这也是影响查询速度的地方。这两杯毒酒选择喝哪一杯，还是要看各自的业务情况。弹幕的话，因为大部分视频下的弹幕数量比较少（四位数一下），所以使用<code>oid_state</code>索引还是可以提高查询速度的。</p>
 </div>
