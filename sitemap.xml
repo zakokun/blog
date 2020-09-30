@@ -5,258 +5,362 @@
   <url>
     <loc>/tags/android/</loc>
     <lastmod>2018-01-12T10:54:30+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/tags/iphone/</loc>
     <lastmod>2018-01-12T10:54:30+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/posts/</loc>
     <lastmod>2018-01-12T10:54:30+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/tags/</loc>
     <lastmod>2018-01-12T10:54:30+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/2018/buy-a-new-android-phone/</loc>
     <lastmod>2018-01-12T10:54:30+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/tags/%E5%B0%8F%E7%B1%B3/</loc>
     <lastmod>2018-01-12T10:54:30+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/</loc>
     <lastmod>2018-01-12T10:54:30+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/tags/%E7%94%9F%E6%B4%BB/</loc>
     <lastmod>2018-01-12T10:54:30+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/tags/mysql/</loc>
     <lastmod>2017-07-17T22:40:28+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/tags/%E6%8A%80%E6%9C%AF/</loc>
     <lastmod>2017-07-17T22:40:28+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/2017/use-force-index/</loc>
     <lastmod>2017-07-17T22:40:28+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/2017/use-singleflight-instead-lock/</loc>
     <lastmod>2017-06-12T17:39:20+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/tags/%E5%B9%B6%E5%8F%91/</loc>
     <lastmod>2017-06-12T17:39:20+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/tags/%E7%BC%93%E5%AD%98/</loc>
     <lastmod>2017-06-12T17:39:20+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/2017/slow-query-with-clustered-index/</loc>
     <lastmod>2017-05-24T20:41:31+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/2017/go-string-implode-diff-way/</loc>
     <lastmod>2017-04-13T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/tags/golang/</loc>
     <lastmod>2017-04-13T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/2017/build-fluent-net-env/</loc>
     <lastmod>2017-03-26T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/tags/%E7%88%AC%E5%A2%99/</loc>
     <lastmod>2017-03-26T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/2017/goroutinue-number-control/</loc>
     <lastmod>2017-02-19T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/tags/%E5%8D%9A%E5%AE%A2/</loc>
     <lastmod>2017-01-18T21:08:02+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/2017/change-blog-system/</loc>
     <lastmod>2017-01-18T21:08:02+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/tags/%E7%B3%BB%E7%BB%9F/</loc>
     <lastmod>2017-01-18T21:08:02+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/2017/year-person-summarize/</loc>
     <lastmod>2017-01-03T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/tags/%E4%BA%BA%E7%94%9F/</loc>
     <lastmod>2017-01-03T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/2016/php-session-bug/</loc>
     <lastmod>2016-10-20T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/tags/%E6%80%A7%E8%83%BD/</loc>
     <lastmod>2016-10-20T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/tags/%E6%B5%8B%E8%AF%95/</loc>
     <lastmod>2016-10-20T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/2016/golang-time-package/</loc>
     <lastmod>2016-07-18T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/2016/linux-pressure-testing-tool/</loc>
     <lastmod>2016-07-14T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/tags/php/</loc>
     <lastmod>2016-06-30T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/2016/impression-about-phpcon-2016/</loc>
     <lastmod>2016-06-30T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/2016/2015-year-person-summarize/</loc>
     <lastmod>2016-01-01T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/2015/osx-lnmp/</loc>
     <lastmod>2015-12-29T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/tags/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</loc>
     <lastmod>2015-12-29T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/2015/create-a-php-framework/</loc>
     <lastmod>2015-05-24T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/2015/install-lnmp-on-elementary-os/</loc>
     <lastmod>2015-05-15T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
     <lastmod>2015-01-29T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/2015/learn-design-patterns-observer/</loc>
     <lastmod>2015-01-29T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/2015/learn-design-patterns-singleton/</loc>
     <lastmod>2015-01-28T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/2015/how-to-reorder-an-array-by-specific-rule/</loc>
     <lastmod>2015-01-26T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/2014/different-between-strtr-and-str_replace/</loc>
     <lastmod>2014-12-25T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/2014/php-method-overload/</loc>
     <lastmod>2014-12-20T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/2014/learn-php-redis/</loc>
     <lastmod>2014-09-22T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/tags/redis/</loc>
     <lastmod>2014-09-22T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/2014/how-to-export-csv-file-by-php/</loc>
     <lastmod>2014-03-12T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/2014/sublime-plugin-introduce/</loc>
     <lastmod>2014-01-17T02:22:33+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/tags/%E5%B7%A5%E5%85%B7/</loc>
     <lastmod>2014-01-17T02:22:33+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/2014/how-to-print-all-five-letters-string-by-php/</loc>
     <lastmod>2014-01-17T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/about/about/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/about/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/categories/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
 </urlset>
