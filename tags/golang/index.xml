@@ -6,10 +6,33 @@
     <description>Recent content in golang on 杂鱼君的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 13 Apr 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 29 Sep 2020 15:58:08 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.zakokun.com/tags/golang/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>又又改了一下博客的架构</title>
+      <link>https://blog.zakokun.com/2020/change-blog-struct-again/</link>
+      <pubDate>Tue, 29 Sep 2020 15:58:08 +0800</pubDate>
+      
+      <guid>https://blog.zakokun.com/2020/change-blog-struct-again/</guid>
+      <description>干啥啥不行，重构第一名。 惊觉一年多没写博客了，惭愧。最近大半年做了挺多东西，想写的主题也有很多。奈何「动物森友会」「塞尔达传说旷野之息」「怪</description>
+    </item>
+    
+    <item>
+      <title>使用 singleflight 代替传统的并发锁</title>
+      <link>https://blog.zakokun.com/2017/use-singleflight-instead-lock/</link>
+      <pubDate>Mon, 12 Jun 2017 17:39:20 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/2017/use-singleflight-instead-lock/</guid>
+      <description>&lt;p&gt;一般来说高并发，或者 sql 查询很重的业务，缓存都是少不了的。业务代码中，读取缓存的时候一般会这样处理：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;data = getCache(key)
+if !data {
+    data = selectDB(key)
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;但是有些时候光做缓存还是不够，我们还要担心缓存失效导致的集中查 DB 的问题，这时候就需要考虑加锁的问题了。&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>go 语言中哪种字符串拼接的方式最高效?</title>
