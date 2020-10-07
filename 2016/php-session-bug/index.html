@@ -3,7 +3,7 @@
 <head>
   <link href="https://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.69.2" />
+  <meta name="generator" content="Hugo 0.76.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -64,22 +64,22 @@
 </blockquote>
 <p>他告诉我们<code>session_name</code>如果有<code>.</code>的话,他会将他转换成<code>_</code>,具体的过程却没有细说.所以我们还需要亲自动手.</p>
 <p>首先我们设置<code>session_name</code>为<code>user.test</code>,然后输出<code>session_id</code>,代码如下:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    session_name(&#39;user.test&#39;);
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    <span style="color:#a6e22e">session_name</span>(<span style="color:#e6db74">&#39;user.test&#39;</span>);
 
-    session_start();
+    <span style="color:#a6e22e">session_start</span>();
 
-    echo session_id();
+    <span style="color:#66d9ef">echo</span> <span style="color:#a6e22e">session_id</span>();
 </code></pre></div><p>不停的刷新页面的话,你会发下你每次输出的<code>session_id</code>是不同的.</p>
 <p>打开 chrome 的开发者工具,查看本地的<code>cookie</code>的话,你会发现这样子:</p>
 <p><img src="https://static.zakokun.com/images/2tdiD1N.png" alt=""></p>
 <p><code>cookie</code>中保存的<code>session_name</code>依然是<code>user.test</code>!那么到底是哪里出问题了呢?我们继续找:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    session_name(&#39;user.test&#39;);
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    <span style="color:#a6e22e">session_name</span>(<span style="color:#e6db74">&#39;user.test&#39;</span>);
 
-    session_start();
+    <span style="color:#a6e22e">session_start</span>();
 
-    print_r($_COOKIE);
+    <span style="color:#a6e22e">print_r</span>($_COOKIE);
 
-    echo session_id();
+    <span style="color:#66d9ef">echo</span> <span style="color:#a6e22e">session_id</span>();
 </code></pre></div><p>打印出来的结构如图:</p>
 <p><img src="https://static.zakokun.com/images/asnsEh3.png" alt=""></p>
 <p>问题出现在这里,php

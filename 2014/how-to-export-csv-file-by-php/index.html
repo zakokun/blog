@@ -3,7 +3,7 @@
 <head>
   <link href="https://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.69.2" />
+  <meta name="generator" content="Hugo 0.76.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,7 +54,7 @@
   <time datetime=2014-03-12T00:00:00Z class="post-date">Wed, Mar 12, 2014</time>
   <p>csv文件本质上是一个由逗号以及回车分割的纯文本文件,因此导出csv文件的流程是:
 读取信息-&gt;循环拼接成对应格式的字符串-&gt;设置header信息-&gt;导出文件（下载）</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
 <span style="color:#75715e">//先定义一个导出的函数
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">export_csv</span>($filename,$data) {
     <span style="color:#a6e22e">header</span>(<span style="color:#e6db74">&#34;Content-type:text/csv&#34;</span>);

@@ -3,7 +3,7 @@
 <head>
   <link href="https://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.69.2" />
+  <meta name="generator" content="Hugo 0.76.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -90,10 +90,10 @@
 <p><img src="https://static.zakokun.com/images/Z9LOVRb.png" alt=""></p>
 <h3 id="修改--发布">修改 &amp;&amp; 发布</h3>
 <p>然后打开<code>_config.yml</code>文件，修改其中的<code>deploy</code>配置：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#66d9ef">deploy</span>:
-  <span style="color:#66d9ef">type</span>: git
-  <span style="color:#66d9ef">repo</span>: git@git.coding.net:yourname/project_name.git
-  <span style="color:#66d9ef">branch</span>: master
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">deploy</span>:
+  <span style="color:#f92672">type</span>: <span style="color:#ae81ff">git</span>
+  <span style="color:#f92672">repo</span>: <span style="color:#ae81ff">git@git.coding.net:yourname/project_name.git</span>
+  <span style="color:#f92672">branch</span>: <span style="color:#ae81ff">master</span>
 </code></pre></div><p>将仓库的 git 地址写到配置里面就好了（记得先配置一下 ssh 公钥）。</p>
 <p>配置文件改完以后，就可以通过如下命令生成并且发布到<code>coding Pages</code>上去了：</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">hexo g  // 生成静态文件

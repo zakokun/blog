@@ -6,11 +6,7 @@
     <description>Recent content in design mode on 杂鱼君的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 29 Jan 2015 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://blog.zakokun.com/tags/design-mode/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Thu, 29 Jan 2015 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.zakokun.com/tags/design-mode/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>设计模式的学习--观察者模式</title>
       <link>https://blog.zakokun.com/2015/learn-design-patterns-observer/</link>

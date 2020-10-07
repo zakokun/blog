@@ -3,7 +3,7 @@
 <head>
   <link href="https://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.69.2" />
+  <meta name="generator" content="Hugo 0.76.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -59,33 +59,33 @@
 <li>这个实例是由这个类本身创建的</li>
 <li>自行向整个逻辑返回本身的实例</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">class Singleton{
-	private static $instance;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Singleton</span>{
+	<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> $instance;
 
-	public $name;
+	<span style="color:#66d9ef">public</span> $name;
 
-	private function __construct(){//私有的构造函数,防止实例化类
-	}
-	//静态的工厂方法,判断实例是否存在,处理
-	public  static function getInstance(){
-		if(is_null(self::$instance)){
-			self::$instance= new Singleton();
+	<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">function</span> __construct(){<span style="color:#75715e">//私有的构造函数,防止实例化类
+</span><span style="color:#75715e"></span>	}
+	<span style="color:#75715e">//静态的工厂方法,判断实例是否存在,处理
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">public</span>  <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getInstance</span>(){
+		<span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">is_null</span>(<span style="color:#a6e22e">self</span><span style="color:#f92672">::</span>$instance)){
+			<span style="color:#a6e22e">self</span><span style="color:#f92672">::</span>$instance<span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Singleton</span>();
 		}
-		return self::$instance;
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">::</span>$instance;
 	}
 
-	 public function __clone(){//防止clone
-        throw new Exception(&#34;Singleton Class Can Not Be Cloned&#34;);
+	 <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> __clone(){<span style="color:#75715e">//防止clone
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Exception</span>(<span style="color:#e6db74">&#34;Singleton Class Can Not Be Cloned&#34;</span>);
     }
 
-    //测试用的方法
-	public function p(){
-		echo &#39;It is Singleton&#39;;
+    <span style="color:#75715e">//测试用的方法
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">p</span>(){
+		<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;It is Singleton&#39;</span>;
 	}
 }
 
-$sing=Singleton::getInstance();
-$sing-&gt;p();
+$sing<span style="color:#f92672">=</span><span style="color:#a6e22e">Singleton</span><span style="color:#f92672">::</span><span style="color:#a6e22e">getInstance</span>();
+$sing<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">p</span>();
 </code></pre></div>
 </div>
 

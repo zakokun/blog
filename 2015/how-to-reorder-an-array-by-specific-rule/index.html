@@ -3,7 +3,7 @@
 <head>
   <link href="https://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.69.2" />
+  <meta name="generator" content="Hugo 0.76.0" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,7 +53,7 @@
   <h1>如何按照给定的顺序重新排序一个数组?</h1>
   <time datetime=2015-01-26T00:00:00Z class="post-date">Mon, Jan 26, 2015</time>
   <p>segmentfault上有人提了个<a href="http://segmentfault.com/q/1010000000185771/a-1020000002514054">问题</a>,关于数组排序的,原本感觉很简单,但是我还是踩到了php自带函数的几个坑……</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
 $a <span style="color:#f92672">=</span> <span style="color:#66d9ef">array</span>(
     <span style="color:#e6db74">&#39;1&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;one&#39;</span>,
     <span style="color:#e6db74">&#39;2&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;two&#39;</span>,
@@ -71,30 +71,30 @@ $b <span style="color:#f92672">=</span> <span style="color:#66d9ef">array</span>
     <span style="color:#e6db74">&#39;3&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;three&#39;</span>
 );
 </code></pre></div><p>这个题目并不难,如果用循环的话,不用动脑就能写出来:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">$a = array(
-    &#39;1&#39; =&gt; &#39;one&#39;,
-    &#39;2&#39; =&gt; &#39;two&#39;,
-    &#39;3&#39; =&gt; &#39;three&#39;,
-    &#39;4&#39; =&gt; &#39;four&#39;,
-    &#39;5&#39; =&gt; &#39;five&#39;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">$a <span style="color:#f92672">=</span> <span style="color:#66d9ef">array</span>(
+    <span style="color:#e6db74">&#39;1&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;one&#39;</span>,
+    <span style="color:#e6db74">&#39;2&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;two&#39;</span>,
+    <span style="color:#e6db74">&#39;3&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;three&#39;</span>,
+    <span style="color:#e6db74">&#39;4&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;four&#39;</span>,
+    <span style="color:#e6db74">&#39;5&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;five&#39;</span>
 );
-$b = array(2,5,4,1,3);
-$c = array();
-foreach ($b as $v) {
-    $c[$v] = $a[$v];
+$b <span style="color:#f92672">=</span> <span style="color:#66d9ef">array</span>(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">3</span>);
+$c <span style="color:#f92672">=</span> <span style="color:#66d9ef">array</span>();
+<span style="color:#66d9ef">foreach</span> ($b <span style="color:#66d9ef">as</span> $v) {
+    $c[$v] <span style="color:#f92672">=</span> $a[$v];
 }
-print_r($c);
+<span style="color:#a6e22e">print_r</span>($c);
 </code></pre></div><p>如果不使用循环的话,我脑子里面第一个浮现出来的就是用array_merge这个函数,代码如下:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">$a = array(
-    &#39;1&#39; =&gt; &#39;one&#39;,
-    &#39;2&#39; =&gt; &#39;two&#39;,
-    &#39;3&#39; =&gt; &#39;three&#39;,
-    &#39;4&#39; =&gt; &#39;four&#39;,
-    &#39;5&#39; =&gt; &#39;five&#39;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">$a <span style="color:#f92672">=</span> <span style="color:#66d9ef">array</span>(
+    <span style="color:#e6db74">&#39;1&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;one&#39;</span>,
+    <span style="color:#e6db74">&#39;2&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;two&#39;</span>,
+    <span style="color:#e6db74">&#39;3&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;three&#39;</span>,
+    <span style="color:#e6db74">&#39;4&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;four&#39;</span>,
+    <span style="color:#e6db74">&#39;5&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;five&#39;</span>
 );
-$b = array(2,5,4,1,3);
-$_b=array_flip($b);//将数组的key和value互换
-print_r( array_merge( $_b , $a ) );
+$b <span style="color:#f92672">=</span> <span style="color:#66d9ef">array</span>(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">3</span>);
+$_b<span style="color:#f92672">=</span><span style="color:#a6e22e">array_flip</span>($b);<span style="color:#75715e">//将数组的key和value互换
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">print_r</span>( <span style="color:#a6e22e">array_merge</span>( $_b , $a ) );
 </code></pre></div><p>**array_merge($a,$b)**的功能是将两个数组合并,如果key相同,则后面一个数组的值覆盖前面一个.本以为能得到想要的结果,没想到结果如下:</p>
 <pre><code>Array
 (
@@ -110,9 +110,9 @@ print_r( array_merge( $_b , $a ) );
     [9] =&gt; five
 )
 </code></pre><p>这结果似乎是舍弃了key,直接把两个数组的值压入新数组了.查了一下发现,当数组的下标是数字的时候,array_merge()会无视这些数字,直接压入新数组,比如:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">$a=array(&#39;1&#39;=&gt;&#39;a&#39;,&#39;2&#39;=&gt;&#39;b&#39;,&#39;3&#39;=&gt;&#39;c&#39;,&#39;x&#39;=&gt;&#39;d&#39;);
-$b=array(&#39;3&#39;=&gt;&#39;cc&#39;,&#39;x&#39;=&gt;&#39;dd&#39;,&#39;5&#39;=&gt;&#39;ee&#39;,&#39;6&#39;=&gt;&#39;ff&#39;);
-print_r(array_merge($a,$b));
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">$a<span style="color:#f92672">=</span><span style="color:#66d9ef">array</span>(<span style="color:#e6db74">&#39;1&#39;</span><span style="color:#f92672">=&gt;</span><span style="color:#e6db74">&#39;a&#39;</span>,<span style="color:#e6db74">&#39;2&#39;</span><span style="color:#f92672">=&gt;</span><span style="color:#e6db74">&#39;b&#39;</span>,<span style="color:#e6db74">&#39;3&#39;</span><span style="color:#f92672">=&gt;</span><span style="color:#e6db74">&#39;c&#39;</span>,<span style="color:#e6db74">&#39;x&#39;</span><span style="color:#f92672">=&gt;</span><span style="color:#e6db74">&#39;d&#39;</span>);
+$b<span style="color:#f92672">=</span><span style="color:#66d9ef">array</span>(<span style="color:#e6db74">&#39;3&#39;</span><span style="color:#f92672">=&gt;</span><span style="color:#e6db74">&#39;cc&#39;</span>,<span style="color:#e6db74">&#39;x&#39;</span><span style="color:#f92672">=&gt;</span><span style="color:#e6db74">&#39;dd&#39;</span>,<span style="color:#e6db74">&#39;5&#39;</span><span style="color:#f92672">=&gt;</span><span style="color:#e6db74">&#39;ee&#39;</span>,<span style="color:#e6db74">&#39;6&#39;</span><span style="color:#f92672">=&gt;</span><span style="color:#e6db74">&#39;ff&#39;</span>);
+<span style="color:#a6e22e">print_r</span>(<span style="color:#a6e22e">array_merge</span>($a,$b));
 </code></pre></div><p>结果是:</p>
 <pre><code>Array
 (
@@ -126,21 +126,21 @@ print_r(array_merge($a,$b));
 )
 </code></pre><p>所以这个方法行不通.</p>
 <p>最后我想到了 <strong>array_walk($arr,$function)</strong> 这个函数,通过如下方法:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">$a = array(
-    &#39;1&#39; =&gt; &#39;one&#39;,
-    &#39;2&#39; =&gt; &#39;two&#39;,
-    &#39;3&#39; =&gt; &#39;three&#39;,
-    &#39;4&#39; =&gt; &#39;four&#39;,
-    &#39;5&#39; =&gt; &#39;five&#39;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">$a <span style="color:#f92672">=</span> <span style="color:#66d9ef">array</span>(
+    <span style="color:#e6db74">&#39;1&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;one&#39;</span>,
+    <span style="color:#e6db74">&#39;2&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;two&#39;</span>,
+    <span style="color:#e6db74">&#39;3&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;three&#39;</span>,
+    <span style="color:#e6db74">&#39;4&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;four&#39;</span>,
+    <span style="color:#e6db74">&#39;5&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;five&#39;</span>
 );
-$b = array(&#39;2&#39;,&#39;5&#39;,&#39;4&#39;,&#39;1&#39;,&#39;3&#39;);
-$result=array();
-function sort_key($v){
-	global $result;
-	global $a;
-	$result[$v]=$a[$v];
+$b <span style="color:#f92672">=</span> <span style="color:#66d9ef">array</span>(<span style="color:#e6db74">&#39;2&#39;</span>,<span style="color:#e6db74">&#39;5&#39;</span>,<span style="color:#e6db74">&#39;4&#39;</span>,<span style="color:#e6db74">&#39;1&#39;</span>,<span style="color:#e6db74">&#39;3&#39;</span>);
+$result<span style="color:#f92672">=</span><span style="color:#66d9ef">array</span>();
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">sort_key</span>($v){
+	<span style="color:#66d9ef">global</span> $result;
+	<span style="color:#66d9ef">global</span> $a;
+	$result[$v]<span style="color:#f92672">=</span>$a[$v];
 }
-array_walk($b, &#39;sort_key&#39;);
+<span style="color:#a6e22e">array_walk</span>($b, <span style="color:#e6db74">&#39;sort_key&#39;</span>);
 </code></pre></div><p>结果可行.</p>
 </div>
 
