@@ -25,6 +25,10 @@
 
   
   
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 </head>
 
   <body class="theme-base-0c ">
@@ -53,23 +57,27 @@
   <h1>在elementary os 上安装LNMP</h1>
   <time datetime=2015-05-15T00:00:00Z class="post-date">Fri, May 15, 2015</time>
   <p><em>elementary os 是基于ubuntu的，所以步骤和ubuntu类似</em></p>
+
 <p>最近换了新设备,老电脑就空下来了.折腾着在上面装了<a href="http://https://elementary.io/">elementary os</a>
 系统，尝试着在这个系统上搭建开发环境。</p>
+
 <h2 id="准备">准备</h2>
+
 <p>先更新下系统和软件源，可以预防很多未知的问题。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    sudo apt-get update
 
-    sudo apt-get upgrade
-</code></pre></div><h2 id="安装nginx">安装Nginx</h2>
+    sudo apt-get upgrade</code></pre></div>
+<h2 id="安装nginx">安装Nginx</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    sudo apt-get install nginx
 
-    sudo service nginx start
-</code></pre></div><h2 id="安装php和mysql">安装PHP和MySQL</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    sudo apt-get install php5-cli php5-cgi php5-fpm mysql-server php5-mysql
-</code></pre></div><p>安装的过程中会提醒我们输入mysql的root密码。</p>
+    sudo service nginx start</code></pre></div>
+<h2 id="安装php和mysql">安装PHP和MySQL</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    sudo apt-get install php5-cli php5-cgi php5-fpm mysql-server php5-mysql</code></pre></div>
+<p>安装的过程中会提醒我们输入mysql的root密码。</p>
+
 <h2 id="配置nginx-和fpm">配置Nginx 和fpm</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    sudo vim /etc/nginx/sites-enabled/default
-</code></pre></div><p>修改如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    sudo vim /etc/nginx/sites-enabled/default</code></pre></div>
+<p>修改如下：</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    server <span style="color:#f92672">{</span>
 
         listen   80;
@@ -102,25 +110,27 @@
 
         <span style="color:#f92672">}</span>
 
-    <span style="color:#f92672">}</span>
-</code></pre></div><p>然后打开：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    sudo vim /etc/php5/fpm/pool.d/www.conf
-</code></pre></div><p>将<code>listen = /var/run/php5-fpm.sock </code>修改为<code>listen = 127.0.0.1:9000</code></p>
+    <span style="color:#f92672">}</span></code></pre></div>
+<p>然后打开：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    sudo vim /etc/php5/fpm/pool.d/www.conf</code></pre></div>
+<p>将<code>listen = /var/run/php5-fpm.sock</code>修改为<code>listen = 127.0.0.1:9000</code></p>
+
 <p>最后重启相关服务：</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    sudo service php5-fpm restart
-    sudo service nginx restart
-</code></pre></div><h2 id="安装其他相关服务">安装其他相关服务：</h2>
+    sudo service nginx restart</code></pre></div>
+<h2 id="安装其他相关服务">安装其他相关服务：</h2>
+
 <h4 id="memcache">memcache</h4>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    sudo apt-get install memcached
 
     memcached -d -m <span style="color:#ae81ff">50</span> -p <span style="color:#ae81ff">11211</span> -u root
 
-    sudo apt-get install php5-memcache
-</code></pre></div><h4 id="redis">Redis</h4>
+    sudo apt-get install php5-memcache</code></pre></div>
+<h4 id="redis">Redis</h4>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    sudo apt-get install redis-server
 
-    sudo apt-get install php5-redis
-</code></pre></div><h4 id="phalcon">phalcon</h4>
+    sudo apt-get install php5-redis</code></pre></div>
+<h4 id="phalcon">phalcon</h4>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    sudo apt-get install gcc make git-core libpcre3-dev php5-dev
 
     git clone git://github.com/phalcon/cphalcon.git
@@ -129,18 +139,18 @@
 
     sudo ./install
 
-    sudo php5enmod phalcon
-</code></pre></div><h4 id="phpmyadmin">phpmyadmin</h4>
+    sudo php5enmod phalcon</code></pre></div>
+<h4 id="phpmyadmin">phpmyadmin</h4>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    sudo apt-get install phpmyadmin
 
-    ln -s /usr/share/phpmadmin/ /home/code/phpmyadmin  <span style="color:#75715e">#在你项目下创建软链接</span>
-</code></pre></div><h4 id="mcrypt">mcrypt</h4>
+    ln -s /usr/share/phpmadmin/ /home/code/phpmyadmin  <span style="color:#75715e">#在你项目下创建软链接</span></code></pre></div>
+<h4 id="mcrypt">mcrypt</h4>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    sudo apt-get install php5-mcrypt
 
-    sudo php5enmod mcrypt
-</code></pre></div><h2 id="安装开机启动管理工具">安装开机启动管理工具</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    sudo apt-get install sysv-rc-conf
-</code></pre></div><p>以上就是我在elementary os 上安装LNMP的全过程了。</p>
+    sudo php5enmod mcrypt</code></pre></div>
+<h2 id="安装开机启动管理工具">安装开机启动管理工具</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    sudo apt-get install sysv-rc-conf</code></pre></div>
+<p>以上就是我在elementary os 上安装LNMP的全过程了。</p>
 </div>
 
 <h2>Comments</h2>

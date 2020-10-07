@@ -25,6 +25,10 @@
 
   
   
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 </head>
 
   <body class="theme-base-0c ">
@@ -53,14 +57,18 @@
   <h1>go 语言中哪种字符串拼接的方式最高效?</h1>
   <time datetime=2017-04-13T00:00:00Z class="post-date">Thu, Apr 13, 2017</time>
   <p>go 语言中字符串拼接有好几种方式,从最普通的<code>+</code>拼接到<code>buffer</code>字节缓冲都有.但是如果遇到大量的字符串拼接的情况,他们之间的性能差异还是需要注意的.</p>
+
 <h2 id="常用的字符串拼接方式">常用的字符串拼接方式</h2>
+
 <ul>
 <li>直接使用<code>+=</code>操作符拼接,最简单且各种语言都通用.不过可以很自然的推测他的性能是最差的</li>
 <li>把要拼接的字符串放入<code>[]string</code>切片中,然后再使用<code>strings.join()</code>方式组合成一个字符串</li>
 <li>使用<code>bytes.Buffer</code>,将所有字符串写入<code>Buffer</code>变量,最后通过<code>Buffer.string()</code>方式输出</li>
 <li>将字符串转换成<code>[]byte</code>字节数组,然后全部<code>append()</code>到一个大<code>[]byte</code>数组中,最后再转换成字符串</li>
 </ul>
+
 <h2 id="测试代码">测试代码</h2>
+
 <p>因为 go 语言自带了很好用的 benchmark 测试框架,因此我们可以写一个简单的测试用例,具体代码如下:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 
@@ -125,8 +133,9 @@
         <span style="color:#a6e22e">buf</span>.<span style="color:#a6e22e">String</span>()
     }
 }
+</code></pre></div>
+<h2 id="测试结果">测试结果</h2>
 
-</code></pre></div><h2 id="测试结果">测试结果</h2>
 <p>测试结果如下</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    Benchmark_strConcat-8        <span style="color:#ae81ff">3000000</span>           <span style="color:#ae81ff">663</span> ns/op
     
@@ -136,8 +145,8 @@
     
     Benchmark_strBuff-8          <span style="color:#ae81ff">5000000</span>           <span style="color:#ae81ff">271</span> ns/op
     PASS
-    ok      test/string 8.738s  
-</code></pre></div><p>可见最慢的就是直接用<code>+</code>号拼接,最快的是<code>strings.join()</code>.不过<code>strings.join()</code>对数据格式有要求,组装<code>[]string</code>还需要做额外的操作.
+    ok      test/string 8.738s  </code></pre></div>
+<p>可见最慢的就是直接用<code>+</code>号拼接,最快的是<code>strings.join()</code>.不过<code>strings.join()</code>对数据格式有要求,组装<code>[]string</code>还需要做额外的操作.
 而<code>bytes.Buffer</code>相比之下使用方便,而且附带很多有用的函数,比如<code>truncate()</code>等. 因此日常使用还是推荐<code>bytes.Buffer</code>.</p>
 </div>
 

@@ -25,6 +25,10 @@
 
   
   
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 </head>
 
   <body class="theme-base-0c ">
@@ -53,12 +57,15 @@
   <h1>设计模式的学习--单例模式</h1>
   <time datetime=2015-01-28T00:00:00Z class="post-date">Wed, Jan 28, 2015</time>
   <p>为了更愉快的装逼,开始学习php的设计模式.</p>
+
 <h3 id="特点">特点</h3>
+
 <ol>
 <li>一个类有且只有一个实例</li>
 <li>这个实例是由这个类本身创建的</li>
 <li>自行向整个逻辑返回本身的实例</li>
 </ol>
+
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Singleton</span>{
 	<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> $instance;
 

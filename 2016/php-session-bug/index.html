@@ -25,6 +25,10 @@
 
   
   
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 </head>
 
   <body class="theme-base-0c ">
@@ -53,25 +57,35 @@
   <h1>php 中 session_name 不能有句号的问题</h1>
   <time datetime=2016-10-20T00:00:00Z class="post-date">Thu, Oct 20, 2016</time>
   <p>和朋友写一个 php 项目, 发现当设置的 session_name 包含 <code>.</code> 的时候,用户的登录状态无法保存了.具体是什么原因导致的呢?</p>
+
 <p>在 php 的官方文档中,关于<code>session_name</code>设置的问题有如下的描述:</p>
+
 <blockquote>
 <p>会话名称至少需要一个字母，不能全部都使用数字， 否则，每次都会生成一个新的会话 ID</p>
 </blockquote>
+
 <p>这个似乎和我们的问题没什么关系,而下面有一条这样的描述:</p>
+
 <blockquote>
 <p>if you try to name a php session “example.com” it gets converted to
 “example_com” and everything breaks.</p>
 </blockquote>
+
 <p>他告诉我们<code>session_name</code>如果有<code>.</code>的话,他会将他转换成<code>_</code>,具体的过程却没有细说.所以我们还需要亲自动手.</p>
+
 <p>首先我们设置<code>session_name</code>为<code>user.test</code>,然后输出<code>session_id</code>,代码如下:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    <span style="color:#a6e22e">session_name</span>(<span style="color:#e6db74">&#39;user.test&#39;</span>);
 
     <span style="color:#a6e22e">session_start</span>();
 
     <span style="color:#66d9ef">echo</span> <span style="color:#a6e22e">session_id</span>();
-</code></pre></div><p>不停的刷新页面的话,你会发下你每次输出的<code>session_id</code>是不同的.</p>
+</code></pre></div>
+<p>不停的刷新页面的话,你会发下你每次输出的<code>session_id</code>是不同的.</p>
+
 <p>打开 chrome 的开发者工具,查看本地的<code>cookie</code>的话,你会发现这样子:</p>
-<p><img src="https://static.zakokun.com/images/2tdiD1N.png" alt=""></p>
+
+<p><img src="https://static.zakokun.com/images/2tdiD1N.png" alt="" /></p>
+
 <p><code>cookie</code>中保存的<code>session_name</code>依然是<code>user.test</code>!那么到底是哪里出问题了呢?我们继续找:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    <span style="color:#a6e22e">session_name</span>(<span style="color:#e6db74">&#39;user.test&#39;</span>);
 
@@ -80,11 +94,16 @@
     <span style="color:#a6e22e">print_r</span>($_COOKIE);
 
     <span style="color:#66d9ef">echo</span> <span style="color:#a6e22e">session_id</span>();
-</code></pre></div><p>打印出来的结构如图:</p>
-<p><img src="https://static.zakokun.com/images/asnsEh3.png" alt=""></p>
+</code></pre></div>
+<p>打印出来的结构如图:</p>
+
+<p><img src="https://static.zakokun.com/images/asnsEh3.png" alt="" /></p>
+
 <p>问题出现在这里,php
 在读取浏览器传过来的<code>cookie</code>中的<code>session_name</code>时,将<code>session_name</code>中的<code>.</code>转换成了<code>_</code>,具体流程如图:</p>
-<p><img src="https://static.zakokun.com/images/JzCJyT6.png" alt=""></p>
+
+<p><img src="https://static.zakokun.com/images/JzCJyT6.png" alt="" /></p>
+
 <p>至于为什么读取<code>COOKIE</code>的时候会将<code>.</code> <code>_</code>呢,这就需要我们慢慢研究了.</p>
 </div>
 

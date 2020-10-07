@@ -25,6 +25,10 @@
 
   
   
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 </head>
 
   <body class="theme-base-0c ">
@@ -53,6 +57,7 @@
   <h1>手动实现PHP的方法重载</h1>
   <time datetime=2014-12-20T00:00:00Z class="post-date">Sat, Dec 20, 2014</time>
   <p>众所周知,由于弱类型以及特殊的解析方式的原因,PHP本身无法实现方法的重载.但是,通过PHP自带的一些强大的魔术方法,我们可以手动实现方法重载.</p>
+
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Operation</span>{
 
 	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> __call($name,$args){
@@ -88,10 +93,15 @@
 $op<span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Operation</span>();
 $value<span style="color:#f92672">=</span>$op<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">plus</span>(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">1</span>);
 <span style="color:#66d9ef">echo</span> $value;<span style="color:#75715e">//&#39;你调用的是plus3&lt;br&gt;&#39;5
-</span></code></pre></div><p>其中的核心就是__call()方法和 call_user_func_array()函数.</p>
-<h4 id="__callnameargs">__call($name,$args)</h4>
+</span></code></pre></div>
+<p>其中的核心就是__call()方法和 call_user_func_array()函数.</p>
+
+<h4 id="call-name-args">__call($name,$args)</h4>
+
 <p>魔术方法在调用类中一个不存在的方法的时候被自动激活,$name就是这个方法的名字,$args就是传入的参数(数组).</p>
-<h4 id="call_user_func_arraycallbackargs">call_user_func_array($callback,$args)</h4>
+
+<h4 id="call-user-func-array-callback-args">call_user_func_array($callback,$args)</h4>
+
 <p>是用来动态调用函数/方法的一个函数.$callback为数组的时候即为调用类中的方法.$args是一个数组,数组中的每一项作为一个参数传入$callback
 另外还有一个函数是call_user_func($callback,$args1,$args2&hellip;) 功能同上,不同之处在于参数只能一个个单独传入.</p>
 </div>

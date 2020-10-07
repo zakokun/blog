@@ -25,6 +25,10 @@
 
   
   
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 </head>
 
   <body class="theme-base-0c ">
@@ -53,11 +57,14 @@
   <h1>设计模式的学习--观察者模式</h1>
   <time datetime=2015-01-29T00:00:00Z class="post-date">Thu, Jan 29, 2015</time>
   <p>为了更愉快的装逼,开始学习php的设计模式之二.</p>
+
 <h3 id="特点">特点</h3>
+
 <ol>
 <li>由一个观察者对应多个被观察者,一对多的关系</li>
 <li>被观察者预留update()方法给观察者调用</li>
 </ol>
+
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">//这是一个总的观察者对象
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Observer</span>{
 	<span style="color:#66d9ef">private</span> $_object<span style="color:#f92672">=</span><span style="color:#66d9ef">array</span>();

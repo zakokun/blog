@@ -26,8 +26,8 @@
 &lt;pre&gt;&lt;code&gt;data = getCache(key)
 if !data {
     data = selectDB(key)
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;但是有些时候光做缓存还是不够，我们还要担心缓存失效导致的集中查 DB 的问题，这时候就需要考虑加锁的问题了。&lt;/p&gt;</description>
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;但是有些时候光做缓存还是不够，我们还要担心缓存失效导致的集中查 DB 的问题，这时候就需要考虑加锁的问题了。&lt;/p&gt;</description>
     </item>
     
     <item>

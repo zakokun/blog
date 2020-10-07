@@ -25,6 +25,10 @@
 
   
   
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 </head>
 
   <body class="theme-base-0c ">
@@ -53,16 +57,29 @@
   <h1>用 force index 调教 MySQL 查询优化器</h1>
   <time datetime=2017-07-17T22:40:28Z class="post-date">Mon, Jul 17, 2017</time>
   <p>mysql 有查询优化器，在我们发起一个查询的时候， msql 会尝试分析他，看看是否能做一些优化手段来加快查询速度。最常见的比如说有个 (a,b)的联合索引，无论我们使用<code>SELECT * FROM t WHERE a=? AND b=?</code>还是<code>SELECT * FROM t WHERE b=? AND a=?</code>都能利用到<code>(a,b)</code>这个联合索引，又或者是在很多复杂的查询条件中，分析出使用哪个索引能最大化查询速度，这都是查询优化器做的事情。</p>
+
 <p>然而毕竟程序是死的，有的时候查询优化器并不如我们想象中的那么聪明。这时候就需要我们强制 mysql 按照我们的意愿去查询了。</p>
+
 <p>还是我大B站的弹幕系统(^_^)，我们给 UP主提供了『弹幕转移』的功能，方便他们在上传同一个视频的更高清的版本以后，能把之前视频的弹幕转移到新的视频下面来。因为分表分库加业务逻辑限制的原因，我们只能通过复制数据的方式来转移这些弹幕。为了减小对数据库造成的压力，我通过分页查询的方式来限制一次查询的数量：</p>
-<pre><code>SELECT id ... FROM table WHERE type=? AND oid=? AND id &gt;? ORDER BY id limit 1000
-</code></pre><p>id 为弹幕的主键。（oid 是视频 id，与弹幕 id 是一对多的关系。）在一个循环中，先初始化 startID = 0，从查询出来的结果中找到最大的 id 赋值给 startID，作为下次查询的最小弹幕 id，这样以分页的方式分批转移弹幕。</p>
+<pre><code>SELECT id ... FROM table WHERE type=? AND oid=? AND id &gt;? ORDER BY id limit 1000</code></pre>
+<p>id 为弹幕的主键。（oid 是视频 id，与弹幕 id 是一对多的关系。）在一个循环中，先初始化 startID = 0，从查询出来的结果中找到最大的 id 赋值给 startID，作为下次查询的最小弹幕 id，这样以分页的方式分批转移弹幕。</p>
+
 <p>数据库中有 oid 的索引，那么我理所应当的认为这次查询走 oid 索引，找到这个 oid 下的所有弹幕 id 以后再进行排序，筛选。然而这个功能上线以后，很快就收到了数据库的报警，提醒我『扫描行数大于XX万行』。但是这些报警的 oid 对应的弹幕 id 数量只有几千个，理论上只会扫描这个 oid 下的弹幕数量的行数的。那为什么数据库还是扫描了这么多行呢？</p>
+
 <p>一般这种情况无需瞎猜，<code>explain</code>就能发现很多信息，如图：</p>
-<p><img src="https://static.zakokun.com/images/dkkZynK.png" alt=""></p>
+
+<p><a data-fancybox="gallery" href="https://static.zakokun.com/images/dkkZynK.png">
+    <img src="https://static.zakokun.com/images/dkkZynK.png">
+</a></p>
+
 <p>问题就在于，mysql 自作聪明的使用了主键索引，可以设想一下如果条件是<code>id &gt; 0</code>那么就相当于全表扫描了，明显是很不效率的行为。因为我们期望 MySQL 通过<code>oid_state</code>的索引来查询，所以我们可以通过<code>force index(ix_oid_state)</code>来强制MySQL使用这个索引：</p>
-<p><img src="https://static.zakokun.com/images/mM53AyK.png" alt=""></p>
+
+<p><a data-fancybox="gallery" href="https://static.zakokun.com/images/mM53AyK.png">
+    <img src="https://static.zakokun.com/images/mM53AyK.png">
+</a></p>
+
 <p>这样就符合我们的预期了，可以看到扫描的行数只有几千行，使用的索引也是我们指定的<code>oid_state</code>索引。</p>
+
 <p>但是要注意的是，因为使用了<code>oid_state</code>索引，而这个索引里面字段顺序并不是完全的 id 顺序的，因此会导致额外的<code>filesort</code>。这也是影响查询速度的地方。这两杯毒酒选择喝哪一杯，还是要看各自的业务情况。弹幕的话，因为大部分视频下的弹幕数量比较少（四位数一下），所以使用<code>oid_state</code>索引还是可以提高查询速度的。</p>
 </div>
 

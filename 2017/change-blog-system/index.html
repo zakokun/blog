@@ -25,6 +25,10 @@
 
   
   
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 </head>
 
   <body class="theme-base-0c ">
@@ -53,25 +57,34 @@
   <h1>博客换新家</h1>
   <time datetime=2017-01-18T21:08:02Z class="post-date">Wed, Jan 18, 2017</time>
   <p>我最早接触 静态网站生成器是<code>farbox</code>，在那个不会搭网站的时代，farbox帮助我建成了我的第一个个人博客。如今最流行的静态网站生成器恐怕就是<code>hexo</code> 和<code>jekyll</code>了，关于他们之间的区别这里就不多赘述，趁着这次整理博客内容的间隙，我把我的博客系统换<code>hexo</code>顺便记录一下安装和部署的流程。</p>
-<h2 id="how--why">How &amp;&amp; Why?</h2>
+
+<h2 id="how-why">How &amp;&amp; Why?</h2>
+
 <p>静态网站生成器真的是很有意思的一个东西。最早的互联网之初，所有的网站都是静态的。我们开始学习网页开发的时候，<code>用 Dreamweaver</code> 创建的一个个的<code>xxx.html</code>就是一个个的静态网页。顾名思义，静态网页就是一个页面对应一个内容，服务器直接把网页内容返回给请求者。</p>
+
 <p>而随着互联网技术的日新月异，大家发现很多网站内容其实是可以在用户点击访问的时候再生成出来，于是动态网站开始逐渐成为主流。通常的动态网站需要一个持续运行的程序,数据库和相对应的模板，再用户点击的时候程序取出数据库的数据套入模板实时的为用户生成他需要的页面。</p>
+
 <p>而为什么如今静态网站又成为了一种趋势呢？<del>我猜是跟风吧</del></p>
-<p>我觉得有几点因素特别重要：</p>
-<ol>
-<li>现代前端技术发展导致后端的功能越来越简单，尤其是<code>javascript</code>这几年的突飞猛进</li>
-<li>持续集成和自动化部署的技术越来越成熟，节省了很多动态的配置和部署工作</li>
-<li>静态网站的安全性和借助CDN加速以后的访问速度都比动态网站要高</li>
-</ol>
+
+<p>我觉得有几点因素特别重要：
+1. 现代前端技术发展导致后端的功能越来越简单，尤其是<code>javascript</code>这几年的突飞猛进
+2. 持续集成和自动化部署的技术越来越成熟，节省了很多动态的配置和部署工作
+3. 静态网站的安全性和借助CDN加速以后的访问速度都比动态网站要高</p>
+
 <p>如果用静态网站生成器来写博客的话，那么他的优点就更加明显了，无需服务器，易于部署，方便维护，<strong>逼格高</strong>。</p>
-<h2 id="安装部署mac">安装部署（Mac）</h2>
+
+<h2 id="安装部署-mac">安装部署（Mac）</h2>
+
 <p><code>hexo</code>是个 node 程序，所以安装之前先要装好<code>node</code>：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">brew install node
-</code></pre></div><p>安装完毕以后就可以直接安装<code>hexo</code>：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">npm install -g hexo-cli
-</code></pre></div><p>安装完成以后，使用<code>hexo -v</code>命令就能看到<code>hexo</code>的相关命令了。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">brew install node</code></pre></div>
+<p>安装完毕以后就可以直接安装<code>hexo</code>：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">npm install -g hexo-cli</code></pre></div>
+<p>安装完成以后，使用<code>hexo -v</code>命令就能看到<code>hexo</code>的相关命令了。</p>
+
 <h2 id="hexo-的使用">Hexo 的使用</h2>
+
 <p>首先就是使用<code>hexo init &lt;blog_name&gt;</code>初始化一个新的博客项目，项目名字可以是任意想要的。</p>
+
 <p>然后进入<code>hexo</code>帮你创建的文件夹，可以看到这里有项目相关的各种文件了。</p>
 <pre><code>├── _config.yml
 ├── node_modules
@@ -79,26 +92,35 @@
 ├── package.json
 ├── scaffolds
 ├── source
-└── themes
-</code></pre><p>顾名思义，<code>source</code>文件夹就是用来存放『博客』的资源-文章了。而博客的『样式』资源呢？其实是存放在<code>themes</code>文件夹中了，这个可以以后自己研究。还有一个<code>_config.yml</code>文件，这就是整个博客的配置文件了，包括博客名称，描述，url等配置项都可以在这里进行修改。（注意和<code>themes/xx/theme_name/_config.yml</code>即主题的配置文件区分）</p>
+└── themes</code></pre>
+<p>顾名思义，<code>source</code>文件夹就是用来存放『博客』的资源-文章了。而博客的『样式』资源呢？其实是存放在<code>themes</code>文件夹中了，这个可以以后自己研究。还有一个<code>_config.yml</code>文件，这就是整个博客的配置文件了，包括博客名称，描述，url等配置项都可以在这里进行修改。（注意和<code>themes/xx/theme_name/_config.yml</code>即主题的配置文件区分）</p>
+
 <h2 id="管理发布">管理发布</h2>
+
 <h3 id="插件配置">插件配置</h3>
+
 <p>想一键发布到 git，还需要安装一个插件：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"> npm install hexo-deployer-git --save
-</code></pre></div><h3 id="coding-pages-设置">Coding Pages 设置</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"> npm install hexo-deployer-git --save</code></pre></div>
+<h3 id="coding-pages-设置">Coding Pages 设置</h3>
+
 <p>Condig Pages 是国内的代码托管网站<code>coding.net</code>提供的静态网站托管服务。我们只要在这里创建一个仓库，然后在左侧<code>pages 服务</code>选项里面开启 Pages 服务并添加一下博客的自定义的域名就可以了：</p>
-<p><img src="https://static.zakokun.com/images/Z9LOVRb.png" alt=""></p>
-<h3 id="修改--发布">修改 &amp;&amp; 发布</h3>
+
+<p><img src="https://static.zakokun.com/images/Z9LOVRb.png" alt="" /></p>
+
+<h3 id="修改-发布">修改 &amp;&amp; 发布</h3>
+
 <p>然后打开<code>_config.yml</code>文件，修改其中的<code>deploy</code>配置：</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">deploy</span>:
   <span style="color:#f92672">type</span>: <span style="color:#ae81ff">git</span>
   <span style="color:#f92672">repo</span>: <span style="color:#ae81ff">git@git.coding.net:yourname/project_name.git</span>
-  <span style="color:#f92672">branch</span>: <span style="color:#ae81ff">master</span>
-</code></pre></div><p>将仓库的 git 地址写到配置里面就好了（记得先配置一下 ssh 公钥）。</p>
+  <span style="color:#f92672">branch</span>: <span style="color:#ae81ff">master</span></code></pre></div>
+<p>将仓库的 git 地址写到配置里面就好了（记得先配置一下 ssh 公钥）。</p>
+
 <p>配置文件改完以后，就可以通过如下命令生成并且发布到<code>coding Pages</code>上去了：</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">hexo g  // 生成静态文件
-hexo d // 发布到 Coding Pages
-</code></pre></div><p>其他 hexo 命令可以参考<a href="https://hexo.io/zh-cn/docs/index.html">这里</a></p>
+hexo d // 发布到 Coding Pages</code></pre></div>
+<p>其他 hexo 命令可以参考<a href="https://hexo.io/zh-cn/docs/index.html">这里</a></p>
+
 <p>这样就配置完成了，以后每次写了一篇新文章，就能方便快速的发布到网上了。美滋滋。</p>
 </div>
 

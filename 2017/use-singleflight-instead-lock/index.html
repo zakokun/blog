@@ -25,6 +25,10 @@
 
   
   
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 </head>
 
   <body class="theme-base-0c ">
@@ -56,9 +60,11 @@
 <pre><code>data = getCache(key)
 if !data {
     data = selectDB(key)
-}
-</code></pre><p>但是有些时候光做缓存还是不够，我们还要担心缓存失效导致的集中查 DB 的问题，这时候就需要考虑加锁的问题了。</p>
+}</code></pre>
+<p>但是有些时候光做缓存还是不够，我们还要担心缓存失效导致的集中查 DB 的问题，这时候就需要考虑加锁的问题了。</p>
+
 <h2 id="传统的-mc-锁">传统的 Mc 锁</h2>
+
 <p>一般加锁的思路都是依靠一个标志位，可以是另外一个 Mc 的 key，或者是一个锁文件。代码往往是这样的：</p>
 <pre><code>func checkAccess(key) bool {
     startTime = time.now()
@@ -72,11 +78,15 @@ if !data {
         }
         time.sleep(20ms)
     }
-}
-</code></pre><p>在读取缓存失败，查询 DB 之前，先来一个锁判断，如果锁不存在，那么就加把锁，再去查 DB。如果锁存在，那么就等待，然后回头再去读 Mc 或者进入 DB 查询。</p>
+}</code></pre>
+<p>在读取缓存失败，查询 DB 之前，先来一个锁判断，如果锁不存在，那么就加把锁，再去查 DB。如果锁存在，那么就等待，然后回头再去读 Mc 或者进入 DB 查询。</p>
+
 <h2 id="使用-singleflight">使用 singleflight</h2>
+
 <p>上面的代码使用起来没什么问题，但是依靠无限循环 + sleep 实现的方法比较低效。而在 go 语言中，借助非常轻量和高效的协程，可以很优雅的实现这种功能，这就是<code>singleflight</code>。</p>
+
 <h3 id="使用方法">使用方法</h3>
+
 <p>使用方法很简单，可以参考其<a href="https://github.com/golang/groupcache/blob/master/singleflight/singleflight_test.go">test</a> ：</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestDo</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
     <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">g</span> <span style="color:#a6e22e">Group</span>
@@ -90,8 +100,11 @@ if !data {
         <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;Do error = %v&#34;</span>, <span style="color:#a6e22e">err</span>)
     }
 }
-</code></pre></div><p>可见使用起来非常简单，对外只需要这个<code>Do</code> 函数，传入 Key 和获取缓存的回调函数，如此 singleflight 就能自动帮我们处理同时请求下游服务的问题了。</p>
+</code></pre></div>
+<p>可见使用起来非常简单，对外只需要这个<code>Do</code> 函数，传入 Key 和获取缓存的回调函数，如此 singleflight 就能自动帮我们处理同时请求下游服务的问题了。</p>
+
 <p>那么这个<code>Do</code>函数到底做了什么事情？</p>
+
 <h3 id="源码分析">源码分析</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">call</span> <span style="color:#66d9ef">struct</span> {
     <span style="color:#a6e22e">wg</span> <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">WaitGroup</span>
@@ -123,17 +136,21 @@ if !data {
     <span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">doCall</span>(<span style="color:#a6e22e">c</span>, <span style="color:#a6e22e">key</span>, <span style="color:#a6e22e">fn</span>)
     <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">val</span>, <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">dups</span> &gt; <span style="color:#ae81ff">0</span>
 }
-</code></pre></div><p>go 的代码一直都很清晰易懂，可以看到先定义了结构体<code>group</code>和<code>call</code>，<code>group.mu</code>是保护<code>group.m</code>的互斥锁，<code>group.m</code>主要是保存请求的key，而<code>call</code>结构体是用来记录回调函数的结果。</p>
+</code></pre></div>
+<p>go 的代码一直都很清晰易懂，可以看到先定义了结构体<code>group</code>和<code>call</code>，<code>group.mu</code>是保护<code>group.m</code>的互斥锁，<code>group.m</code>主要是保存请求的key，而<code>call</code>结构体是用来记录回调函数的结果。</p>
+
 <p>在<code>Do</code>函数中，函数先是判断这个 key 是否是第一次调用，如果是，就会进入<code>doCall</code>调用回调函数获取结果，后续的请求就会阻塞在<code>c.wg.Wait()</code>这里，等待回调函数返回以后，直接拿到结果。</p>
+
 <h3 id="singleflight-的应用">singleflight 的应用</h3>
+
 <p>所以依靠 singleflight ，针对并发缓存的更新，我们就可以这样实现：</p>
 <pre><code>data = getCache(key)
 if !data {
     data = g.Do(key, func(){
         return selectDB(key)
     })
-}
-</code></pre><p>这样是不是优雅很多呢？而且 singleflight 不仅仅可以用来当做 mc 锁，调用其他脆弱的下游业务同样可以发挥很大的作用。</p>
+}</code></pre>
+<p>这样是不是优雅很多呢？而且 singleflight 不仅仅可以用来当做 mc 锁，调用其他脆弱的下游业务同样可以发挥很大的作用。</p>
 </div>
 
 <h2>Comments</h2>

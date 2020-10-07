@@ -14,7 +14,9 @@
       
       <guid>https://blog.zakokun.com/2015/learn-design-patterns-observer/</guid>
       <description>&lt;p&gt;为了更愉快的装逼,开始学习php的设计模式之二.&lt;/p&gt;
+
 &lt;h3 id=&#34;特点&#34;&gt;特点&lt;/h3&gt;
+
 &lt;ol&gt;
 &lt;li&gt;由一个观察者对应多个被观察者,一对多的关系&lt;/li&gt;
 &lt;li&gt;被观察者预留update()方法给观察者调用&lt;/li&gt;
@@ -28,7 +30,9 @@
       
       <guid>https://blog.zakokun.com/2015/learn-design-patterns-singleton/</guid>
       <description>&lt;p&gt;为了更愉快的装逼,开始学习php的设计模式.&lt;/p&gt;
+
 &lt;h3 id=&#34;特点&#34;&gt;特点&lt;/h3&gt;
+
 &lt;ol&gt;
 &lt;li&gt;一个类有且只有一个实例&lt;/li&gt;
 &lt;li&gt;这个实例是由这个类本身创建的&lt;/li&gt;

@@ -14,6 +14,7 @@
       
       <guid>https://blog.zakokun.com/2017/use-force-index/</guid>
       <description>&lt;p&gt;mysql 有查询优化器，在我们发起一个查询的时候， msql 会尝试分析他，看看是否能做一些优化手段来加快查询速度。最常见的比如说有个 (a,b)的联合索引，无论我们使用&lt;code&gt;SELECT * FROM t WHERE a=? AND b=?&lt;/code&gt;还是&lt;code&gt;SELECT * FROM t WHERE b=? AND a=?&lt;/code&gt;都能利用到&lt;code&gt;(a,b)&lt;/code&gt;这个联合索引，又或者是在很多复杂的查询条件中，分析出使用哪个索引能最大化查询速度，这都是查询优化器做的事情。&lt;/p&gt;
+
 &lt;p&gt;然而毕竟程序是死的，有的时候查询优化器并不如我们想象中的那么聪明。这时候就需要我们强制 mysql 按照我们的意愿去查询了。&lt;/p&gt;</description>
     </item>
     

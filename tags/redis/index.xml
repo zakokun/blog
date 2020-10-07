@@ -14,7 +14,9 @@
       
       <guid>https://blog.zakokun.com/2014/learn-php-redis/</guid>
       <description>&lt;p&gt;Redis是一个和Memcache类似的NoSQL缓存系统.相比Memcache支持更多的数据类型,并且数据可以持久化,这让他可以储存超过指定内存大小的数据(这是我觉得和Memcache最大的区别).&lt;/p&gt;
+
 &lt;p&gt;由于支持的数据格式多,所以操作相比Memcache稍微复杂些.&lt;/p&gt;
+
 &lt;p&gt;Redis的各种赋值和取值的操作很多,网上想找个齐全的资料都不太好找.以下整理记录了一些自己常用的操作.&lt;/p&gt;</description>
     </item>
     

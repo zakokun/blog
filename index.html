@@ -26,6 +26,10 @@
   
   <link href="https://blog.zakokun.com/index.xml" rel="alternate" type="application/rss+xml" title="杂鱼君的博客" />
   
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 </head>
 
   <body class="theme-base-0c ">
@@ -68,6 +72,7 @@
   </h1>
   <time datetime="2018-01-12T10:54:30Z" class="post-date">Fri, Jan 12, 2018</time>
   <p>我的 iPhone 6 plus 用『降频门』+ iOS 11 的 bug + 续航雪崩三连发将我折腾得痛不欲生，在『花一大笔钱升级到新款 iPhone』和『省点钱买个便宜手机』之间犹豫了许久以后，最终还是决定买个便宜的 android 手机。</p>
+
 <p>不过对于稍微有点偏执的我来说，国内的一众『安卓』系统真的无法下手，别扭的 UI，各种『贴心』的优化实在无力吐槽。本想咬牙入手谷歌亲儿子 pixel2，但是网上的一众关于质量问题的报告让我胆战心惊。机缘巧合之下，关于谷歌的『android one』计划和小米的A1 手机印入我的眼帘。</p>
   
   <div class="read-more-link">
@@ -80,6 +85,7 @@
   </h1>
   <time datetime="2017-07-17T22:40:28Z" class="post-date">Mon, Jul 17, 2017</time>
   <p>mysql 有查询优化器，在我们发起一个查询的时候， msql 会尝试分析他，看看是否能做一些优化手段来加快查询速度。最常见的比如说有个 (a,b)的联合索引，无论我们使用<code>SELECT * FROM t WHERE a=? AND b=?</code>还是<code>SELECT * FROM t WHERE b=? AND a=?</code>都能利用到<code>(a,b)</code>这个联合索引，又或者是在很多复杂的查询条件中，分析出使用哪个索引能最大化查询速度，这都是查询优化器做的事情。</p>
+
 <p>然而毕竟程序是死的，有的时候查询优化器并不如我们想象中的那么聪明。这时候就需要我们强制 mysql 按照我们的意愿去查询了。</p>
   
   <div class="read-more-link">
@@ -95,8 +101,8 @@
 <pre><code>data = getCache(key)
 if !data {
     data = selectDB(key)
-}
-</code></pre><p>但是有些时候光做缓存还是不够，我们还要担心缓存失效导致的集中查 DB 的问题，这时候就需要考虑加锁的问题了。</p>
+}</code></pre>
+<p>但是有些时候光做缓存还是不够，我们还要担心缓存失效导致的集中查 DB 的问题，这时候就需要考虑加锁的问题了。</p>
   
   <div class="read-more-link">
     <a href="/2017/use-singleflight-instead-lock/">Read More…</a>
@@ -241,6 +247,7 @@ if !data {
   </h1>
   <time datetime="2015-05-24T00:00:00Z" class="post-date">Sun, May 24, 2015</time>
   <p><em>相关代码在这里：github.com/zakokun/myPHP</em></p>
+
 <p>个人觉得徒手写一个PHP框架是帮助我们了解MVC架构的好办法，同时对PHP的资源调度以及代码组织都是一个很好的锻炼。</p>
   
   <div class="read-more-link">
@@ -253,6 +260,7 @@ if !data {
   </h1>
   <time datetime="2015-05-15T00:00:00Z" class="post-date">Fri, May 15, 2015</time>
   <p><em>elementary os 是基于ubuntu的，所以步骤和ubuntu类似</em></p>
+
 <p>最近换了新设备,老电脑就空下来了.折腾着在上面装了<a href="http://https://elementary.io/">elementary os</a>
 系统，尝试着在这个系统上搭建开发环境。</p>
   
@@ -266,7 +274,9 @@ if !data {
   </h1>
   <time datetime="2015-01-29T00:00:00Z" class="post-date">Thu, Jan 29, 2015</time>
   <p>为了更愉快的装逼,开始学习php的设计模式之二.</p>
+
 <h3 id="特点">特点</h3>
+
 <ol>
 <li>由一个观察者对应多个被观察者,一对多的关系</li>
 <li>被观察者预留update()方法给观察者调用</li>
@@ -282,7 +292,9 @@ if !data {
   </h1>
   <time datetime="2015-01-28T00:00:00Z" class="post-date">Wed, Jan 28, 2015</time>
   <p>为了更愉快的装逼,开始学习php的设计模式.</p>
+
 <h3 id="特点">特点</h3>
+
 <ol>
 <li>一个类有且只有一个实例</li>
 <li>这个实例是由这个类本身创建的</li>
@@ -332,7 +344,9 @@ if !data {
   </h1>
   <time datetime="2014-09-22T00:00:00Z" class="post-date">Mon, Sep 22, 2014</time>
   <p>Redis是一个和Memcache类似的NoSQL缓存系统.相比Memcache支持更多的数据类型,并且数据可以持久化,这让他可以储存超过指定内存大小的数据(这是我觉得和Memcache最大的区别).</p>
+
 <p>由于支持的数据格式多,所以操作相比Memcache稍微复杂些.</p>
+
 <p>Redis的各种赋值和取值的操作很多,网上想找个齐全的资料都不太好找.以下整理记录了一些自己常用的操作.</p>
   
   <div class="read-more-link">
