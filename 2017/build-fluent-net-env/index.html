@@ -3,7 +3,7 @@
 <head>
   <link href="https://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.76.0" />
+  <meta name="generator" content="Hugo 0.69.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -112,7 +112,7 @@ NG</code>为我们自动设置好了<code>HTTP代理</code>,由于我用的是<c
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">alias pp<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;env http_proxy=http://127.0.0.1:1087 https_proxy=http://127.0.0.1:1087&#39;</span></code></pre></div>
 <p>设置好了以后,在需要走代理的命令前面加入<code>pp</code>.如:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">curl ip.gs <span style="color:#75715e">#直接连接</span>
-pp curl ip.gs <span style="color:#75715e">## 走代理  </span></code></pre></div>
+pp curl ip.gs <span style="color:#75715e">## 走代理</span>  </code></pre></div>
 <p>效果如下:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">▶ curl ip.sb
 112.64.63.157
@@ -134,7 +134,7 @@ alias startpp<span style="color:#f92672">=</span><span style="color:#e6db74">&#3
 <p>在使用git来提交代码的时候,你会发现如果使用的是<code>https</code>协议的话,那么加<code>pp</code>是可以走代理的,但是如果使用的是<code>git</code>协议,因为<code>git</code>协议走的是<code>ssh</code>,因此我们需要修改<code>ssh</code>的配置,配置文件在<code>~/.ssh/config</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">Host github.com
 User git
-ProxyCommand nc -x 127.0.0.1:1086 %h %p   <span style="color:#75715e">#1086是你的http协议的端口,如果使用polipo转换,那么就是默认的8123端口  </span></code></pre></div>
+ProxyCommand nc -x 127.0.0.1:1086 %h %p   <span style="color:#75715e">#1086是你的http协议的端口,如果使用polipo转换,那么就是默认的8123端口</span>  </code></pre></div>
 <p>感受一下极速clone代码的快感吧.</p>
 
 <h3 id="ios-android">iOS &amp; Android</h3>

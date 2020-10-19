@@ -3,7 +3,7 @@
 <head>
   <link href="https://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.76.0" />
+  <meta name="generator" content="Hugo 0.69.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,42 +58,41 @@
   <time datetime=2014-12-20T00:00:00Z class="post-date">Sat, Dec 20, 2014</time>
   <p>众所周知,由于弱类型以及特殊的解析方式的原因,PHP本身无法实现方法的重载.但是,通过PHP自带的一些强大的魔术方法,我们可以手动实现方法重载.</p>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Operation</span>{
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">class Operation{
 
-	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> __call($name,$args){
-		<span style="color:#66d9ef">if</span>($name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;plus&#39;</span>){
-			$args_num<span style="color:#f92672">=</span><span style="color:#a6e22e">count</span>($args);
-			$method_name<span style="color:#f92672">=</span>$name<span style="color:#f92672">.</span>$args_num;
-			<span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">method_exists</span>(<span style="color:#e6db74">&#39;Operation&#39;</span>,$method_name)){
-				<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">call_user_func_array</span>(<span style="color:#66d9ef">array</span>($this,$method_name),$args);
-			}<span style="color:#66d9ef">else</span>{
-				<span style="color:#66d9ef">die</span>(<span style="color:#e6db74">&#39;method doesn`t exist&#39;</span>);
+	public function __call($name,$args){
+		if($name=&#39;plus&#39;){
+			$args_num=count($args);
+			$method_name=$name.$args_num;
+			if(method_exists(&#39;Operation&#39;,$method_name)){
+				return call_user_func_array(array($this,$method_name),$args);
+			}else{
+				die(&#39;method doesn`t exist&#39;);
 			}
-		}<span style="color:#66d9ef">else</span>{
-			<span style="color:#66d9ef">die</span>(<span style="color:#e6db74">&#39;method doesn`t exist&#39;</span>);
+		}else{
+			die(&#39;method doesn`t exist&#39;);
 		}
 	}
 
-	<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">plus1</span>($arg1){
-		<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;你调用的是plus1&lt;br&gt;&#39;</span>;
-		<span style="color:#66d9ef">return</span>  $arg1;
+	private function plus1($arg1){
+		echo &#39;你调用的是plus1&lt;<span style="color:#f92672">br</span>&gt;&#39;;
+		return  $arg1;
 	}
 
-	<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">plus2</span>($arg1,$arg2){
-		<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;你调用的是plus2&lt;br&gt;&#39;</span>;
-		<span style="color:#66d9ef">return</span>  $arg1<span style="color:#f92672">+</span>$arg2;
+	private function plus2($arg1,$arg2){
+		echo &#39;你调用的是plus2&lt;<span style="color:#f92672">br</span>&gt;&#39;;
+		return  $arg1+$arg2;
 	}
 
-	<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">plus3</span>($arg1,$arg2,$arg3){
-		<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;你调用的是plus3&lt;br&gt;&#39;</span>;
-		<span style="color:#66d9ef">return</span>  $arg1<span style="color:#f92672">+</span>$arg2<span style="color:#f92672">+</span>$arg3;
+	private function plus3($arg1,$arg2,$arg3){
+		echo &#39;你调用的是plus3&lt;<span style="color:#f92672">br</span>&gt;&#39;;
+		return  $arg1+$arg2+$arg3;
 	}
 }
 
-$op<span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Operation</span>();
-$value<span style="color:#f92672">=</span>$op<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">plus</span>(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">1</span>);
-<span style="color:#66d9ef">echo</span> $value;<span style="color:#75715e">//&#39;你调用的是plus3&lt;br&gt;&#39;5
-</span></code></pre></div>
+$op=new Operation();
+$value=$op-&gt;plus(1,3,1);
+echo $value;//&#39;你调用的是plus3&lt;<span style="color:#f92672">br</span>&gt;&#39;5</code></pre></div>
 <p>其中的核心就是__call()方法和 call_user_func_array()函数.</p>
 
 <h4 id="call-name-args">__call($name,$args)</h4>

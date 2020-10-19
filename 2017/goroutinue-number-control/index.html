@@ -3,7 +3,7 @@
 <head>
   <link href="https://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.76.0" />
+  <meta name="generator" content="Hugo 0.69.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -76,8 +76,7 @@
 <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">esIndex</span>(<span style="color:#a6e22e">j</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">job</span>, <span style="color:#a6e22e">wg</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">WaitGroup</span>) {
     <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Done</span>()
     <span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>}  
-</code></pre></div>
+</span><span style="color:#75715e"></span>}  </code></pre></div>
 <p>我们先在<code>esJob</code>这个函数中遍历<code>jobSlice</code>切片,每一个 job
 都启动一个协程去处理,然后在循环外部通过<code>wg.Wait()</code>等待所有的协程处理完成以后退出.</p>
 
@@ -120,8 +119,7 @@
         <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">limit</span>
     
     }  
-  
-</code></pre></div>
+  </code></pre></div>
 <p>因为<code>channel</code>本身是带锁的,因此当<code>limit</code>这个 chan 缓冲数据达到10个满了以后,程序会阻塞在<code>limit &lt;-
 true</code>这里,直到<code>esIndex</code>函数从<code>limit</code>中取出数据(同时也意味着一个协程执行结束退出),那么将会继续创建新的协程,这样就能将协程一直控制在10个,虽然会有一些额外的创建协程的开销,但是都是在可接受范围内的.</p>
 </div>

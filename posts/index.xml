@@ -6,14 +6,18 @@
     <description>Recent content in Posts on 杂鱼君的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 29 Sep 2020 15:58:08 +0800</lastBuildDate><atom:link href="https://blog.zakokun.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 29 Sep 2020 15:58:08 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.zakokun.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
     <item>
       <title>又又改了一下博客的架构</title>
       <link>https://blog.zakokun.com/2020/change-blog-struct-again/</link>
       <pubDate>Tue, 29 Sep 2020 15:58:08 +0800</pubDate>
       
       <guid>https://blog.zakokun.com/2020/change-blog-struct-again/</guid>
-      <description>干啥啥不行，重构第一名。 惊觉一年多没写博客了，惭愧。最近大半年做了挺多东西，想写的主题也有很多。奈何「动物森友会」「塞尔达传说旷野之息」「怪</description>
+      <description>干啥啥不行，重构第一名。 What can I do? Refactor first. 惊觉一年多没写博客了，惭愧。最近大半年做了挺多东西，想写的主题也有很多。奈何「动物森友会」「塞尔达传说旷</description>
     </item>
     
     <item>

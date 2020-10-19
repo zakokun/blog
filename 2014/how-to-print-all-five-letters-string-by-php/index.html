@@ -3,7 +3,7 @@
 <head>
   <link href="https://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.76.0" />
+  <meta name="generator" content="Hugo 0.69.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -59,7 +59,7 @@
   <p>逛v2的时候看到一个帖子:<a href="http://v2ex.com/t/133080#reply45">点击这里</a>
 各个码农都在秀自家的语言,身为php程序员,也尝试着写了一个,没想到这么一个简单的问题也踩了不少的坑.</p>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
 $arr<span style="color:#f92672">=</span><span style="color:#66d9ef">array</span>(<span style="color:#e6db74">&#34;a&#34;</span>,<span style="color:#e6db74">&#34;b&#34;</span>,<span style="color:#e6db74">&#39;c&#39;</span>,<span style="color:#e6db74">&#39;d&#39;</span>,<span style="color:#e6db74">&#39;e&#39;</span>,<span style="color:#e6db74">&#39;f&#39;</span>,<span style="color:#e6db74">&#39;g&#39;</span>,<span style="color:#e6db74">&#39;h&#39;</span>,<span style="color:#e6db74">&#39;i&#39;</span>,<span style="color:#e6db74">&#39;j&#39;</span>,<span style="color:#e6db74">&#39;k&#39;</span>,<span style="color:#e6db74">&#39;l&#39;</span>,<span style="color:#e6db74">&#39;m&#39;</span>,<span style="color:#e6db74">&#39;n&#39;</span>,<span style="color:#e6db74">&#39;o&#39;</span>,<span style="color:#e6db74">&#39;p&#39;</span>,<span style="color:#e6db74">&#39;q&#39;</span>,<span style="color:#e6db74">&#39;r&#39;</span>,<span style="color:#e6db74">&#39;s&#39;</span>,<span style="color:#e6db74">&#39;t&#39;</span>,<span style="color:#e6db74">&#39;u&#39;</span>,<span style="color:#e6db74">&#39;v&#39;</span>,<span style="color:#e6db74">&#39;w&#39;</span>,<span style="color:#e6db74">&#39;x&#39;</span>,<span style="color:#e6db74">&#39;y&#39;</span>,<span style="color:#e6db74">&#39;z&#39;</span>);
 	$num<span style="color:#f92672">=</span><span style="color:#66d9ef">array</span>(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>);
 	$out<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>;
@@ -86,7 +86,7 @@ $arr<span style="color:#f92672">=</span><span style="color:#66d9ef">array</span>
 	<span style="color:#a6e22e">file_put_contents</span>(<span style="color:#e6db74">&#34;d:/num.txt&#34;</span>, $out);
 </code></pre></div>
 <p>虽然结果是正确的,但是这滑稽的判断连我自己都看不下去了.幸好另一位php前辈写了如下这个:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    <span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    <span style="color:#75715e">&lt;?php</span>
     <span style="color:#66d9ef">for</span>($i<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;aaaaa&#39;</span>;$i<span style="color:#f92672">&lt;</span><span style="color:#e6db74">&#39;zzzzz&#39;</span>;$i<span style="color:#f92672">++</span>){
         <span style="color:#66d9ef">echo</span> $i<span style="color:#f92672">.</span><span style="color:#e6db74">&#39;,&#39;</span>;
     }
@@ -103,9 +103,8 @@ $arr<span style="color:#f92672">=</span><span style="color:#66d9ef">array</span>
 
 <li><p>与字符串的长度无关
 例如 “aaaaa”和”z” 比较,由于第一个”z”大于”a”,所以”z”&gt;”aaaaa”</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">$a<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;aaaaa&#39;</span>;$b<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;z&#39;</span>;
-<span style="color:#66d9ef">echo</span> $b<span style="color:#f92672">&gt;</span>$a<span style="color:#f92672">?</span><span style="color:#e6db74">&#34;yes&#34;</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;no&#34;</span>;<span style="color:#75715e">//输出&#39;yes&#39;
-</span></code></pre></div></li>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">$a=&#39;aaaaa&#39;;$b=&#39;z&#39;;
+echo $b&gt;$a?&#34;yes&#34;:&#34;no&#34;;//输出&#39;yes&#39;</code></pre></div></li>
 </ul>
 
 <h3 id="字符串的自增-只限英文字母">字符串的自增(只限英文字母)</h3>
@@ -113,27 +112,24 @@ $arr<span style="color:#f92672">=</span><span style="color:#66d9ef">array</span>
 <p>stackoveflow上有关于这个的讨论:<a href="http://stackoverflow.com/questions/4098345/why-
 doesnt-this-code-simply-print-letters-a-to-z">点击这里</a>
 帖子里面讨论的很详细,php关于字母的加减的规则没有沿袭C语言,而是模仿perl,”z”++ 并不是等于”[“(C语言是这样),而是等于”aa”.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">$str1<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;a&#34;</span>;
-<span style="color:#66d9ef">echo</span> <span style="color:#f92672">++</span>$str1;<span style="color:#75715e">//&#34;b&#34;
-</span><span style="color:#75715e"></span>$str2<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;z&#34;</span>;
-<span style="color:#66d9ef">echo</span> <span style="color:#f92672">++</span>$str2;<span style="color:#75715e">//&#34;aa&#34;
-</span><span style="color:#75715e"></span>$str2<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;z&#34;</span>;
-<span style="color:#66d9ef">echo</span> <span style="color:#f92672">--</span>$str2;<span style="color:#75715e">//&#34;z&#34;
-</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">$str1=&#34;a&#34;;
+echo ++$str1;//&#34;b&#34;
+$str2=&#34;z&#34;;
+echo ++$str2;//&#34;aa&#34;
+$str2=&#34;z&#34;;
+echo --$str2;//&#34;z&#34;</code></pre></div>
 <p>注意只能自增,自减无效果.并且:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">$str<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;a&#34;</span>;
-$a<span style="color:#f92672">=++</span>$str;
-$b<span style="color:#f92672">=</span>$str<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>;
-<span style="color:#66d9ef">echo</span> $a;<span style="color:#75715e">//&#34;b&#34;
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">echo</span> $b;<span style="color:#75715e">// 1
-</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">$str=&#34;a&#34;;
+$a=++$str;
+$b=$str+1;
+echo $a;//&#34;b&#34;
+echo $b;// 1</code></pre></div>
 <p>字符串与数字加减,依然走php关于这方面的规定.</p>
 
 <p>所以,如何用php方便的输出a-z?</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    <span style="color:#66d9ef">for</span>($i<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;a&#34;</span>;$i<span style="color:#f92672">&lt;</span><span style="color:#e6db74">&#34;z&#34;</span>;$i<span style="color:#f92672">++</span>){
-        <span style="color:#66d9ef">echo</span> $i<span style="color:#f92672">.</span><span style="color:#e6db74">&#34;&lt;br&gt;&#34;</span>;
-    }
-</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    for($i=&#34;a&#34;;$i<span style="color:#960050;background-color:#1e0010">&lt;</span>&#34;z&#34;;$i++){
+        echo $i.&#34;&lt;<span style="color:#f92672">br</span>&gt;&#34;;
+    }</code></pre></div>
 <p>以上</p>
 </div>
 

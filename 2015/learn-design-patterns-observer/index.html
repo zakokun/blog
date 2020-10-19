@@ -3,7 +3,7 @@
 <head>
   <link href="https://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.76.0" />
+  <meta name="generator" content="Hugo 0.69.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -65,62 +65,61 @@
 <li>被观察者预留update()方法给观察者调用</li>
 </ol>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">//这是一个总的观察者对象
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Observer</span>{
-	<span style="color:#66d9ef">private</span> $_object<span style="color:#f92672">=</span><span style="color:#66d9ef">array</span>();
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">//这是一个总的观察者对象
+class Observer{
+	private $_object=array();
 
-	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> __construct(){
+	public function __construct(){
 	}
-	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">add_object</span>($object){  <span style="color:#75715e">//增加被观察者对象
-</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">array_push</span>($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_object</span>,$object);
+	public function add_object($object){  //增加被观察者对象
+		return array_push($this-&gt;_object,$object);
 	}
 
-	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">remove_object</span>($object){ <span style="color:#75715e">////移除被观察者对象
-</span><span style="color:#75715e"></span>		$index <span style="color:#f92672">=</span> <span style="color:#a6e22e">array_search</span>($object,$this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_object</span>);
-		<span style="color:#66d9ef">if</span>($index<span style="color:#f92672">===</span><span style="color:#66d9ef">false</span>){
-			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
-		}<span style="color:#66d9ef">else</span>{
-			<span style="color:#a6e22e">unset</span>($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_object</span>[$index]);
-			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+	public function remove_object($object){ ////移除被观察者对象
+		$index = array_search($object,$this-&gt;_object);
+		if($index===false){
+			return false;
+		}else{
+			unset($this-&gt;_object[$index]);
+			return true;
 		}
 	}
 
-	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">notify</span>(){  <span style="color:#75715e">//遍历数组,调用被观察者
-</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span><span style="color:#66d9ef">empty</span>($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_object</span>)){
-			<span style="color:#66d9ef">foreach</span> ($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_object</span> <span style="color:#66d9ef">as</span> $key <span style="color:#f92672">=&gt;</span> $value) {
-				$value<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">update</span>();
+	public function notify(){  //遍历数组,调用被观察者
+		if(!empty($this-&gt;_object)){
+			foreach ($this-&gt;_object as $key =&gt; $value) {
+				$value-&gt;update();
 			}
-			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
-		}<span style="color:#66d9ef">else</span>{
-			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+			return true;
+		}else{
+			return false;
 		}
 	}
 }
 
 
-<span style="color:#75715e">//这是某个被观察的对象(可以有多个)
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">object</span>{
-	<span style="color:#66d9ef">private</span> $name;
-	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> __construct($name){
-		$this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">name</span><span style="color:#f92672">=</span>$name;
+//这是某个被观察的对象(可以有多个)
+
+class object{
+	private $name;
+	public function __construct($name){
+		$this-&gt;name=$name;
 	}
-	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">update</span>(){<span style="color:#75715e">//被观察者必须自带一个update()方法,用来被观察者调用
-</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">echo</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">name</span><span style="color:#f92672">.</span><span style="color:#e6db74">&#39; object has already updated&lt;br&gt;&#39;</span>;
+	public function update(){//被观察者必须自带一个update()方法,用来被观察者调用
+		echo $this-&gt;name.&#39; object has already updated&lt;<span style="color:#f92672">br</span>&gt;&#39;;
 	}
 }
-$a1<span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">object</span>(<span style="color:#e6db74">&#39;a1&#39;</span>);
-$a2<span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">object</span>(<span style="color:#e6db74">&#39;a2&#39;</span>);
-$a3<span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">object</span>(<span style="color:#e6db74">&#39;a3&#39;</span>);
+$a1=new object(&#39;a1&#39;);
+$a2=new object(&#39;a2&#39;);
+$a3=new object(&#39;a3&#39;);
 
-$observer<span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Observer</span>();
+$observer=new Observer();
 
-$observer<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">add_object</span>($a1);
-$observer<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">add_object</span>($a2);
-$observer<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">add_object</span>($a3);
+$observer-&gt;add_object($a1);
+$observer-&gt;add_object($a2);
+$observer-&gt;add_object($a3);
 
-$observer<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">notify</span>();
-</code></pre></div>
+$observer-&gt;notify();</code></pre></div>
 </div>
 
 <h2>Comments</h2>

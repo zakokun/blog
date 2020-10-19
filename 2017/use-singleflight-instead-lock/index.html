@@ -3,7 +3,7 @@
 <head>
   <link href="https://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.76.0" />
+  <meta name="generator" content="Hugo 0.69.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -99,8 +99,7 @@ if !data {
     <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
         <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;Do error = %v&#34;</span>, <span style="color:#a6e22e">err</span>)
     }
-}
-</code></pre></div>
+}</code></pre></div>
 <p>可见使用起来非常简单，对外只需要这个<code>Do</code> 函数，传入 Key 和获取缓存的回调函数，如此 singleflight 就能自动帮我们处理同时请求下游服务的问题了。</p>
 
 <p>那么这个<code>Do</code>函数到底做了什么事情？</p>
@@ -135,8 +134,7 @@ if !data {
 
     <span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">doCall</span>(<span style="color:#a6e22e">c</span>, <span style="color:#a6e22e">key</span>, <span style="color:#a6e22e">fn</span>)
     <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">val</span>, <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">dups</span> &gt; <span style="color:#ae81ff">0</span>
-}
-</code></pre></div>
+}</code></pre></div>
 <p>go 的代码一直都很清晰易懂，可以看到先定义了结构体<code>group</code>和<code>call</code>，<code>group.mu</code>是保护<code>group.m</code>的互斥锁，<code>group.m</code>主要是保存请求的key，而<code>call</code>结构体是用来记录回调函数的结果。</p>
 
 <p>在<code>Do</code>函数中，函数先是判断这个 key 是否是第一次调用，如果是，就会进入<code>doCall</code>调用回调函数获取结果，后续的请求就会阻塞在<code>c.wg.Wait()</code>这里，等待回调函数返回以后，直接拿到结果。</p>
