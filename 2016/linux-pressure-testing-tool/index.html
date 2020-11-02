@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-cn" lang="zh-cn">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.69.2" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>使用 http_load 测试服务器的负载 &middot; 杂鱼君的博客</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+</head>
+
+  <body class="theme-base-0c ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://blog.zakokun.com/"><h1>杂鱼君的博客</h1></a>
+      <p class="lead">
+       好吃懒做,眼高手低 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://blog.zakokun.com/">Home</a> </li>
+        <li><a href="/tags/"> Tags </a></li><li><a href="/about/about"> About </a></li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>使用 http_load 测试服务器的负载</h1>
+  <time datetime=2016-07-14T00:00:00Z class="post-date">Thu, Jul 14, 2016</time>
+  <p>http_load是一款linux,OSX下的性能检测工具,通过简单的参数就能测试Web服务器的负载和性能.对于日常的代码自测已经足够了.</p>
+
+<h2 id="安装">安装</h2>
+
+<p>这个很简单,OSX下只需要:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    brew install http_load</code></pre></div>
+<p>通过 brew 就可以直接装了.</p>
+
+<p>ubuntu 下需要下载源码自己编译:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    wget http://acme.com/software/http_load/http_load-09Mar2016.tar.gz
+    tar zxvf http_load-09Mar2016.tar.gz
+    cd http_load-09Mar2016
+    make <span style="color:#f92672">&amp;&amp;</span> make install</code></pre></div>
+<p>前提是需要安装 <code>wget</code> 和 <code>gcc</code>.</p>
+
+<p>编译完成以后就可以再当前文件夹下看到 http_load 文件了,为了方便我们可以:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    sudo cp http_load /usr/local/bin/http_load</code></pre></div>
+<h2 id="使用">使用</h2>
+
+<p>基本的使用方式如下:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    http_load <span style="color:#f92672">[</span>参数<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>url_file<span style="color:#f92672">]</span></code></pre></div>
+<p><strong>url_file文件内容如下</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    http://a.com/test1
+    http://a.com/test2
+    http://a.com/test3
+    http://a.com/test4</code></pre></div>
+<p>里面包含你需要访问的url,用回车分割.域名,IP都可以.</p>
+
+<p><strong>参数含义如下</strong></p>
+
+<p>-p (parallels) : 并发的访问进程数
+-f (fetches) : 总的访问数
+-r (rates) : 每秒的请求数
+-s (seconds) : 总的请求时间</p>
+
+<p>通过这四个参数组合,我们就很容易针对性的做一些测试了,比如我们想测试服务器的QPS:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    http_load -r <span style="color:#ae81ff">200</span> -s <span style="color:#ae81ff">10</span> url_file</code></pre></div>
+<p>意味着每秒请求200次,总共请求10秒.</p>
+
+<p>或者:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    http_load -p <span style="color:#ae81ff">100</span> -f <span style="color:#ae81ff">10000</span> url_file</code></pre></div>
+<p>返回的结果一般如下:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    <span style="color:#ae81ff">1301</span> fetches, <span style="color:#ae81ff">170</span> max parallel, <span style="color:#ae81ff">383256</span> bytes, in 10.0006 seconds
+
+    294.586 mean bytes/connection
+
+    130.093 fetches/sec, 38323.5 bytes/sec
+
+    msecs/connect: 0.488161 mean, 5.405 max, 0.138 min
+
+    msecs/first-response: 653.768 mean, 1645.57 max, 0.174 min
+
+    <span style="color:#ae81ff">176</span> bad byte counts
+
+    HTTP response codes:
+
+      code <span style="color:#ae81ff">200</span> -- <span style="color:#ae81ff">1125</span>
+
+      code <span style="color:#ae81ff">500</span> -- <span style="color:#ae81ff">168</span></code></pre></div>
+<p>其中<code>msecs/connect</code> <code>msecs/first-response</code> 的三个数值告诉我们平均响应时间,最大响应时间,最小响应时间(单位是毫秒)
+具体区别不太明白,待补充.</p>
+
+<p>最后三行是统计的HTTP状态码,可以大致了解响应的情况.</p>
+</div>
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zakokun" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-62768625-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+  </body>
+</html>

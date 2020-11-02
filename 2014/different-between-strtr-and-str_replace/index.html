@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-cn" lang="zh-cn">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.69.2" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>strtr()和str_replace()的区别 &middot; 杂鱼君的博客</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+</head>
+
+  <body class="theme-base-0c ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://blog.zakokun.com/"><h1>杂鱼君的博客</h1></a>
+      <p class="lead">
+       好吃懒做,眼高手低 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://blog.zakokun.com/">Home</a> </li>
+        <li><a href="/tags/"> Tags </a></li><li><a href="/about/about"> About </a></li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>strtr()和str_replace()的区别</h1>
+  <time datetime=2014-12-25T00:00:00Z class="post-date">Thu, Dec 25, 2014</time>
+  <p>工作中遇到了字符串替换的问题,查了一下php中常用的替换函数有strtr()和str_replace().分享一下我自己使用这两个函数的一些心得.</p>
+
+<p>####strtr(subject,from,to)  / strtr(subject,array)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">echo strtr(&#39;i LOVE php&#39;,&#39;love&#39;,&#39;1234&#39;);//输出 i LOVE php;</code></pre></div>
+<p>首先它是大小写敏感的.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">echo strtr(&#39;i love python&#39;,&#39;love&#39;,&#39;12&#39;);//输出 i 12ve pyth2n;</code></pre></div>
+<p>这个结果很怪异,from和to中的字符串参数并不是作为整体计算的,而是逐个替换的,以上的结果:
+&lsquo;l&rsquo;-&gt;1,&lsquo;o&rsquo;-&gt;2, &rsquo;ve&rsquo;找不到对应的字符,不参与替换,被舍弃. 因此以上语句的作用是:</p>
+
+<p><strong>在i love python这个字符串中,将所有的 l 替换成 1 , o 替换成 2</strong></p>
+
+<p>而在这句:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">echo strtr(&#39;i love python&#39;,&#39;lo&#39;,&#39;1234&#39;);//输出 i 12ve pyth2n;</code></pre></div>
+<p>同理,&lsquo;l&rsquo;-&gt;1,&lsquo;o&rsquo;-&gt;2, &lsquo;34&rsquo;被舍弃,结果同上</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">echo strtr(&#39;i love python&#39;,&#39;love&#39;,&#39;&#39;);//输出 i love python;</code></pre></div>
+<p>第二个参数为空,love没有对应的字符,不进行替换,原样输出</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">echo strtr(&#39;i LOVE php&#39;,array(&#39;love&#39;=&gt;&#39;1234&#39;,&#39;php&#39;=&gt;&#39;python&#39;));//输出i LOVE python
+echo strtr(&#39;i love php&#39;,array(&#39;love&#39;=&gt;&#39;12&#39;,&#39;php&#39;=&gt;&#39;python&#39;));//输出i 12 python</code></pre></div>
+<p>而当替换的两个参数作为数组传入时,相反却是整体替换的,且大小写敏感.这个很明确.</p>
+
+<p>####str_replace (<em>from</em>,<em>to</em> ,<em>subject</em>)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">print_r(str_replace(&#39;love&#39;,&#39;1234&#39;,&#39;i LOVE python&#39;));//输出 i LOVE python</code></pre></div>
+<p>依然大小写敏感</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">echo str_replace(&#39;love&#39;,&#39;12&#39;,&#39;i love python&#39;);//输出 i 12 python</code></pre></div>
+<p>与strtr()不同,&lsquo;love&rsquo;和&rsquo;12&rsquo;是作为整体替换的,与strtr()数组参数的时候相似</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">print_r(str_replace(&#39;love&#39;,&#39;12&#39;,array(&#39;i&#39;,&#39;love the&#39;,&#39;python&#39;)));
+//输出Array ( [0] =&gt; i [1] =&gt; 12 the [2] =&gt; python )</code></pre></div>
+<p>如上所示,str_replace()的特殊之处在于,目标可以传入数组,替换规格相同</p>
+
+<p>总的来说,strtr()是个功能很诡异的函数,虽然路边社的消息strtr函数的效率是str_replace函数的四倍,但是易用和方便性上来说,最好还是用str_replace.</p>
+</div>
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zakokun" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-62768625-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+  </body>
+</html>

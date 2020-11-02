@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-cn" lang="zh-cn">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.69.2" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>在OSX上安装php开发环境 &middot; 杂鱼君的博客</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+</head>
+
+  <body class="theme-base-0c ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://blog.zakokun.com/"><h1>杂鱼君的博客</h1></a>
+      <p class="lead">
+       好吃懒做,眼高手低 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://blog.zakokun.com/">Home</a> </li>
+        <li><a href="/tags/"> Tags </a></li><li><a href="/about/about"> About </a></li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2020. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>在OSX上安装php开发环境</h1>
+  <time datetime=2015-12-29T00:00:00Z class="post-date">Tue, Dec 29, 2015</time>
+  <p>开始慢慢体会到 Mac 作为开发机的优势了，记录一下搭建 php 开发环境的过程。</p>
+
+<h2 id="一些准备工作">一些准备工作</h2>
+
+<h3 id="安装xcode">安装Xcode</h3>
+
+<p>首先必须要安装xcode,通过Mac appStore就可以.然后还要注意安装code命令行工具:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    xcode-select --install</code></pre></div>
+<p>安装好了以后记得先手动打开一次xcode,同意一下用户协议.</p>
+
+<h3 id="安装homebrew">安装homebrew</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    ruby -e <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span></code></pre></div>
+<h2 id="安装iterm-和-oh-my-zsh">安装iterm 和 Oh-My-Zsh</h2>
+
+<p>iterm 是很好用的命令行工具,这个可以直接去<a href="http://www.iterm2.com">官网</a> 下载安装.</p>
+
+<p>zsh是非常复杂强大的shell,而Oh-My-Zsh又是非常简单易用的zsh.所以…</p>
+
+<h3 id="自动安装">自动安装</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh</code></pre></div>
+<p><em>不过OSX貌似没有自带wget,所以需要 brew去装一个</em></p>
+
+<h3 id="手动安装">手动安装</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+    cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc</code></pre></div>
+<p>安装好了以后需要退出当前的shell,重开你的iterm就能使用强大的Oh-My-Zsh了.</p>
+
+<p><strong>zsh 的配置文件位于 ~/.zshrc</strong> ,可以先尝试着去修改一下主题什么的,慢慢摸索.</p>
+
+<h2 id="安装php">安装php</h2>
+
+<p>因为我们使用的ngnix,所以在安装的时候要注意编译fpm以及禁用apache:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    brew install php56 <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --without-snmp <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --without-apache <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --with-fpm <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --with-intl <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --with-homebrew-curl <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --with-homebrew-libxslt <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --with-homebrew-openssl <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --with-imap <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --with-mysql <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --with-tidy</code></pre></div>
+<p>安装好了以后注意看说明,brew会提示如何把php加入开机启动:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    ln -sfv /usr/local/opt/php56/*.plist ~/Library/LaunchAgents
+    launchctl load ~/Library/LaunchAgents/homebrew.mxcl.php56.plist</code></pre></div>
+<h3 id="修改环境变量">修改环境变量</h3>
+
+<p>由于系统已经自带了php环境,因此我们需要修改环境变量,优先执行我们安装的php版本,修改<code>~/.zshrc</code> 文件:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    export PATH<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin&#34;</span></code></pre></div>
+<p>然后让配置生效:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    source ./zshrc</code></pre></div>
+<p>这时候我们再通过<code>php -v</code> 和 <code>php-fpm -v</code> 查看,就能发现运行的是我们安装的php版本了.</p>
+
+<p><em>brew 安装的php有时候会带有一个bug,当发起https请求的时候会报错.这时候需要我们重新安装openssl:</em></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    brew rm curl
+    brew update
+    brew install —with-openssl curl</code></pre></div>
+<p><em>再重启一下fpm就可以了.</em></p>
+
+<h2 id="安装php相关的拓展">安装php相关的拓展</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    brew install php56-gearman php56-msgpack php56-memcache php56-memcached php56-mongo php56-redis php56-xdebug</code></pre></div>
+<p><em>由于众所周知的原因brew经常出现下载失败的状况,一般只要重新下载就可以了.但是有时候会报某个包不存在,但是手动 brew install
+却提示已经安装的情况.这时候就需要brew uninstall xxx 之后再 brew install xxx 就可以了</em></p>
+
+<h2 id="安装nginx">安装nginx</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    brew install nginx</code></pre></div>
+<p>同样根据提示,加入开机启动:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    ln -sfv /usr/local/opt/nginx/*.plist ~/Library/LaunchAgents
+    launchctl load ~/Library/LaunchAgents/homebrew.mxcl.nginx.plist</code></pre></div>
+<p>nginx 安装后只能监听非80端口,监听80端口候需要给予root权限(注意路径的版本号,有可能不同):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    sudo chown root:wheel /usr/local/Cellar/nginx/1.8.0/bin/nginx
+    sudo chmod u+s /usr/local/Cellar/nginx/1.8.0/bin/nginx</code></pre></div>
+<h3 id="nginx-conf的一些配置">nginx.conf的一些配置</h3>
+
+<p>我们可以仿照ubuntu下的nginx的文件夹配置:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    mkdir -p /usr/local/etc/nginx/sites-available
+    mkdir -p /usr/local/etc/nginx/conf</code></pre></div>
+<p>然后修改<code>/usr/local/etc/nginx/nginx.conf</code>文件:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    <span style="color:#75715e">#user  nobody;</span>
+
+    worker_processes  1;
+
+    <span style="color:#75715e">#指定error.log的路径</span>
+
+    error_log  /usr/local/var/log/nginx/error.log debug;
+
+    <span style="color:#75715e">#pid        logs/nginx.pid;</span>
+
+    events <span style="color:#f92672">{</span>
+
+        worker_connections  256;
+
+    <span style="color:#f92672">}</span>
+
+    http <span style="color:#f92672">{</span>
+
+        include       mime.types;
+
+        default_type  application/octet-stream;
+
+        log_format main <span style="color:#e6db74">&#39;$remote_addr - $remote_user [$time_local] &#39;</span>
+
+            <span style="color:#e6db74">&#39;&#34;$request&#34; $status $body_bytes_sent &#39;</span>
+
+            <span style="color:#e6db74">&#39;&#34;$http_referer&#34; &#34;$http_user_agent&#34; &#39;</span>
+
+            <span style="color:#e6db74">&#39;&#34;$http_x_forwarded_for&#34; $host $request_time $upstream_response_time $scheme &#39;</span>
+
+            <span style="color:#e6db74">&#39;$cookie_evalogin&#39;</span>;
+
+    <span style="color:#75715e">#指定access.log的路径</span>
+
+        access_log  /usr/local/var/log/nginx/access.log  main;
+
+        sendfile        on;
+
+        keepalive_timeout  65;
+
+        <span style="color:#75715e">#gzip  on;</span>
+
+        port_in_redirect off;
+
+        include /usr/local/etc/nginx/sites-enabled/*;
+
+    <span style="color:#f92672">}</span></code></pre></div>
+<p>然后<code>/usr/local/etc/nginx/site-enabled/</code>目录可以N个配置文件对应N个项目了,比如一个local.conf文件:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    server <span style="color:#f92672">{</span>
+
+        listen       80;
+
+        server_name  localhost;
+
+        root         /Users/evanszhang/develop;
+
+        index index.php;
+
+        location ~ <span style="color:#ae81ff">\.</span>php <span style="color:#f92672">{</span>
+
+            include fastcgi_params;
+
+            fastcgi_buffers <span style="color:#ae81ff">128</span> 4k;
+
+            fastcgi_pass   127.0.0.1:9000;
+
+            fastcgi_index  index.php;
+
+            fastcgi_param  SCRIPT_FILENAME  /home/larablog/public$fastcgi_script_name;
+
+        <span style="color:#f92672">}</span>
+
+    <span style="color:#f92672">}</span></code></pre></div>
+<p>最后用root启动nginx:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    sudo nginx</code></pre></div>
+<h2 id="安装mysql">安装mysql</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    brew install mysql</code></pre></div>
+<p>同样最好也是开机启动</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    ln -sfv /usr/local/opt/mysql/*.plist ~/Library/LaunchAgents
+    launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist</code></pre></div>
+<p>通过以下命令为mysql的root用户设置一个密码:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    mysqladmin -uroot password <span style="color:#e6db74">&#34;mypassword&#34;</span></code></pre></div>
+<h2 id="安装其他组件">安装其他组件:</h2>
+
+<h3 id="redis">redis</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    brew install redis</code></pre></div>
+<p>设置开机启动:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    ln -sfv /usr/local/opt/redis/*.plist ~/Library/LaunchAgents
+    launchctl load ~/Library/LaunchAgents/homebrew.mxcl.redis.plist</code></pre></div>
+<p>修改<code>/usr/local/etc/redis.conf</code>配置文件,将<code>daemonize</code>的值改为<code>yes</code>.允许以守护进程执行.</p>
+
+<p>如果想手动启动redis,可以执行以下命令:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    redis-server /usr/local/etc/redis.conf</code></pre></div>
+<h3 id="memcached">memcached</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    brew install memcached</code></pre></div>
+<p>设置开机启动:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">    ln -sfv /usr/local/opt/memcached/*.plist ~/Library/LaunchAgents
+    launchctl load ~/Library/LaunchAgents/homebrew.mxcl.memcached.plist</code></pre></div>
+<p>以上安装完成.</p>
+</div>
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zakokun" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-62768625-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+  </body>
+</html>

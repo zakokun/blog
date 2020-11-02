@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on 杂鱼君的博客</title>
+    <link>https://blog.zakokun.com/tags/</link>
+    <description>Recent content in Tags on 杂鱼君的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 29 Sep 2020 15:58:08 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.zakokun.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>golang</title>
+      <link>https://blog.zakokun.com/tags/golang/</link>
+      <pubDate>Tue, 29 Sep 2020 15:58:08 +0800</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hugo</title>
+      <link>https://blog.zakokun.com/tags/hugo/</link>
+      <pubDate>Tue, 29 Sep 2020 15:58:08 +0800</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/hugo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>android</title>
+      <link>https://blog.zakokun.com/tags/android/</link>
+      <pubDate>Fri, 12 Jan 2018 10:54:30 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/android/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>iPhone</title>
+      <link>https://blog.zakokun.com/tags/iphone/</link>
+      <pubDate>Fri, 12 Jan 2018 10:54:30 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/iphone/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>xiaomi</title>
+      <link>https://blog.zakokun.com/tags/xiaomi/</link>
+      <pubDate>Fri, 12 Jan 2018 10:54:30 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/xiaomi/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>index</title>
+      <link>https://blog.zakokun.com/tags/index/</link>
+      <pubDate>Mon, 17 Jul 2017 22:40:28 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/index/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mysql</title>
+      <link>https://blog.zakokun.com/tags/mysql/</link>
+      <pubDate>Mon, 17 Jul 2017 22:40:28 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/mysql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>performance</title>
+      <link>https://blog.zakokun.com/tags/performance/</link>
+      <pubDate>Mon, 17 Jul 2017 22:40:28 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/performance/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>query</title>
+      <link>https://blog.zakokun.com/tags/query/</link>
+      <pubDate>Mon, 17 Jul 2017 22:40:28 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/query/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cache</title>
+      <link>https://blog.zakokun.com/tags/cache/</link>
+      <pubDate>Mon, 12 Jun 2017 17:39:20 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/cache/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>concurrence</title>
+      <link>https://blog.zakokun.com/tags/concurrence/</link>
+      <pubDate>Mon, 12 Jun 2017 17:39:20 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/concurrence/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>singleflight</title>
+      <link>https://blog.zakokun.com/tags/singleflight/</link>
+      <pubDate>Mon, 12 Jun 2017 17:39:20 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/singleflight/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>slow query</title>
+      <link>https://blog.zakokun.com/tags/slow-query/</link>
+      <pubDate>Wed, 24 May 2017 20:41:31 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/slow-query/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>GFW</title>
+      <link>https://blog.zakokun.com/tags/gfw/</link>
+      <pubDate>Sun, 26 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/gfw/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>system</title>
+      <link>https://blog.zakokun.com/tags/system/</link>
+      <pubDate>Sun, 26 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/system/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>channel</title>
+      <link>https://blog.zakokun.com/tags/channel/</link>
+      <pubDate>Sun, 19 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/channel/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>blog</title>
+      <link>https://blog.zakokun.com/tags/blog/</link>
+      <pubDate>Wed, 18 Jan 2017 21:08:02 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/blog/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>life</title>
+      <link>https://blog.zakokun.com/tags/life/</link>
+      <pubDate>Tue, 03 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/life/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>php</title>
+      <link>https://blog.zakokun.com/tags/php/</link>
+      <pubDate>Thu, 20 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/php/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>session</title>
+      <link>https://blog.zakokun.com/tags/session/</link>
+      <pubDate>Thu, 20 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/session/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>date</title>
+      <link>https://blog.zakokun.com/tags/date/</link>
+      <pubDate>Mon, 18 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/date/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>testing</title>
+      <link>https://blog.zakokun.com/tags/testing/</link>
+      <pubDate>Thu, 14 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/testing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>metting</title>
+      <link>https://blog.zakokun.com/tags/metting/</link>
+      <pubDate>Thu, 30 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/metting/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>OSX</title>
+      <link>https://blog.zakokun.com/tags/osx/</link>
+      <pubDate>Tue, 29 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/osx/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>elementryOS</title>
+      <link>https://blog.zakokun.com/tags/elementryos/</link>
+      <pubDate>Fri, 15 May 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/elementryos/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>design mode</title>
+      <link>https://blog.zakokun.com/tags/design-mode/</link>
+      <pubDate>Thu, 29 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/design-mode/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sort</title>
+      <link>https://blog.zakokun.com/tags/sort/</link>
+      <pubDate>Mon, 26 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/sort/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>redis</title>
+      <link>https://blog.zakokun.com/tags/redis/</link>
+      <pubDate>Mon, 22 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/redis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>csv</title>
+      <link>https://blog.zakokun.com/tags/csv/</link>
+      <pubDate>Wed, 12 Mar 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/csv/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sublime text</title>
+      <link>https://blog.zakokun.com/tags/sublime-text/</link>
+      <pubDate>Fri, 17 Jan 2014 02:22:33 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/sublime-text/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tool</title>
+      <link>https://blog.zakokun.com/tags/tool/</link>
+      <pubDate>Fri, 17 Jan 2014 02:22:33 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/tags/tool/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

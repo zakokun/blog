@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>life on 杂鱼君的博客</title>
+    <link>https://blog.zakokun.com/tags/life/</link>
+    <description>Recent content in life on 杂鱼君的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 03 Jan 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.zakokun.com/tags/life/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>2016年终总结</title>
+      <link>https://blog.zakokun.com/2017/year-person-summarize/</link>
+      <pubDate>Tue, 03 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/2017/year-person-summarize/</guid>
+      <description>每年都会有的那个东西. 我是带着一种很复杂的心情来写2016年的总结的.这一年对我来说真的发生了以及认识到了太多的事情 .但是拙劣的文笔却让我很</description>
+    </item>
+    
+    <item>
+      <title>2015年终总结</title>
+      <link>https://blog.zakokun.com/2016/2015-year-person-summarize/</link>
+      <pubDate>Fri, 01 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/2016/2015-year-person-summarize/</guid>
+      <description>&lt;p&gt;任何时候都少不了的东西。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
