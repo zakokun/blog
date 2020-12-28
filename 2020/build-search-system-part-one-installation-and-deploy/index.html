@@ -68,19 +68,18 @@
 
 <p>在我们开始做调研的时候，ES的最新版本是7.6.1。作为一个没有历史包袱的项目，最新版本自然是最好的选择。对我们一般的用户来说，ES7相比之前的版本最大的改变是如下几点：</p>
 
-<p>When we started doing the investigation, the latest version of ES is 7.6.1. As a brand new project,the latest version natural is the best choice. For normal users, the biggest changes from the previous version are as follows:</p>
-
 <ol>
 <li>删除type类型</li>
 <li>支持向量搜索</li>
+<li>自带JDK环境</li>
+</ol>
 
-<li><p>自带JDK环境</p></li>
+<p>When we started doing the investigation, the latest version of ES is 7.6.1. As a brand new project,the latest version natural is the best choice. For normal users, the biggest changes from the previous version are as follows:</p>
 
-<li><p>remove mapping type</p></li>
-
-<li><p>vector search support</p></li>
-
-<li><p>JDK include</p></li>
+<ol>
+<li>remove mapping type</li>
+<li>vector search support</li>
+<li>JDK include</li>
 </ol>
 
 <p>删除type类型以后，索引和字段的关系更加清晰，也方便从数据库的角度去理解索引（表）字段之间的对应关系。向量搜索可以为算法服务提供向量运算和基于向量模型的召回。自带JDK环境不必多说，部署ES服务更加方便了。</p>
