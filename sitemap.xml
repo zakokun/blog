@@ -437,12 +437,6 @@
   </url>
   
   <url>
-    <loc>https://blog.zakokun.com/about/about/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.zakokun.com/about/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -450,6 +444,12 @@
   
   <url>
     <loc>https://blog.zakokun.com/categories/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zakokun.com/about/about/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
