@@ -77,14 +77,14 @@
 <p>When we started doing the investigation, the latest version of ES is 7.6.1. As a brand new project,the latest version natural is the best choice. For normal users, the biggest changes from the previous version are as follows:</p>
 
 <ol>
-<li>remove mapping type</li>
+<li>remove &lsquo;type&rsquo; type</li>
 <li>vector search support</li>
 <li>JDK include</li>
 </ol>
 
 <p>删除type类型以后，索引和字段的关系更加清晰，也方便从数据库的角度去理解索引（表）字段之间的对应关系。向量搜索可以为算法服务提供向量运算和基于向量模型的召回。自带JDK环境不必多说，部署ES服务更加方便了。</p>
 
-<p>After remove mapping type,we can clearly understand the relation between index and field,besides,it is also convenient to understand the correspoding relationship between index (table) fields from the database perspective. The vector search provide vector operation and items recall based on vector model for algorithm service.</p>
+<p>After remove &lsquo;type&rsquo; type,we can clearly understand the relation between index and field,besides,it is also convenient to understand the correspoding relationship between index (table) fields from the database perspective. The vector search provide vector operation and items recall based on vector model for algorithm service.</p>
 
 <p>运维为我们提供了三台物理机，硬件配置都为24核128G内存。针对这样配置的机器，ES 官方有这样的建议：</p>
 
@@ -216,7 +216,12 @@ It makes more sense to split it this way.</p>
 
 <p>Specifies the minimum and maximum heaps memory sizes.</p>
 
-<p>都设置好了以后，直接执行 <code>bin/elasticsearch</code> 就可以了。</p>
+<p>都设置好了以后，需要创建一个运行es服务的用户，es不允许使用root账户直接运行，因此：</p>
+
+<p>After all set up, we need to create a specified user for ES,root user is not allowed.So:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">adduser --disabled-password --gecos <span style="color:#e6db74">&#34;&#34;</span> es
+chown -R es:es elasticsearch-7.6.1</code></pre></div>
+<p>最后，直接执行 <code>bin/elasticsearch</code> 就可以了。</p>
 
 <p>After all set up, it is ok to execute <code>bin/elasticsearch</code> directly.</p>
 

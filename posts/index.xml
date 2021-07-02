@@ -6,10 +6,19 @@
     <description>Recent content in Posts on 杂鱼君的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 22 Oct 2020 14:27:26 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 28 Dec 2020 19:26:34 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.zakokun.com/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>elasticsearch 在漫画搜索项目的应用（二）数据 索引流程和中文分词搜索</title>
+      <link>https://blog.zakokun.com/2020/build-search-system-part-two-index-analyzer-and-chinese-search/</link>
+      <pubDate>Mon, 28 Dec 2020 19:26:34 +0800</pubDate>
+      
+      <guid>https://blog.zakokun.com/2020/build-search-system-part-two-index-analyzer-and-chinese-search/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>elasticsearch 在漫画搜索项目的应用（一）安装和部署搜索服务</title>
@@ -27,6 +36,15 @@
       
       <guid>https://blog.zakokun.com/2020/change-blog-struct-again/</guid>
       <description>干啥啥不行，重构第一名。 What can I do? Refactor first. 惊觉一年多没写博客了，惭愧。最近大半年做了挺多东西，想写的主题也有很多。奈何「动物森友会」「塞尔达传说旷</description>
+    </item>
+    
+    <item>
+      <title>我最近使用的订阅APP</title>
+      <link>https://blog.zakokun.com/2020/my-fav-sub-app/</link>
+      <pubDate>Sun, 10 May 2020 12:20:54 +0800</pubDate>
+      
+      <guid>https://blog.zakokun.com/2020/my-fav-sub-app/</guid>
+      <description></description>
     </item>
     
     <item>
