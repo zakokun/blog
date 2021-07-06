@@ -112,7 +112,7 @@
 
 <p>First,download the installation package for your own system and unzip from the download page:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">tar -zxvf elasticsearch-7.6.1-linux-x86_64.tar.gz
-cd elasticsearch-7.6.1</code></pre></div>
+cd elasticsearch</code></pre></div>
 <p>几个主要的配置文件位于：</p>
 
 <p>Several major configuration files are located here:</p>
@@ -220,7 +220,20 @@ It makes more sense to split it this way.</p>
 
 <p>After all set up, we need to create a specified user for ES,root user is not allowed.So:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">adduser --disabled-password --gecos <span style="color:#e6db74">&#34;&#34;</span> es
-chown -R es:es elasticsearch-7.6.1</code></pre></div>
+chown -R es:es elasticsearch</code></pre></div>
+<p>不过一般来说第一次运行ES服务还会额外报一个错误：</p>
+
+<p>But if we run ES service at first time,we may get another error:</p>
+<pre><code>max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]</code></pre>
+<p>参考stackoverflow上的这个<a href="https://stackoverflow.com/questions/51445846/elasticsearch-max-virtual-memory-areas-vm-max-map-count-65530-is-too-low-inc">回答</a>:</p>
+
+<p>We can refer to this answer in stackoverflow:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sysctl -w vm.max_map_count<span style="color:#f92672">=</span><span style="color:#ae81ff">262144</span></code></pre></div>
+<p>或者一步到位，直接去修改系统的配置项，新增一行：</p>
+
+<p>Or go ahead and change the system configuration and add a new line:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vim /etc/sysctl.conf
+vm.max_map_count<span style="color:#f92672">=</span><span style="color:#ae81ff">262144</span></code></pre></div>
 <p>最后，直接执行 <code>bin/elasticsearch</code> 就可以了。</p>
 
 <p>After all set up, it is ok to execute <code>bin/elasticsearch</code> directly.</p>
