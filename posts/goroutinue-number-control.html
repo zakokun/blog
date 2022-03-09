@@ -55,7 +55,6 @@
     <main class="content container">
     <div class="post">
   <h1>通过带缓冲的channel来控制并发数</h1>
-  <time datetime=2017-02-19T00:00:00Z class="post-date">2017-02-19 00:00</time>
   <p>最近和搜索的同事一起用 golang 重构他们的 Elasticsearch 客户端.在用 Goroutines 去异步更新索引的时候并发量太大导致 ES
 进程挂掉的情况(真弱).因此在更新索引的时候考虑如何手动控制并发的协程数量.</p>
 <p>原始的代码是这样的:</p>

@@ -55,7 +55,6 @@
     <main class="content container">
     <div class="post">
   <h1>使用 singleflight 代替传统的并发锁</h1>
-  <time datetime=2017-06-12T17:39:20Z class="post-date">2017-06-12 17:39</time>
   <p>一般来说高并发，或者 sql 查询很重的业务，缓存都是少不了的。业务代码中，读取缓存的时候一般会这样处理：</p>
 <pre tabindex="0"><code>data = getCache(key)
 if !data {

@@ -55,7 +55,6 @@
     <main class="content container">
     <div class="post">
   <h1>elasticsearch 在漫画搜索项目的应用（二）索引设计和管理</h1>
-  <time datetime=2020-12-28T19:26:34&#43;0800 class="post-date">2020-12-28 19:26</time>
   <p>索引相当于DB中的表，数据都是储存在索引中。正如数据库的表需要设计索引一样，ES的索引设计同样也有很多要注意的地方，否则就会发生查询速度过慢甚至查询不到数据的情况。本文整理一下自己在设计漫画搜索索引时候遇到的一些问题和细节。</p>
 <p><em>the Index just like Table in DB,the data is stored in the Index.Just like DB tables need to be indexed,the ES index also has pay attaton to many points,Otherwise,the query speed will be slow even the data can not be queried. In this post,I will sort out some of the problems and details I encountered when designing the comic search index.</em></p>
 <h2 id="索引结构">索引结构</h2>
