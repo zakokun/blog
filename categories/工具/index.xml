@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>工具 on 杂鱼君的博客</title>
+    <link>https://blog.zakokun.com/categories/%E5%B7%A5%E5%85%B7.html</link>
+    <description>Recent content in 工具 on 杂鱼君的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 26 Mar 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.zakokun.com/categories/%E5%B7%A5%E5%85%B7/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>搭建自由的网络环境</title>
+      <link>https://blog.zakokun.com/posts/build-fluent-net-env.html</link>
+      <pubDate>Sun, 26 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/posts/build-fluent-net-env.html</guid>
+      <description>对一个程序员来说,能够无障碍的上网是非常重要的,毕竟现在的计算机科学的重心依然在国外.面对越来越严苛的封锁,提高自己的架梯子技术迫在睫眉. 服</description>
+    </item>
+    
+    <item>
+      <title>在OSX上安装php开发环境</title>
+      <link>https://blog.zakokun.com/posts/osx-lnmp.html</link>
+      <pubDate>Tue, 29 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/posts/osx-lnmp.html</guid>
+      <description>&lt;p&gt;开始慢慢体会到 Mac 作为开发机的优势了，记录一下搭建 php 开发环境的过程。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

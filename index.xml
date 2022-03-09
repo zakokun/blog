@@ -123,7 +123,9 @@ if !data {
       <pubDate>Tue, 03 Jan 2017 00:00:00 +0000</pubDate>
       
       <guid>https://blog.zakokun.com/posts/year-person-summarize.html</guid>
-      <description>每年都会有的那个东西. 我是带着一种很复杂的心情来写2016年的总结的.这一年对我来说真的发生了以及认识到了太多的事情 .但是拙劣的文笔却让我很</description>
+      <description>&lt;p&gt;每年都会有的那个东西.&lt;/p&gt;
+&lt;p&gt;我是带着一种很复杂的心情来写2016年的总结的.这一年对我来说真的发生了以及认识到了太多的事情&lt;br&gt;
+.但是拙劣的文笔却让我很难尽情的通过总结写下来,于是这个总结写着写着心情就变得更差了.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -181,7 +183,7 @@ if !data {
     </item>
     
     <item>
-      <title>从零开始写一个PHP框架</title>
+      <title></title>
       <link>https://blog.zakokun.com/posts/create-a-php-framework.html</link>
       <pubDate>Sun, 24 May 2015 00:00:00 +0000</pubDate>
       

@@ -27,5 +27,220 @@
 &lt;p&gt;The early Bilibili Manga search service is provided by Big Data department,and many functions could not meet the needs of our own business. After a period of investigation, we start to construct a functional search service. We got a lots of exprience in this process so I decide to white some article to record it. As a start, I will go into some details about set up a ES service.&lt;/p&gt;</description>
     </item>
     
+    <item>
+      <title>又又改了一下博客的架构</title>
+      <link>https://blog.zakokun.com/posts/change-blog-struct-again.html</link>
+      <pubDate>Tue, 29 Sep 2020 15:58:08 +0800</pubDate>
+      
+      <guid>https://blog.zakokun.com/posts/change-blog-struct-again.html</guid>
+      <description>&lt;p&gt;干啥啥不行，重构第一名。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;What can I do? Refactor first.&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>用 force index 调教 MySQL 查询优化器</title>
+      <link>https://blog.zakokun.com/posts/use-force-index.html</link>
+      <pubDate>Mon, 17 Jul 2017 22:40:28 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/posts/use-force-index.html</guid>
+      <description>&lt;p&gt;mysql 有查询优化器，在我们发起一个查询的时候， msql 会尝试分析他，看看是否能做一些优化手段来加快查询速度。最常见的比如说有个 (a,b)的联合索引，无论我们使用&lt;code&gt;SELECT * FROM t WHERE a=? AND b=?&lt;/code&gt;还是&lt;code&gt;SELECT * FROM t WHERE b=? AND a=?&lt;/code&gt;都能利用到&lt;code&gt;(a,b)&lt;/code&gt;这个联合索引，又或者是在很多复杂的查询条件中，分析出使用哪个索引能最大化查询速度，这都是查询优化器做的事情。&lt;/p&gt;
+&lt;p&gt;然而毕竟程序是死的，有的时候查询优化器并不如我们想象中的那么聪明。这时候就需要我们强制 mysql 按照我们的意愿去查询了。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>使用 singleflight 代替传统的并发锁</title>
+      <link>https://blog.zakokun.com/posts/use-singleflight-instead-lock.html</link>
+      <pubDate>Mon, 12 Jun 2017 17:39:20 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/posts/use-singleflight-instead-lock.html</guid>
+      <description>&lt;p&gt;一般来说高并发，或者 sql 查询很重的业务，缓存都是少不了的。业务代码中，读取缓存的时候一般会这样处理：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;data = getCache(key)
+if !data {
+    data = selectDB(key)
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;但是有些时候光做缓存还是不够，我们还要担心缓存失效导致的集中查 DB 的问题，这时候就需要考虑加锁的问题了。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>一个慢查询引发的联合索引的思考</title>
+      <link>https://blog.zakokun.com/posts/slow-query-with-clustered-index.html</link>
+      <pubDate>Wed, 24 May 2017 20:41:31 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/posts/slow-query-with-clustered-index.html</guid>
+      <description>&lt;p&gt;上周开始我司完善了 mysql 慢查询的报警机制,然后很快陆陆续续的一些业务的慢查询报警开始出现了.其中有一个慢查询是对联合索引使用不当引起的,解决这个问题的过程中也让我重新认识了联合索引的特点.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>go 语言中哪种字符串拼接的方式最高效?</title>
+      <link>https://blog.zakokun.com/posts/go-string-implode-diff-way.html</link>
+      <pubDate>Thu, 13 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/posts/go-string-implode-diff-way.html</guid>
+      <description>&lt;p&gt;go 语言中字符串拼接有好几种方式,从最普通的&lt;code&gt;+&lt;/code&gt;拼接到&lt;code&gt;buffer&lt;/code&gt;字节缓冲都有.但是如果遇到大量的字符串拼接的情况,他们之间的性能差异还是需要注意的.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>通过带缓冲的channel来控制并发数</title>
+      <link>https://blog.zakokun.com/posts/goroutinue-number-control.html</link>
+      <pubDate>Sun, 19 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/posts/goroutinue-number-control.html</guid>
+      <description>&lt;p&gt;最近和搜索的同事一起用 golang 重构他们的 Elasticsearch 客户端.在用 Goroutines 去异步更新索引的时候并发量太大导致 ES
+进程挂掉的情况(真弱).因此在更新索引的时候考虑如何手动控制并发的协程数量.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>php 中 session_name 不能有句号的问题</title>
+      <link>https://blog.zakokun.com/posts/php-session-bug.html</link>
+      <pubDate>Thu, 20 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/posts/php-session-bug.html</guid>
+      <description>&lt;p&gt;和朋友写一个 php 项目, 发现当设置的 session_name 包含 &lt;code&gt;.&lt;/code&gt; 的时候,用户的登录状态无法保存了.具体是什么原因导致的呢?&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>phper 学 golang --日期时间处理</title>
+      <link>https://blog.zakokun.com/posts/golang-time-package.html</link>
+      <pubDate>Mon, 18 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/posts/golang-time-package.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>使用 http_load 测试服务器的负载</title>
+      <link>https://blog.zakokun.com/posts/linux-pressure-testing-tool.html</link>
+      <pubDate>Thu, 14 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/posts/linux-pressure-testing-tool.html</guid>
+      <description>&lt;p&gt;http_load是一款linux,OSX下的性能检测工具,通过简单的参数就能测试Web服务器的负载和性能.对于日常的代码自测已经足够了.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>PHPCON2016 的一些心得</title>
+      <link>https://blog.zakokun.com/posts/impression-about-phpcon-2016.html</link>
+      <pubDate>Thu, 30 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/posts/impression-about-phpcon-2016.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://blog.zakokun.com/posts/create-a-php-framework.html</link>
+      <pubDate>Sun, 24 May 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/posts/create-a-php-framework.html</guid>
+      <description>&lt;p&gt;&lt;em&gt;相关代码在这里：github.com/zakokun/myPHP&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;个人觉得徒手写一个PHP框架是帮助我们了解MVC架构的好办法，同时对PHP的资源调度以及代码组织都是一个很好的锻炼。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>在elementary os 上安装LNMP</title>
+      <link>https://blog.zakokun.com/posts/install-lnmp-on-elementary-os.html</link>
+      <pubDate>Fri, 15 May 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/posts/install-lnmp-on-elementary-os.html</guid>
+      <description>&lt;p&gt;&lt;em&gt;elementary os 是基于ubuntu的，所以步骤和ubuntu类似&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;最近换了新设备,老电脑就空下来了.折腾着在上面装了&lt;a href=&#34;http://https://elementary.io/&#34;&gt;elementary os&lt;/a&gt;
+系统，尝试着在这个系统上搭建开发环境。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>设计模式的学习--观察者模式</title>
+      <link>https://blog.zakokun.com/posts/learn-design-patterns-observer.html</link>
+      <pubDate>Thu, 29 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/posts/learn-design-patterns-observer.html</guid>
+      <description>&lt;p&gt;为了更愉快的装逼,开始学习php的设计模式之二.&lt;/p&gt;
+&lt;h3 id=&#34;特点&#34;&gt;特点&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;由一个观察者对应多个被观察者,一对多的关系&lt;/li&gt;
+&lt;li&gt;被观察者预留update()方法给观察者调用&lt;/li&gt;
+&lt;/ol&gt;</description>
+    </item>
+    
+    <item>
+      <title>设计模式的学习--单例模式</title>
+      <link>https://blog.zakokun.com/posts/learn-design-patterns-singleton.html</link>
+      <pubDate>Wed, 28 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/posts/learn-design-patterns-singleton.html</guid>
+      <description>&lt;p&gt;为了更愉快的装逼,开始学习php的设计模式.&lt;/p&gt;
+&lt;h3 id=&#34;特点&#34;&gt;特点&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;一个类有且只有一个实例&lt;/li&gt;
+&lt;li&gt;这个实例是由这个类本身创建的&lt;/li&gt;
+&lt;li&gt;自行向整个逻辑返回本身的实例&lt;/li&gt;
+&lt;/ol&gt;</description>
+    </item>
+    
+    <item>
+      <title>如何按照给定的顺序重新排序一个数组?</title>
+      <link>https://blog.zakokun.com/posts/how-to-reorder-an-array-by-specific-rule.html</link>
+      <pubDate>Mon, 26 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/posts/how-to-reorder-an-array-by-specific-rule.html</guid>
+      <description>&lt;p&gt;segmentfault上有人提了个&lt;a href=&#34;http://segmentfault.com/q/1010000000185771/a-1020000002514054&#34;&gt;问题&lt;/a&gt;,关于数组排序的,原本感觉很简单,但是我还是踩到了php自带函数的几个坑……&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>strtr()和str_replace()的区别</title>
+      <link>https://blog.zakokun.com/posts/different-between-strtr-and-str_replace.html</link>
+      <pubDate>Thu, 25 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/posts/different-between-strtr-and-str_replace.html</guid>
+      <description>&lt;p&gt;工作中遇到了字符串替换的问题,查了一下php中常用的替换函数有strtr()和str_replace().分享一下我自己使用这两个函数的一些心得.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>手动实现PHP的方法重载</title>
+      <link>https://blog.zakokun.com/posts/php-method-overload.html</link>
+      <pubDate>Sat, 20 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/posts/php-method-overload.html</guid>
+      <description>&lt;p&gt;众所周知,由于弱类型以及特殊的解析方式的原因,PHP本身无法实现方法的重载.但是,通过PHP自带的一些强大的魔术方法,我们可以手动实现方法重载.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>php-Redis学习实例</title>
+      <link>https://blog.zakokun.com/posts/learn-php-redis.html</link>
+      <pubDate>Mon, 22 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/posts/learn-php-redis.html</guid>
+      <description>&lt;p&gt;Redis是一个和Memcache类似的NoSQL缓存系统.相比Memcache支持更多的数据类型,并且数据可以持久化,这让他可以储存超过指定内存大小的数据(这是我觉得和Memcache最大的区别).&lt;/p&gt;
+&lt;p&gt;由于支持的数据格式多,所以操作相比Memcache稍微复杂些.&lt;/p&gt;
+&lt;p&gt;Redis的各种赋值和取值的操作很多,网上想找个齐全的资料都不太好找.以下整理记录了一些自己常用的操作.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>php导出csv文件的一些操作</title>
+      <link>https://blog.zakokun.com/posts/how-to-export-csv-file-by-php.html</link>
+      <pubDate>Wed, 12 Mar 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/posts/how-to-export-csv-file-by-php.html</guid>
+      <description>csv文件本质上是一个由逗号以及回车分割的纯文本文件,因此导出csv文件的流程是: 读取信息-&amp;gt;循环拼接成对应格式的字符串-&amp;gt;设置</description>
+    </item>
+    
+    <item>
+      <title>sublime的一些个人使用心得</title>
+      <link>https://blog.zakokun.com/posts/sublime-plugin-introduce.html</link>
+      <pubDate>Fri, 17 Jan 2014 02:22:33 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/posts/sublime-plugin-introduce.html</guid>
+      <description>&lt;p&gt;SubLime Text(ST)是一个很适合程序猿使用的跨平台文本编辑器,有很多强大的内置功能以及丰富的第三方插件.我在第一次接触他的时候就被彻底征服.又大又笨的IDE还是见鬼去吧.
+下载安装ST可以直接去&lt;a href=&#34;http://www.sublimetext.com/&#34;&gt;官网&lt;/a&gt;,有2和3两个版本,ST3目前是beta版,不过日常使用依然是挺稳定的,看个人喜好吧,我用的是2.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>如何用PHP输出26个英文字母组成的所有5位字符串?</title>
+      <link>https://blog.zakokun.com/posts/how-to-print-all-five-letters-string-by-php.html</link>
+      <pubDate>Fri, 17 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.zakokun.com/posts/how-to-print-all-five-letters-string-by-php.html</guid>
+      <description>&lt;p&gt;逛v2的时候看到一个帖子:&lt;a href=&#34;http://v2ex.com/t/133080#reply45&#34;&gt;点击这里&lt;/a&gt;
+各个码农都在秀自家的语言,身为php程序员,也尝试着写了一个,没想到这么一个简单的问题也踩了不少的坑.&lt;/p&gt;</description>
+    </item>
+    
   </channel>
 </rss>
