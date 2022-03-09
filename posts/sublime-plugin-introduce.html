@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-cn" lang="zh-cn">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.93.2" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>sublime的一些个人使用心得 &middot; 杂鱼君的博客</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://blog.zakokun.com/"><h1>杂鱼君的博客</h1></a>
+      <p class="lead">
+       好吃懒做，眼高手低 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="/"> 首页 </a></li><li><a href="/categories.html"> 分类 </a></li><li><a href="/about/about.html"> 关于我 </a></li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2022.Powered by <a target="_blank" href="https://gohugo.io/">Hugo</a> </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>sublime的一些个人使用心得</h1>
+  <time datetime=2014-01-17T02:22:33Z class="post-date">2014-01-17 02:22</time>
+  <p>SubLime Text(ST)是一个很适合程序猿使用的跨平台文本编辑器,有很多强大的内置功能以及丰富的第三方插件.我在第一次接触他的时候就被彻底征服.又大又笨的IDE还是见鬼去吧.
+下载安装ST可以直接去<a href="http://www.sublimetext.com/">官网</a>,有2和3两个版本,ST3目前是beta版,不过日常使用依然是挺稳定的,看个人喜好吧,我用的是2.</p>
+<p>##安装Package Control</p>
+<p>Package Control是ST的插件管理器,可以直接通过它方便的在线安装各种好用的插件,最简单的方法是通过以下方法安装:</p>
+<p>####SubLime Text2</p>
+<blockquote>
+<p>import urllib2,os,hashlib; h = &rsquo;eb2297e1a458f27d836c04bb0cbaf282&rsquo; + &lsquo;d0e7a3098092775ccb37ca9d6b2e4b7d&rsquo;; pf = &lsquo;Package Control.sublime-package&rsquo;; ipp = sublime.installed_packages_path(); os.makedirs( ipp ) if not os.path.exists(ipp) else None; urllib2.install_opener( urllib2.build_opener( urllib2.ProxyHandler()) ); by = urllib2.urlopen( &lsquo;<a href="http://packagecontrol.io/'">http://packagecontrol.io/'</a> + pf.replace(&rsquo; &lsquo;, &lsquo;%20&rsquo;)).read(); dh = hashlib.sha256(by).hexdigest(); open( os.path.join( ipp, pf), &lsquo;wb&rsquo; ).write(by) if dh == h else None; print(&lsquo;Error validating download (got %s instead of %s), please try manual install&rsquo; % (dh, h) if dh != h else &lsquo;Please restart Sublime Text to finish installation&rsquo;)</p>
+</blockquote>
+<p>####SubLime Text3</p>
+<blockquote>
+<p>import urllib.request,os,hashlib; h = &rsquo;eb2297e1a458f27d836c04bb0cbaf282&rsquo; + &lsquo;d0e7a3098092775ccb37ca9d6b2e4b7d&rsquo;; pf = &lsquo;Package Control.sublime-package&rsquo;; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( &lsquo;<a href="http://packagecontrol.io/'">http://packagecontrol.io/'</a> + pf.replace(&rsquo; &lsquo;, &lsquo;%20&rsquo;)).read(); dh = hashlib.sha256(by).hexdigest(); print(&lsquo;Error validating download (got %s instead of %s), please try manual install&rsquo; % (dh, h)) if dh != h else open(os.path.join( ipp, pf), &lsquo;wb&rsquo; ).write(by)</p>
+</blockquote>
+<p>安装完毕以后就可以通过command+shift+p 执行Package Control 的命令了.</p>
+<p>##常用的插件介绍</p>
+<p>####SublimeCodeIntel
+非常强大的代码提示插件,支持大多数常见的编程语言.安装好了即可使用.</p>
+<p>####CodeFormatter
+依然非常强大的代码格式化插件,可以对PHP,HTML,JS,JSON,CSS,Python2 的代码格式化.使用方法是通过默认的快捷键Command+Alt+F或者命令行调用CodeFormatter执行.</p>
+<p>####ConvertToUTF8
+这是一款将GBK,ANSI,BIG5等编码格式的文件转换成UTF8编码格式的插件,安装后自动生效.</p>
+<p>####Emmet
+通过一些特定的指令快速编写html代码的插件.比如敲 <code>div.container&gt;ul#list&gt;li.item*3</code>出现如下html内容:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>    &lt;<span style="color:#309;font-weight:bold">div</span> <span style="color:#309">class</span><span style="color:#555">=</span><span style="color:#c30">&#34;container&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#309;font-weight:bold">ul</span> <span style="color:#309">id</span><span style="color:#555">=</span><span style="color:#c30">&#34;list&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>            &lt;<span style="color:#309;font-weight:bold">li</span> <span style="color:#309">class</span><span style="color:#555">=</span><span style="color:#c30">&#34;item&#34;</span>&gt;&lt;/<span style="color:#309;font-weight:bold">li</span>&gt;
+</span></span><span style="display:flex;"><span>            &lt;<span style="color:#309;font-weight:bold">li</span> <span style="color:#309">class</span><span style="color:#555">=</span><span style="color:#c30">&#34;item&#34;</span>&gt;&lt;/<span style="color:#309;font-weight:bold">li</span>&gt;
+</span></span><span style="display:flex;"><span>            &lt;<span style="color:#309;font-weight:bold">li</span> <span style="color:#309">class</span><span style="color:#555">=</span><span style="color:#c30">&#34;item&#34;</span>&gt;&lt;/<span style="color:#309;font-weight:bold">li</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;/<span style="color:#309;font-weight:bold">ul</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#309;font-weight:bold">div</span>&gt;
+</span></span></code></pre></div><p>除此之外还很多进阶功能,但是需要一段时间的学习.</p>
+<p>####Bracket Highlighter
+高亮显示匹配的括号、引号和标签对.虽然ST本身就有匹配的功能,但是Bracket Highlighter自定义选项更加丰富,尤其是在编写html代码的时候非常有用.</p>
+<p>####AutoFileName
+自动补全文件名.</p>
+<p>####JavaScript Completions
+JS &amp; JQuery的代码提示插件,SublimeCodeIntel无法提示jQuery的代码补全,这个插件可以帮助你.</p>
+<p>####SublimeLinter
+一个支持lint语法的插件，可以高亮linter认为有错误的代码行.建议在设置里面将<code>sublimelinter_popup_errors_on_save</code>改成<code>true</code>,让插件只在保存的时候提示错误.</p>
+<p>####Clipboard History
+粘贴板历史记录，可以方便的查看和调用粘贴板的使用记录.</p>
+<p>####Goto-CSS-Declaration
+在html中跳转到某个某个class/id 的定义处.注意相关的css文件必须同时打开.</p>
+<p>####Git
+大家都知道这个是干嘛的.</p>
+<p>##不得不记住的快捷键操作</p>
+<p>####Command+Shift+P
+打开ST命令行.所有软件功能,包括插件的功能,都能在这里调用.而且支持模糊匹配.</p>
+<p>####Command+P
+通过文件名查找/打开文件.搜索的范围是ST所有打开的文件和文件夹即左侧side Bar 里面的所有内容.</p>
+<p>####Command+R
+或者Command+P再输入&quot;@&quot;(不带引号).在当前文件里查找函数/方法.</p>
+<p>####Command+Shift+F
+在ST所有打开的文件和文件夹(即左侧side Bar 里面的所有内容)/指定的文件夹中查找对应内容.</p>
+<p>####Command+G
+或者Command+P再输入&quot;:&quot;(不带引号).跳转到该文件的某一行</p>
+<p>####Command+:
+或者Command+P再输入&quot;#&quot;(不带引号).查看该文件所有已使用的关键字/变量名/函数/字符串 等.</p>
+<p>####Alt+Shift+1/2/3/4/5
+分屏显示.</p>
+<p>####Command+K+U/L
+将选中的内容转换为大/小写</p>
+<p>####Command+J
+将多行代码合并为一行</p>
+<p>以上都是我自己总结的一些常用功能.不得不说，Sublime Text 是一款很优秀的编辑器,ui好看,各种细节令人惊奇,功能拓展强大,确实不愧他&rsquo;sublime&rsquo;的名头,值得各位程序猿去尝试.</p>
+</div>
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "evanszhang" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-62768625-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+  </body>
+</html>

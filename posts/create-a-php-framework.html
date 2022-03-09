@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-cn" lang="zh-cn">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.93.2" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>从零开始写一个PHP框架 &middot; 杂鱼君的博客</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://blog.zakokun.com/"><h1>杂鱼君的博客</h1></a>
+      <p class="lead">
+       好吃懒做，眼高手低 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="/"> 首页 </a></li><li><a href="/categories.html"> 分类 </a></li><li><a href="/about/about.html"> 关于我 </a></li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2022.Powered by <a target="_blank" href="https://gohugo.io/">Hugo</a> </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>从零开始写一个PHP框架</h1>
+  <time datetime=2015-05-24T00:00:00Z class="post-date">2015-05-24 00:00</time>
+  <p><em>相关代码在这里：github.com/zakokun/myPHP</em></p>
+<p>个人觉得徒手写一个PHP框架是帮助我们了解MVC架构的好办法，同时对PHP的资源调度以及代码组织都是一个很好的锻炼。</p>
+<h1 id="开始">开始</h1>
+<p>首先我们建立基本的文件夹结构，如下：</p>
+<pre tabindex="0"><code>application
+——controller
+——model
+——view
+system
+index.php
+</code></pre><p><code>application</code>是项目的目录，而system不用说就是框架文件的目录了。
+<code>index.php</code> 是我们所有请求的入口，我们规定通过如下的url来调用<code>controller</code>：<code>localhost/index.php?c=controller&amp;a=action&amp;param=123</code></p>
+<h1 id="设置indexphp-入口以及路由">设置index.php 入口以及路由</h1>
+<p>因为所有的请求都是通过<code>index.php</code>发起的，因此我们需要在<code>index.php</code>里面进行一些初始化的设置：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>define(<span style="color:#c30">&#39;BASE_ROOT&#39;</span>, dirname(<span style="color:#360">__FILE__</span>) <span style="color:#555">.</span> DIRECTORY_SEPARATOR);
+</span></span><span style="display:flex;"><span>define(<span style="color:#c30">&#39;APP_ROOT&#39;</span>, BASE_ROOT <span style="color:#555">.</span> <span style="color:#c30">&#39;application&#39;</span> <span style="color:#555">.</span>  DIRECTORY_SEPARATOR);
+</span></span></code></pre></div><p>因为我们规定url参数中的<code>c</code>是控制器名，<code>a</code>是方法名，因此<code>index.php</code>中需要一个路由函数去活取这两个参数：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>define(<span style="color:#c30">&#39;BASE_ROOT&#39;</span>, dirname(<span style="color:#360">__FILE__</span>) <span style="color:#555">.</span> DIRECTORY_SEPARATOR);
+</span></span><span style="display:flex;"><span>define(<span style="color:#c30">&#39;APP_ROOT&#39;</span>, BASE_ROOT <span style="color:#555">.</span> <span style="color:#c30">&#39;application&#39;</span> <span style="color:#555">.</span>  DIRECTORY_SEPARATOR);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#069;font-weight:bold">function</span> <span style="color:#c0f">route</span>(){
+</span></span><span style="display:flex;"><span>    <span style="color:#033">$c</span> <span style="color:#555">=</span> isset(<span style="color:#033">$_GET</span>[<span style="color:#c30">&#39;c&#39;</span>])<span style="color:#555">?</span><span style="color:#033">$_GET</span>[<span style="color:#c30">&#39;c&#39;</span>]<span style="color:#555">:</span><span style="color:#c30">&#39;index&#39;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#033">$a</span> <span style="color:#555">=</span> isset(<span style="color:#033">$_GET</span>[<span style="color:#c30">&#39;a&#39;</span>])<span style="color:#555">?</span><span style="color:#033">$_GET</span>[<span style="color:#c30">&#39;a&#39;</span>]<span style="color:#555">:</span><span style="color:#c30">&#39;index&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#033">$r</span>[<span style="color:#c30">&#39;c&#39;</span>]<span style="color:#555">=</span>ucfirst(strtolower(trim(<span style="color:#033">$c</span>)));
+</span></span><span style="display:flex;"><span>    <span style="color:#033">$r</span>[<span style="color:#c30">&#39;a&#39;</span>]<span style="color:#555">=</span>strtolower(trim(<span style="color:#033">$a</span>));
+</span></span><span style="display:flex;"><span>    <span style="color:#069;font-weight:bold">return</span> <span style="color:#033">$r</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#033">$routeArr</span> <span style="color:#555">=</span> route();
+</span></span><span style="display:flex;"><span><span style="color:#033">$controller</span><span style="color:#555">=</span><span style="color:#033">$routeArr</span>[<span style="color:#c30">&#39;c&#39;</span>];
+</span></span><span style="display:flex;"><span><span style="color:#033">$action</span><span style="color:#555">=</span><span style="color:#033">$routeArr</span>[<span style="color:#c30">&#39;a&#39;</span>];
+</span></span></code></pre></div><p>获取到了需要实例化的controller以后，就可以进行相关操作了：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>define(<span style="color:#c30">&#39;BASE_ROOT&#39;</span>, dirname(<span style="color:#360">__FILE__</span>) <span style="color:#555">.</span> DIRECTORY_SEPARATOR);
+</span></span><span style="display:flex;"><span>define(<span style="color:#c30">&#39;APP_ROOT&#39;</span>, BASE_ROOT <span style="color:#555">.</span> <span style="color:#c30">&#39;application&#39;</span> <span style="color:#555">.</span>  DIRECTORY_SEPARATOR);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#069;font-weight:bold">function</span> <span style="color:#c0f">route</span>(){
+</span></span><span style="display:flex;"><span>    <span style="color:#033">$c</span> <span style="color:#555">=</span> isset(<span style="color:#033">$_GET</span>[<span style="color:#c30">&#39;c&#39;</span>])<span style="color:#555">?</span><span style="color:#033">$_GET</span>[<span style="color:#c30">&#39;c&#39;</span>]<span style="color:#555">:</span><span style="color:#c30">&#39;index&#39;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#033">$a</span> <span style="color:#555">=</span> isset(<span style="color:#033">$_GET</span>[<span style="color:#c30">&#39;a&#39;</span>])<span style="color:#555">?</span><span style="color:#033">$_GET</span>[<span style="color:#c30">&#39;a&#39;</span>]<span style="color:#555">:</span><span style="color:#c30">&#39;index&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#033">$r</span>[<span style="color:#c30">&#39;c&#39;</span>]<span style="color:#555">=</span>ucfirst(strtolower(trim(<span style="color:#033">$c</span>)));
+</span></span><span style="display:flex;"><span>    <span style="color:#033">$r</span>[<span style="color:#c30">&#39;a&#39;</span>]<span style="color:#555">=</span>strtolower(trim(<span style="color:#033">$a</span>));
+</span></span><span style="display:flex;"><span>    <span style="color:#069;font-weight:bold">return</span> <span style="color:#033">$r</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#033">$routeArr</span> <span style="color:#555">=</span> route();
+</span></span><span style="display:flex;"><span><span style="color:#033">$controller</span><span style="color:#555">=</span><span style="color:#033">$routeArr</span>[<span style="color:#c30">&#39;c&#39;</span>];
+</span></span><span style="display:flex;"><span><span style="color:#033">$action</span><span style="color:#555">=</span><span style="color:#033">$routeArr</span>[<span style="color:#c30">&#39;a&#39;</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#09f;font-style:italic">//根据route的参数加载所需的文件
+</span></span></span><span style="display:flex;"><span><span style="color:#09f;font-style:italic"></span><span style="color:#069;font-weight:bold">if</span> (file_exists(APP_ROOT <span style="color:#555">.</span> <span style="color:#c30">&#39;controller/&#39;</span> <span style="color:#555">.</span> <span style="color:#033">$controller</span><span style="color:#555">.</span><span style="color:#c30">&#39;Controller.php&#39;</span> )){
+</span></span><span style="display:flex;"><span>    <span style="color:#069;font-weight:bold">require_once</span> APP_ROOT <span style="color:#555">.</span> <span style="color:#c30">&#39;controller/&#39;</span> <span style="color:#555">.</span> <span style="color:#033">$controller</span><span style="color:#555">.</span><span style="color:#c30">&#39;Controller.php&#39;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#033">$obj</span><span style="color:#555">=</span><span style="color:#069;font-weight:bold">new</span> <span style="color:#033">$controller</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#069;font-weight:bold">if</span> (method_exists(<span style="color:#033">$obj</span>,<span style="color:#033">$action</span>)){
+</span></span><span style="display:flex;"><span>        <span style="color:#033">$obj</span><span style="color:#555">-&gt;</span><span style="color:#033">$action</span>();
+</span></span><span style="display:flex;"><span>    }<span style="color:#069;font-weight:bold">else</span>{
+</span></span><span style="display:flex;"><span>        <span style="color:#069;font-weight:bold">die</span>(<span style="color:#c30">&#39;func not exist&#39;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}<span style="color:#069;font-weight:bold">else</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#069;font-weight:bold">die</span>(<span style="color:#c30">&#39;file not exist&#39;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h1 id="创建测试控制器">创建测试控制器</h1>
+<p>我们在<code>controller</code>文件夹里面创建一个<code> IndexController.php</code> 文件：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#069;font-weight:bold">class</span> <span style="color:#0a8;font-weight:bold">IndexController</span>{
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#069;font-weight:bold">public</span> <span style="color:#069;font-weight:bold">function</span> <span style="color:#c0f">test</span>(){
+</span></span><span style="display:flex;"><span>        <span style="color:#069;font-weight:bold">echo</span> <span style="color:#c30">&#39;test data&#39;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>试一试 <code> localhost/index.php?c=index&amp;a=test</code> ，不出意外就能得到<code>test data</code> 了。</p>
+<h1 id="提取父类控制器">提取父类控制器</h1>
+<p>光是这样肯定是不够的，因为我们需要在controller里面连接model，调用模板，加载各种工具类等。因此我们需要一个带一些公用方法的
+父类，这个父类可以被所有的controller继承。</p>
+<p>我们创建一个<code>controller.php</code>文件：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#069;font-weight:bold">class</span> <span style="color:#0a8;font-weight:bold">controller</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#09f;font-style:italic">//打印的方法
+</span></span></span><span style="display:flex;"><span><span style="color:#09f;font-style:italic"></span>    <span style="color:#069;font-weight:bold">public</span> <span style="color:#069;font-weight:bold">function</span> <span style="color:#c0f">dump</span>(<span style="color:#033">$data</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#069;font-weight:bold">echo</span> <span style="color:#c30">&#39;&lt;p&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>        print_r(<span style="color:#033">$data</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#069;font-weight:bold">echo</span> <span style="color:#c30">&#39;&lt;/p&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#069;font-weight:bold">die</span>;
+</span></span><span style="display:flex;"><span>    } 
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这样一个简单的父类就完成了，里面带了一个很常用的格式化打印数据的方法。那么这个父类我们放在哪里呢？ 最简单的方法就是放在
+<code>application/controller</code>文件夹里面了，但是一般来说application文件夹是用来放我们项目本身的代码的，框架的代码我们最好放在
+<code>system</code> 文件夹里面,然后通过<code>__autoload()</code> 函数自动调用。</p>
+<p>我们可以在index.php 里面添加这个函数:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#069;font-weight:bold">function</span> <span style="color:#c0f">__autoload</span>(<span style="color:#033">$className</span>){
+</span></span><span style="display:flex;"><span>    <span style="color:#069;font-weight:bold">if</span>(file_exists(BASE_ROOT <span style="color:#555">.</span> <span style="color:#c30">&#39;system/&#39;</span> <span style="color:#555">.</span> <span style="color:#033">$className</span> <span style="color:#555">.</span> <span style="color:#c30">&#39;.php&#39;</span>)){
+</span></span><span style="display:flex;"><span>        <span style="color:#069;font-weight:bold">require_once</span> BASE_ROOT <span style="color:#555">.</span> <span style="color:#c30">&#39;system/&#39;</span> <span style="color:#555">.</span> <span style="color:#033">$className</span> <span style="color:#555">.</span> <span style="color:#c30">&#39;.php&#39;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>接下来我们就能在项目的controller继承这个父类了：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#069;font-weight:bold">class</span> <span style="color:#0a8;font-weight:bold">IndexController</span> <span style="color:#069;font-weight:bold">extends</span> Controller
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#069;font-weight:bold">public</span> <span style="color:#069;font-weight:bold">function</span> <span style="color:#c0f">test</span>(){
+</span></span><span style="display:flex;"><span>        <span style="color:#033">$this</span><span style="color:#555">-&gt;</span><span style="color:#309">dump</span>(<span style="color:#c30">&#39;test data&#39;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h1 id="model">Model</h1>
+<p>接下来我们在application文件夹下面创建model文件夹，用来存放模型。那怎么通过controller来调用model？自然就是通过父类自带
+的方法了。我们在<code>controller.php</code>里面添加一个方法：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#069;font-weight:bold">public</span> <span style="color:#069;font-weight:bold">function</span> <span style="color:#c0f">model</span>(<span style="color:#033">$modelName</span>){
+</span></span><span style="display:flex;"><span>    <span style="color:#033">$modelFile</span> <span style="color:#555">=</span> <span style="color:#033">$modelName</span> <span style="color:#555">.</span> <span style="color:#c30">&#39;Model&#39;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#069;font-weight:bold">return</span> <span style="color:#069;font-weight:bold">new</span> <span style="color:#033">$modelFile</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>单是这样还不行，因为php并不知道我们试图实例化的这个model文件在哪里，因此我们需要通过<code>__autoload()</code>函数告诉PHP：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#069;font-weight:bold">function</span> <span style="color:#c0f">__autoload</span>(<span style="color:#033">$className</span>){
+</span></span><span style="display:flex;"><span>    <span style="color:#069;font-weight:bold">if</span>(file_exists(BASE_ROOT <span style="color:#555">.</span> <span style="color:#c30">&#39;system/&#39;</span> <span style="color:#555">.</span> <span style="color:#033">$className</span> <span style="color:#555">.</span> <span style="color:#c30">&#39;.php&#39;</span>)){
+</span></span><span style="display:flex;"><span>        <span style="color:#069;font-weight:bold">require_once</span> BASE_ROOT <span style="color:#555">.</span> <span style="color:#c30">&#39;system/&#39;</span> <span style="color:#555">.</span> <span style="color:#033">$className</span> <span style="color:#555">.</span> <span style="color:#c30">&#39;.php&#39;</span>;
+</span></span><span style="display:flex;"><span>    }<span style="color:#069;font-weight:bold">elseif</span>(file_exists(APP_ROOT <span style="color:#555">.</span> <span style="color:#c30">&#39;model/&#39;</span> <span style="color:#555">.</span> <span style="color:#033">$className</span> <span style="color:#555">.</span> <span style="color:#c30">&#39;.php&#39;</span>)){
+</span></span><span style="display:flex;"><span>        <span style="color:#069;font-weight:bold">require_once</span> APP_ROOT <span style="color:#555">.</span> <span style="color:#c30">&#39;model/&#39;</span> <span style="color:#555">.</span> <span style="color:#033">$className</span> <span style="color:#555">.</span> <span style="color:#c30">&#39;.php&#39;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>然后我们就可以写一个测试用的<code>TestModel.php </code>了：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#069;font-weight:bold">class</span> <span style="color:#0a8;font-weight:bold">TestModel</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#069;font-weight:bold">public</span> <span style="color:#069;font-weight:bold">function</span> <span style="color:#c0f">findData</span>(){
+</span></span><span style="display:flex;"><span>        <span style="color:#069;font-weight:bold">return</span> <span style="color:#c30">&#39;model data&#39;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>试着在<code>TestController.php</code> 里面调用看看：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#069;font-weight:bold">class</span> <span style="color:#0a8;font-weight:bold">IndexController</span> <span style="color:#069;font-weight:bold">extends</span> Controller
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#069;font-weight:bold">public</span> <span style="color:#069;font-weight:bold">function</span> <span style="color:#c0f">test</span>(){
+</span></span><span style="display:flex;"><span>        <span style="color:#033">$testModel</span> <span style="color:#555">=</span> <span style="color:#033">$this</span><span style="color:#555">-&gt;</span><span style="color:#309">model</span>(<span style="color:#c30">&#39;Test&#39;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#069;font-weight:bold">echo</span> <span style="color:#033">$testModel</span><span style="color:#555">-&gt;</span><span style="color:#309">findData</span>();   <span style="color:#09f;font-style:italic">//输出 model data；
+</span></span></span><span style="display:flex;"><span><span style="color:#09f;font-style:italic"></span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h1 id="连接数据库">连接数据库</h1>
+<p>但是现在的model是无法连接数据库的，这样的model就是个废物。但是在每一个model里面写连接数据库的方法是很蠢的，最好的
+方法就是通过父类的model连接数据库，其他model继承父类就好了。</p>
+<p>和controller.php相同，我们在<code>sysytem</code>文件夹下创建一个<code>model.php</code>  ：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#069;font-weight:bold">class</span> <span style="color:#0a8;font-weight:bold">model</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#069;font-weight:bold">protected</span> <span style="color:#033">$_db</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#069;font-weight:bold">public</span> <span style="color:#069;font-weight:bold">function</span> __construct(){
+</span></span><span style="display:flex;"><span>        <span style="color:#033">$this</span><span style="color:#555">-&gt;</span><span style="color:#309">_db</span><span style="color:#555">=</span><span style="color:#069;font-weight:bold">new</span> mysqli(<span style="color:#c30">&#39;localhost&#39;</span>, <span style="color:#c30">&#39;root&#39;</span>,<span style="color:#c30">&#39;123456&#39;</span>, <span style="color:#c30">&#39;myphp&#39;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#069;font-weight:bold">if</span>(mysqli_connect_errno()){
+</span></span><span style="display:flex;"><span>            <span style="color:#069;font-weight:bold">echo</span> <span style="color:#c30">&#39;error...&#39;</span><span style="color:#555">.</span>mysqli_connect_errno();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#069;font-weight:bold">public</span> <span style="color:#069;font-weight:bold">function</span> <span style="color:#c0f">query</span>(<span style="color:#033">$sql</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#033">$result</span><span style="color:#555">=</span><span style="color:#033">$this</span><span style="color:#555">-&gt;</span><span style="color:#309">_db</span><span style="color:#555">-&gt;</span><span style="color:#309">query</span>(<span style="color:#033">$sql</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#069;font-weight:bold">if</span>(<span style="color:#033">$result</span><span style="color:#555">-&gt;</span><span style="color:#309">num_rows</span>){
+</span></span><span style="display:flex;"><span>            <span style="color:#069;font-weight:bold">while</span> (<span style="color:#033">$row</span> <span style="color:#555">=</span> <span style="color:#033">$result</span><span style="color:#555">-&gt;</span><span style="color:#309">fetch_assoc</span>()) {
+</span></span><span style="display:flex;"><span>                <span style="color:#033">$myRow</span>[] <span style="color:#555">=</span> <span style="color:#033">$row</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#069;font-weight:bold">return</span> <span style="color:#033">$myRow</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>自然我们所有的model都继承这个父类model：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#069;font-weight:bold">class</span> <span style="color:#0a8;font-weight:bold">TestModel</span> <span style="color:#069;font-weight:bold">extends</span> Model
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#09f;font-style:italic">// other code......
+</span></span></span><span style="display:flex;"><span><span style="color:#09f;font-style:italic"></span>}
+</span></span></code></pre></div><p>让我们在本地建立一个<code>myphp</code>数据库，再新建一个<code>user</code>表，格式如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">id</th>
+<th style="text-align:left">name</th>
+<th style="text-align:left">age</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">zhang</td>
+<td style="text-align:left">20</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">shao</td>
+<td style="text-align:left">21</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">wang</td>
+<td style="text-align:left">22</td>
+</tr>
+</tbody>
+</table>
+<p>让我们写一个<code>UserController</code>连接<code>UserModel</code>查找数据，所以我们要这么做：</p>
+<p>在<code>application/controller</code> 文件夹下面创建<code>UserController.php</code>,内容如下：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#069;font-weight:bold">class</span> <span style="color:#0a8;font-weight:bold">UserController</span> <span style="color:#069;font-weight:bold">extends</span> Controller
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#069;font-weight:bold">public</span> <span style="color:#069;font-weight:bold">function</span> <span style="color:#c0f">user</span>(){
+</span></span><span style="display:flex;"><span>        <span style="color:#033">$id</span> <span style="color:#555">=</span> <span style="color:#033">$_GET</span>[<span style="color:#c30">&#39;id&#39;</span>];
+</span></span><span style="display:flex;"><span>        <span style="color:#033">$userModel</span> <span style="color:#555">=</span> <span style="color:#033">$this</span><span style="color:#555">-&gt;</span><span style="color:#309">model</span>(<span style="color:#c30">&#39;User&#39;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#033">$user</span> <span style="color:#555">=</span> <span style="color:#033">$userModel</span><span style="color:#555">-&gt;</span><span style="color:#309">getUser</span>(<span style="color:#033">$id</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#033">$this</span><span style="color:#555">-&gt;</span><span style="color:#309">dump</span>(<span style="color:#033">$user</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>在<code>application/model</code> 文件夹下面创建<code>UserModel.php</code>,内容如下：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#069;font-weight:bold">class</span> <span style="color:#0a8;font-weight:bold">UserModel</span> <span style="color:#069;font-weight:bold">extends</span> Model
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#069;font-weight:bold">public</span> <span style="color:#069;font-weight:bold">function</span> <span style="color:#c0f">getUser</span>(<span style="color:#033">$id</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#033">$sql</span> <span style="color:#555">=</span> <span style="color:#c30">&#39;select * from user where id =&#39;</span><span style="color:#555">.</span><span style="color:#033">$id</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#033">$data</span> <span style="color:#555">=</span> <span style="color:#033">$this</span><span style="color:#555">-&gt;</span><span style="color:#309">query</span>(<span style="color:#033">$sql</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#069;font-weight:bold">return</span> <span style="color:#033">$data</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>试着通过<code>localhost/index.php?c=user&amp;a=user&amp;id=1</code> 请求看看吧！</p>
+<p>待续～～～</p>
+</div>
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "evanszhang" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-62768625-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+  </body>
+</html>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>技术 on 杂鱼君的博客</title>
+    <link>https://blog.zakokun.com/categories/%E6%8A%80%E6%9C%AF.html</link>
+    <description>Recent content in 技术 on 杂鱼君的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 28 Dec 2020 19:26:34 +0800</lastBuildDate><atom:link href="https://blog.zakokun.com/categories/%E6%8A%80%E6%9C%AF/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>elasticsearch 在漫画搜索项目的应用（二）索引设计和管理</title>
+      <link>https://blog.zakokun.com/posts/build-search-system-part-two-index-analyzer-and-chinese-search.html</link>
+      <pubDate>Mon, 28 Dec 2020 19:26:34 +0800</pubDate>
+      
+      <guid>https://blog.zakokun.com/posts/build-search-system-part-two-index-analyzer-and-chinese-search.html</guid>
+      <description>&lt;p&gt;索引相当于DB中的表，数据都是储存在索引中。正如数据库的表需要设计索引一样，ES的索引设计同样也有很多要注意的地方，否则就会发生查询速度过慢甚至查询不到数据的情况。本文整理一下自己在设计漫画搜索索引时候遇到的一些问题和细节。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;the Index just like Table in DB,the data is stored in the Index.Just like DB tables need to be indexed,the ES index also has pay attaton to many points,Otherwise,the query speed will be slow even the data can not be queried. In this post,I will sort out some of the problems and details I encountered when designing the comic search index.&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>elasticsearch 在漫画搜索项目的应用（一）安装和部署搜索服务</title>
+      <link>https://blog.zakokun.com/posts/build-search-system-part-one-installation-and-deploy.html</link>
+      <pubDate>Thu, 22 Oct 2020 14:27:26 +0800</pubDate>
+      
+      <guid>https://blog.zakokun.com/posts/build-search-system-part-one-installation-and-deploy.html</guid>
+      <description>&lt;p&gt;早期的哔哩哔哩漫画搜索服务是由大数据部门提供的，很多功能上无法满足漫画自己业务的需求。我们在调研了一段时间 elasticsearch（后面简称ES）以后，动手搭建了一套功能齐全的搜索服务。探索的过程收获了不少东西，因此打算写几篇相关的文章记录一下。作为开篇，简单的讲一些ES的搭建过程和一些细节。&lt;/p&gt;
+&lt;p&gt;The early Bilibili Manga search service is provided by Big Data department,and many functions could not meet the needs of our own business. After a period of investigation, we start to construct a functional search service. We got a lots of exprience in this process so I decide to white some article to record it. As a start, I will go into some details about set up a ES service.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

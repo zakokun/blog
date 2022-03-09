@@ -2,21 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>OSX on 杂鱼君的博客</title>
-    <link>https://blog.zakokun.com/tags/osx/</link>
+    <link>https://blog.zakokun.com/tags/osx.html</link>
     <description>Recent content in OSX on 杂鱼君的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 29 Dec 2015 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://blog.zakokun.com/tags/osx/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Tue, 29 Dec 2015 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.zakokun.com/tags/osx/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>在OSX上安装php开发环境</title>
-      <link>https://blog.zakokun.com/2015/osx-lnmp/</link>
+      <link>https://blog.zakokun.com/posts/osx-lnmp.html</link>
       <pubDate>Tue, 29 Dec 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blog.zakokun.com/2015/osx-lnmp/</guid>
+      <guid>https://blog.zakokun.com/posts/osx-lnmp.html</guid>
       <description>&lt;p&gt;开始慢慢体会到 Mac 作为开发机的优势了，记录一下搭建 php 开发环境的过程。&lt;/p&gt;</description>
     </item>
     

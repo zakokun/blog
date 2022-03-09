@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-cn" lang="zh-cn">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.93.2" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>elasticsearch 在漫画搜索项目的应用（二）索引设计和管理 &middot; 杂鱼君的博客</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://blog.zakokun.com/"><h1>杂鱼君的博客</h1></a>
+      <p class="lead">
+       好吃懒做，眼高手低 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="/"> 首页 </a></li><li><a href="/categories.html"> 分类 </a></li><li><a href="/about/about.html"> 关于我 </a></li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2022.Powered by <a target="_blank" href="https://gohugo.io/">Hugo</a> </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>elasticsearch 在漫画搜索项目的应用（二）索引设计和管理</h1>
+  <time datetime=2020-12-28T19:26:34&#43;0800 class="post-date">2020-12-28 19:26</time>
+  <p>索引相当于DB中的表，数据都是储存在索引中。正如数据库的表需要设计索引一样，ES的索引设计同样也有很多要注意的地方，否则就会发生查询速度过慢甚至查询不到数据的情况。本文整理一下自己在设计漫画搜索索引时候遇到的一些问题和细节。</p>
+<p><em>the Index just like Table in DB,the data is stored in the Index.Just like DB tables need to be indexed,the ES index also has pay attaton to many points,Otherwise,the query speed will be slow even the data can not be queried. In this post,I will sort out some of the problems and details I encountered when designing the comic search index.</em></p>
+<h2 id="索引结构">索引结构</h2>
+<h2 id="index-structure">index structure</h2>
+<p>一个典型的索引配置如下所示：</p>
+<p><em>A typical Index Configuration like the following show:</em></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#309;font-weight:bold">&#34;mappings&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#309;font-weight:bold">&#34;properties&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#309;font-weight:bold">&#34;userid&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#309;font-weight:bold">&#34;type&#34;</span>: <span style="color:#c30">&#34;keyword&#34;</span>
+</span></span><span style="display:flex;"><span>      },
+</span></span><span style="display:flex;"><span>      <span style="color:#309;font-weight:bold">&#34;nick_name&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#309;font-weight:bold">&#34;type&#34;</span>: <span style="color:#c30">&#34;text&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#309;font-weight:bold">&#34;analyzer&#34;</span>: <span style="color:#c30">&#34;nick_analyzer&#34;</span>
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#309;font-weight:bold">&#34;settings&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#309;font-weight:bold">&#34;index&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#309;font-weight:bold">&#34;analysis&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#309;font-weight:bold">&#34;analyzer&#34;</span>: {
+</span></span><span style="display:flex;"><span>          <span style="color:#309;font-weight:bold">&#34;nick_analyzer&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#309;font-weight:bold">&#34;filter&#34;</span>: [
+</span></span><span style="display:flex;"><span>              <span style="color:#c30">&#34;stop&#34;</span>,
+</span></span><span style="display:flex;"><span>              <span style="color:#c30">&#34;lowercase&#34;</span>
+</span></span><span style="display:flex;"><span>            ],
+</span></span><span style="display:flex;"><span>            <span style="color:#309;font-weight:bold">&#34;tokenizer&#34;</span>: <span style="color:#c30">&#34;standard&#34;</span>
+</span></span><span style="display:flex;"><span>          }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      },
+</span></span><span style="display:flex;"><span>      <span style="color:#309;font-weight:bold">&#34;number_of_shards&#34;</span>: <span style="color:#c30">&#34;1&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#309;font-weight:bold">&#34;number_of_replicas&#34;</span>: <span style="color:#c30">&#34;1&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>可以看到配置中分成两个属性：<code>mappings</code> 和 <code>settings</code>。下面主要分析这两个部分。</p>
+<p><em>You can see two properties in the configuration：<code>mappings</code> and <code>settings</code>.Then let us focus on this two parts.</em></p>
+<h3 id="mappings-设计">mappings 设计</h3>
+<h3 id="mappings-design">mappings design</h3>
+<p>mappings主要用来声明索引包含哪些字段，并且通过<code>type</code>主要用来指定字段的类型，一般来说，常用的几个类型如图所示：</p>
+<p><em>The mappings is usually used for define what is include in Index and appoint the type of field by <code>type</code>. In general, several frequently-used type are shown in the picture:</em></p>
+<h4 id="普通字符串类型">普通字符串类型</h4>
+<h4 id="normal-string-type">normal string type</h4>
+<p>关键词为<code>keyword</code>。最常用的类型，将原始内容作为完整的一个词储存在倒排索引中，可以看做 mysql 中的<code>varchar</code>类型。不会被分词器处理。</p>
+<p><em>The keyword is <code>keyword</code>.It is the most common type. It store the original content as a complete word in the Inverted Index. It can be thought of <code>varchar</code> type in mysql and will not be processed by the tokenizer.</em></p>
+<h4 id="数字类型">数字类型</h4>
+<h4 id="numerical-type">numerical type</h4>
+<p>包括<code>long</code>、<code>integer</code>、<code>short</code>、<code>byte</code>、<code>double</code>、<code>float</code>等数字类型，和常见的编程语言中的取值范围保持一致，在查询中可以进行计算。</p>
+<p><em>It include <code>long</code> <code>integer</code> <code>short</code> <code>byte</code> <code>double</code>、<code>float</code> and so on. The value range as same as the common programming language and can be calculated in queries.</em></p>
+<h4 id="长文本类型">长文本类型</h4>
+<h4 id="long-text-type">long text type</h4>
+<p>关键词是<code>text</code>。用来储存长文本。和 keyword 区别是 text 类型可以通过分词器分词处理，这也是 ES 查询的核心。</p>
+<p><em>The keyword is <code>text</code>.It is used for store long text. The difference between text and keyword is that text can be handled by tokenizer. This is also the core in ES query.</em></p>
+<h4 id="日期类型">日期类型</h4>
+<h4 id="date-type">Date type</h4>
+<p>关键词是<code>date</code>。用来储存时间。通过对应的<code>format</code>字段，可以指定接受的时间格式，包括秒、毫秒时间戳，字符串时间等。具体可以接受的格式和关键词可参考<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/date.html">这个链接</a>。如：</p>
+<p><em>The keyword is <code>date</code>. It is also used to store time with the field <code>format</code>. You can assign an accepted time format include second timestamp and Millisecond timestamp and string date. The detail about the accepted time format can be referd by <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/date.html">this post</a> like:</em></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#309;font-weight:bold">&#34;type&#34;</span>: <span style="color:#c30">&#34;date&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#309;font-weight:bold">&#34;format&#34;</span>: <span style="color:#c30">&#34;yyyy-MM-dd||epoch_millis&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="布尔类型">布尔类型</h4>
+<h4 id="boolean-type">Boolean type</h4>
+<p>可以接受表示 true 和 false 的字符串或数字，比如：</p>
+<p><em>It can be accepted strings or numbers representing true and false like:</em></p>
+<ul>
+<li>true: true, &ldquo;true&rdquo;, &ldquo;on&rdquo;, &ldquo;yes&rdquo;, &ldquo;1&rdquo;</li>
+<li>false: false, &ldquo;false&rdquo;, &ldquo;off&rdquo;, &ldquo;no&rdquo;, &ldquo;0&rdquo;</li>
+</ul>
+<p>以上是常用的数据类型。大家也许会发现我没有提到<code>数组</code>类型。在ES中，数组不需要单独定义，只需要在写入数据的时候，<strong>直接将需要的数据以数组的形式写入即可</strong>。注意所有的值必须是同一个类型。</p>
+<p><em>These are common data types.You may notice that I didn&rsquo;t mention the <code>array</code> type. In ES you don&rsquo;t have to define array type insead of input the required data as an array directly. The only matter is all the value must be of the same type.</em></p>
+<h3 id="setting">setting</h3>
+<p>正如同 mysql 中建表的同时要指定各种索引(主键索引、联合索引等)一样，ES 中我们也需要通过<code>setting</code>来确保索引按照我们的需求工作。</p>
+<p><em>Just as in mysql we need to specify various indexes(primary index,clustered index),In es we also need <code>setting</code> to ensure that the index works according to our our requirements.</em></p>
+<h4 id="analysis">analysis</h4>
+<p><code>analysis</code>用于设置索引的分析器。ES 的文本在保存到索引之中时，需要指定唯一的分析器<code>Analyzer</code>（每个字段类型都有默认的分析器），它的作用就是将原文本处理、变形、切分成我们需要的单元，从而方便我们搜索。一个标准的<code>Analyzer</code>包含三个组件，即0～N个<code>Char Filter</code>、一个<code>Tokenizer</code>、0～N个<code>Token Filter</code>。如下图所示：</p>
+<p><em><code>analysis</code> is used to set analyzer for index. When the text is saved to an index We need to specify a unique <code>Analyzer</code>.Its function is to process the original text,transform, cut into the unit we need,so as for searching. A typical <code>Analyzer</code> include three parts:some <code>Char Filter</code>, a <code>Tokenizer</code> and some <code>Token Filter</code>.</em></p>
+<p>
+<div class="post-img-view">
+<a data-fancybox="gallery" href="https://i.imgur.com/efNsR4f.jpg">
+<img src="https://i.imgur.com/efNsR4f.jpg" alt=""  />
+</a>
+</div>
+</p>
+<ul>
+<li>
+<p><strong>Char Filter</strong>：对文本进行过滤处理，常用来过滤html标签</p>
+</li>
+<li>
+<p><strong>Tokenizer</strong>：Analyzer的核心部分，对本文进行分词。<strong>必须包含一个Tokenizer</strong></p>
+</li>
+<li>
+<p><strong>Token Filter</strong>：对 Tokenizer 分出的词进行过滤、转换处理。如同义词转换、拼音转换等</p>
+</li>
+<li>
+<p><strong>Char Filter</strong>：Filter text, often used to filter HTML tags</p>
+</li>
+<li>
+<p><strong>Tokenizer</strong>：The core part of the Analyzer that split text. <strong>must include a Tokenizer</strong></p>
+</li>
+<li>
+<p><strong>Token Filter</strong>：converts the words which splted from Tokenizer. Such as synonym conversion, pinyin conversion</p>
+</li>
+</ul>
+<p>引用一下官方的一个图片：</p>
+<p><em>To quote an official picture:</em></p>
+<p>
+<div class="post-img-view">
+<a data-fancybox="gallery" href="https://i.imgur.com/LRKPELM.jpg">
+<img src="https://i.imgur.com/LRKPELM.jpg" alt=""  />
+</a>
+</div>
+</p>
+<p>因此再回头看我们上面的索引的 setting 内容，可以看到我们主要做了如下几个事情：</p>
+<p><em>So looking back at our index setting, we can see that we mainly do the following things:</em></p>
+<ol>
+<li>
+<p>创建一个名为<code>nick_analyzer</code>的分析器</p>
+</li>
+<li>
+<p>指定其 tokenizer 为<code>standard</code>(标准分词器)</p>
+</li>
+<li>
+<p>指定 filter 为<code>stop</code>（去除停用词，如<code>is</code> <code>a</code>）和<code>lowercase</code>（转小写）</p>
+</li>
+<li>
+<p>Create a analyzer who was named nick_analyzer</p>
+</li>
+<li>
+<p>specify <code>standard</code> (standard tokenizer) for tokenizer</p>
+</li>
+<li>
+<p>specify <code>stop</code> and <code>lowercase</code> for filter</p>
+</li>
+</ol>
+<p>这样的一个 nick_analyzer 会有什么样的效果呢，大致处理流程如下：</p>
+<p><em>So what happend in the nick_analyzer? The general processing is as follows:</em></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">流程</th>
+<th style="text-align:center">文本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">开始</td>
+<td style="text-align:center">我最喜欢的 is ElasticSearch</td>
+</tr>
+<tr>
+<td style="text-align:center">standard（Tokenizer）</td>
+<td style="text-align:center"><code>我</code>、<code>最</code>、<code>喜</code>、<code>欢</code>、<code>的</code>、<code>is</code>、<code>ElasticSearch</code></td>
+</tr>
+<tr>
+<td style="text-align:center">stop（Token Filter）</td>
+<td style="text-align:center"><code>我</code>、<code>最</code>、<code>喜</code>、<code>欢</code>、<code>的</code>、<code>ElasticSearch</code></td>
+</tr>
+<tr>
+<td style="text-align:center">lowercase（Token Filter）</td>
+<td style="text-align:center"><code>我</code>、<code>最</code>、<code>喜</code>、<code>欢</code>、<code>的</code>、<code>elasticsearch</code></td>
+</tr>
+</tbody>
+</table>
+<p>这样的话，一段中英文混合的文本，就处理成我们需要的单元保存在索引中了。</p>
+<p><em>In this case, a paragraph of mixed Chinese and English text is processed into the unit we need to save in the index.</em></p>
+<h4 id="number_of_shards">number_of_shards</h4>
+<p>设置索引的数据分片数，ES通过这个选项将索引切分成对应数量的分片。一个索引切成多个分片以后，每个查询请求都会同时在多个分片上处理，这样会大大提升遍历整个索引的速度，提高查询性能。一般的情况下，分片的数量最好小于等于数据节点数。（关于<code>数据节点</code>和<code>非数据节点</code>请参考上一篇(<a href="mweblib://16464492536025">elasticsearch 在漫画搜索项目的应用（一）安装和部署搜索服务</a>）。</p>
+<p><em>This configuration item means setting the shard for a index. The index will be divided into many fragments.After an index is cut, each query request is processed on multiple fragments at the same time, which greatly improves the speed of searching and improves query performance.In general, the number of shards should be less or equal to the number of data nodes. You can find more infomation in previous post.<a href="mweblib://16464492536025">elasticsearch 在漫画搜索项目的应用（一）安装和部署搜索服务</a></em></p>
+<h4 id="number_of_replicas">number_of_replicas</h4>
+<p>这个选项是用来设定索引的数据备份的数量，当集群的节点出现数据丢失时可以通过副本恢复。一般来说设定为1就可以。值得注意的是，通过<code>GET /_cat/indices</code>查看索引状态时，你会发现设置了<code>number_of_replicas=1</code>所占用的存储空间为<code>number_of_replicas=0</code>的2倍（额外储存了一份备份数据）。数据备份是完全复制原始数据，包括分片设置。假设我们<code>number_of_shards</code>为3，<code>number_of_replicas</code>为1，那么该索引总的分片数量为 3*(1+1)=6。</p>
+<p><em>This option is used to set the number of data backups for the index so that data can be recovered from a replica if a node in the cluster loses data. Generally, set it to 1.If you check index status by <code>GET /_cat/indices</code> ,you will see that the index which setting <code>number_of_replicas=1</code>  takes up twice as much storage space as the index which setting <code>number_of_replicas=0</code>.The replica is a complete copy of the original data, including sharding Settings. So if the<code>number_of_shards</code> is 3,the <code>number_of_replicas</code> is 1,that the total numbers of shards for the index is 3</em>(1+1)=6.*</p>
+<p>以上就是关于ES的索引配置和管理的内容了。下一期我们继续介绍如何配置实际生产中适用的中文搜索服务。</p>
+<p><em>That&rsquo;s all about index configuration and management for ES. In the next post, we will continue to show you how to configure Chinese search services for actual production.</em></p>
+</div>
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "evanszhang" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-62768625-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+  </body>
+</html>

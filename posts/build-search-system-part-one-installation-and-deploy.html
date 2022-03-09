@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-cn" lang="zh-cn">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.93.2" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>elasticsearch 在漫画搜索项目的应用（一）安装和部署搜索服务 &middot; 杂鱼君的博客</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://blog.zakokun.com/"><h1>杂鱼君的博客</h1></a>
+      <p class="lead">
+       好吃懒做，眼高手低 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="/"> 首页 </a></li><li><a href="/categories.html"> 分类 </a></li><li><a href="/about/about.html"> 关于我 </a></li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2022.Powered by <a target="_blank" href="https://gohugo.io/">Hugo</a> </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>elasticsearch 在漫画搜索项目的应用（一）安装和部署搜索服务</h1>
+  <time datetime=2020-10-22T14:27:26&#43;0800 class="post-date">2020-10-22 14:27</time>
+  <p>早期的哔哩哔哩漫画搜索服务是由大数据部门提供的，很多功能上无法满足漫画自己业务的需求。我们在调研了一段时间 elasticsearch（后面简称ES）以后，动手搭建了一套功能齐全的搜索服务。探索的过程收获了不少东西，因此打算写几篇相关的文章记录一下。作为开篇，简单的讲一些ES的搭建过程和一些细节。</p>
+<p>The early Bilibili Manga search service is provided by Big Data department,and many functions could not meet the needs of our own business. After a period of investigation, we start to construct a functional search service. We got a lots of exprience in this process so I decide to white some article to record it. As a start, I will go into some details about set up a ES service.</p>
+<h2 id="前期准备">前期准备</h2>
+<h2 id="preparing">preparing</h2>
+<p>在我们开始做调研的时候，ES的最新版本是7.6.1。作为一个没有历史包袱的项目，最新版本自然是最好的选择。对我们一般的用户来说，ES7相比之前的版本最大的改变是如下几点：</p>
+<ol>
+<li>删除type类型</li>
+<li>支持向量搜索</li>
+<li>自带JDK环境</li>
+</ol>
+<p>When we started doing the investigation, the latest version of ES is 7.6.1. As a brand new project,the latest version natural is the best choice. For normal users, the biggest changes from the previous version are as follows:</p>
+<ol>
+<li>remove &rsquo;type&rsquo; type</li>
+<li>vector search support</li>
+<li>JDK include</li>
+</ol>
+<p>删除type类型以后，索引和字段的关系更加清晰，也方便从数据库的角度去理解索引（表）字段之间的对应关系。向量搜索可以为算法服务提供向量运算和基于向量模型的召回。自带JDK环境不必多说，部署ES服务更加方便了。</p>
+<p>After remove &rsquo;type&rsquo; type,we can clearly understand the relation between index and field,besides,it is also convenient to understand the correspoding relationship between index (table) fields from the database perspective. The vector search provide vector operation and items recall based on vector model for algorithm service.</p>
+<p>运维为我们提供了三台物理机，硬件配置都为24核128G内存。针对这样配置的机器，ES 官方有这样的建议：</p>
+<p>OPS provide us three physical machines with 24 cores and 128 gigabytes of memory. some official recommendations for machines with this configuration:</p>
+<blockquote>
+<p>假设你有个 128 GB 内存的机器，你可以创建两个节点，每个节点内存分配不超过 32 GB。 也就是说不超过 64 GB 内存给 ES 的堆内存，剩下的超过 64 GB 的内存给 Lucene。</p>
+</blockquote>
+<blockquote>
+<p>If you have a 128 GB memory machine, you can create two nodes at most 32 GB memory allocate to each node,which means no more than 64 GB of memory allocate to ES heaps memory,and rest is over 64 GB of memory for Lucene.</p>
+</blockquote>
+<p>具体说明在<a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/heap-sizing.html">这里</a></p>
+<p>Here is the deatail.</p>
+<h2 id="安装部署">安装部署</h2>
+<h2 id="install--deploy">install &amp; deploy</h2>
+<p>自带 JDK 的 ES 安装非常简单，保持着一贯以来的开箱即用原则。只要在构建集群的时候稍微注意一下集群的配置就可以了。</p>
+<p>The installation of ES with JDK is very simple,keeping with the usual out-of-the-box principles. We Just have to focus on the config when you build all the systems.</p>
+<p>首先从<a href="https://www.elastic.co/cn/downloads/elasticsearch">下载页面</a> 下载符合自己系统的安装包，解压缩：</p>
+<p>First,download the installation package for your own system and unzip from the download page:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tar -zxvf elasticsearch-7.6.1-linux-x86_64.tar.gz
+</span></span><span style="display:flex;"><span><span style="color:#366">cd</span> elasticsearch
+</span></span></code></pre></div><p>几个主要的配置文件位于：</p>
+<p>Several major configuration files are located here:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./config/elasticsearch.yml     <span style="color:#09f;font-style:italic"># es 自身配置</span>
+</span></span><span style="display:flex;"><span>./config/jvm.options     <span style="color:#09f;font-style:italic"># jvm 相关配置</span>
+</span></span></code></pre></div><p><code>elasticsearch.yml</code> 中几个重点的配置如下：</p>
+<p>the point of <code>elasticsearch.yml</code> is:</p>
+<p><strong>cluster.name</strong></p>
+<p>集群名称，同集群下的节点配置必须相同。</p>
+<p>The special name of cluster. Each node configuration must keep the same under a cluster.</p>
+<p><strong>node.name</strong></p>
+<p>节点名称，同集群下不同节点名称不能相同。</p>
+<p>The special name of node. Each node configuration must keep different under a cluster.</p>
+<p><strong>node.data/node.master</strong></p>
+<p>节点类型。一般来说，一个节点要么是 master 节点，要么是 data 节点，这样拆分更合理。</p>
+<p>node type. generally, a node either a master node or a data node.
+It makes more sense to split it this way.</p>
+<p><strong>path.data/path.logs</strong></p>
+<p>数据文件和日志文件储存目录。</p>
+<p>The storage directory of data file and log file.</p>
+<p><strong>http.port</strong></p>
+<p>搜索 API 服务端口号，默认9200。</p>
+<p>The port user for API service, deafult 9200.</p>
+<p><strong>transport.port</strong></p>
+<p>elasticsearch集群内数据通讯使用的端口，默认9300。</p>
+<p>The port user for data transport within the cluser, default 9300.</p>
+<p><strong>discovery.seed_hosts</strong></p>
+<p>指定集群扫描的 IP 和端口号，便于发现集群节点纳入集群。</p>
+<p>Assign IP and PORT to cluster discovery for find out and include into cluster easily.</p>
+<p>因此一个完整的 master 节点配置文件内容如下：</p>
+<p>Therefore, the content of complete master node configuration file is as follows:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#309;font-weight:bold">cluster.name</span>:<span style="color:#bbb"> </span>my_cluster_name<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">node.name</span>:<span style="color:#bbb"> </span>node1<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">node.master</span>:<span style="color:#bbb"> </span><span style="color:#069;font-weight:bold">true</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">node.data</span>:<span style="color:#bbb"> </span><span style="color:#069;font-weight:bold">false</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">path.data</span>:<span style="color:#bbb"> </span>/mnt/storage01/esdata<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">path.logs</span>:<span style="color:#bbb"> </span>/mnt/storage01/log/elasticsearch<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">bootstrap.memory_lock</span>:<span style="color:#bbb"> </span><span style="color:#069;font-weight:bold">false</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">bootstrap.system_call_filter</span>:<span style="color:#bbb"> </span><span style="color:#069;font-weight:bold">false</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">network.host</span>:<span style="color:#bbb"> </span><span style="color:#f60">0.0.0.0</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">http.port</span>:<span style="color:#bbb"> </span><span style="color:#f60">9212</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">transport.tcp.port</span>:<span style="color:#bbb"> </span><span style="color:#f60">9312</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">discovery.seed_hosts</span>:<span style="color:#bbb"> </span>[<span style="color:#c30">&#39;10.70.54.28:9311&#39;</span>,<span style="color:#c30">&#39;10.70.54.28:9312&#39;</span>,<span style="color:#c30">&#39;10.70.54.27:9312&#39;</span>,<span style="color:#c30">&#39;10.70.54.27:9311&#39;</span>,<span style="color:#c30">&#39;10.70.54.26:9312&#39;</span>]<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">http.cors.enabled</span>:<span style="color:#bbb"> </span><span style="color:#069;font-weight:bold">true</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">http.cors.allow-origin</span>:<span style="color:#bbb"> </span><span style="color:#c30">&#34;*&#34;</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">indices.memory.index_buffer_size</span>:<span style="color:#bbb"> </span><span style="color:#f60">40</span>%<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">thread_pool.write.queue_size</span>:<span style="color:#bbb"> </span><span style="color:#f60">1024</span><span style="color:#bbb">
+</span></span></span></code></pre></div><p>同理，一个 data 节点的配置文件如下：</p>
+<p>Similarly, the configuration file for a data node is as follows:</p>
+<p><em>注意node.master,node.data的区别</em></p>
+<p><em>notice the different of node.master and node.data</em></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#309;font-weight:bold">cluster.name</span>:<span style="color:#bbb"> </span>my_cluster_name<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">node.name</span>:<span style="color:#bbb"> </span>node2<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">node.master</span>:<span style="color:#bbb"> </span><span style="color:#069;font-weight:bold">false</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">node.data</span>:<span style="color:#bbb"> </span><span style="color:#069;font-weight:bold">true</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">path.data</span>:<span style="color:#bbb"> </span>/mnt/storage01/esdata<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">path.logs</span>:<span style="color:#bbb"> </span>/mnt/storage01/log/elasticsearch<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">bootstrap.memory_lock</span>:<span style="color:#bbb"> </span><span style="color:#069;font-weight:bold">false</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">bootstrap.system_call_filter</span>:<span style="color:#bbb"> </span><span style="color:#069;font-weight:bold">false</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">network.host</span>:<span style="color:#bbb"> </span><span style="color:#f60">0.0.0.0</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">http.port</span>:<span style="color:#bbb"> </span><span style="color:#f60">9211</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">transport.tcp.port</span>:<span style="color:#bbb"> </span><span style="color:#f60">9311</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">discovery.seed_hosts</span>:<span style="color:#bbb"> </span>[<span style="color:#c30">&#39;10.70.54.28:9311&#39;</span>,<span style="color:#c30">&#39;10.70.54.28:9312&#39;</span>,<span style="color:#c30">&#39;10.70.54.27:9312&#39;</span>,<span style="color:#c30">&#39;10.70.54.27:9311&#39;</span>,<span style="color:#c30">&#39;10.70.54.26:9312&#39;</span>]<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">http.cors.enabled</span>:<span style="color:#bbb"> </span><span style="color:#069;font-weight:bold">true</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">http.cors.allow-origin</span>:<span style="color:#bbb"> </span><span style="color:#c30">&#34;*&#34;</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">indices.memory.index_buffer_size</span>:<span style="color:#bbb"> </span><span style="color:#f60">40</span>%<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">thread_pool.write.queue_size</span>:<span style="color:#bbb"> </span><span style="color:#f60">1024</span><span style="color:#bbb">
+</span></span></span></code></pre></div><p>而 jvm.options 文件就很简单，需要改的只有以下两个地方：</p>
+<p>And <code>jvm.options</code> file is simple,you just need change this two parts:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>-Xms30g
+</span></span><span style="display:flex;"><span>-Xmx30g
+</span></span></code></pre></div><p>指定最小和最大堆内存都为30GB。</p>
+<p>Specifies the minimum and maximum heaps memory sizes.</p>
+<p>都设置好了以后，需要创建一个运行es服务的用户，es不允许使用root账户直接运行，因此：</p>
+<p>After all set up, we need to create a specified user for ES,root user is not allowed.So:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>adduser --disabled-password --gecos <span style="color:#c30">&#34;&#34;</span> es
+</span></span><span style="display:flex;"><span>chown -R es:es elasticsearch
+</span></span></code></pre></div><p>不过一般来说第一次运行ES服务还会额外报一个错误：</p>
+<p>But if we run ES service at first time,we may get another error:</p>
+<pre tabindex="0"><code>max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+</code></pre><p>参考stackoverflow上的这个<a href="https://stackoverflow.com/questions/51445846/elasticsearch-max-virtual-memory-areas-vm-max-map-count-65530-is-too-low-inc">回答</a>:</p>
+<p>We can refer to this answer in stackoverflow:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sysctl -w vm.max_map_count<span style="color:#555">=</span><span style="color:#f60">262144</span>
+</span></span></code></pre></div><p>或者一步到位，直接去修改系统的配置项，新增一行：</p>
+<p>Or go ahead and change the system configuration and add a new line:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vim /etc/sysctl.conf
+</span></span><span style="display:flex;"><span>vm.max_map_count<span style="color:#555">=</span><span style="color:#f60">262144</span>
+</span></span></code></pre></div><p>最后，直接执行 <code>bin/elasticsearch -d</code> 就可以了。</p>
+<p>After all set up, it is ok to execute <code>bin/elasticsearch -d</code> directly.</p>
+</div>
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "evanszhang" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-62768625-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+  </body>
+</html>

@@ -2,21 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>tool on 杂鱼君的博客</title>
-    <link>https://blog.zakokun.com/tags/tool/</link>
+    <link>https://blog.zakokun.com/tags/tool.html</link>
     <description>Recent content in tool on 杂鱼君的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 17 Jan 2014 02:22:33 +0000</lastBuildDate>
-    
-	<atom:link href="https://blog.zakokun.com/tags/tool/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Fri, 17 Jan 2014 02:22:33 +0000</lastBuildDate><atom:link href="https://blog.zakokun.com/tags/tool/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>sublime的一些个人使用心得</title>
-      <link>https://blog.zakokun.com/2014/sublime-plugin-introduce/</link>
+      <link>https://blog.zakokun.com/posts/sublime-plugin-introduce.html</link>
       <pubDate>Fri, 17 Jan 2014 02:22:33 +0000</pubDate>
       
-      <guid>https://blog.zakokun.com/2014/sublime-plugin-introduce/</guid>
+      <guid>https://blog.zakokun.com/posts/sublime-plugin-introduce.html</guid>
       <description>&lt;p&gt;SubLime Text(ST)是一个很适合程序猿使用的跨平台文本编辑器,有很多强大的内置功能以及丰富的第三方插件.我在第一次接触他的时候就被彻底征服.又大又笨的IDE还是见鬼去吧.
 下载安装ST可以直接去&lt;a href=&#34;http://www.sublimetext.com/&#34;&gt;官网&lt;/a&gt;,有2和3两个版本,ST3目前是beta版,不过日常使用依然是挺稳定的,看个人喜好吧,我用的是2.&lt;/p&gt;</description>
     </item>

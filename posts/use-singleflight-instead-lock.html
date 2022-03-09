@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-cn" lang="zh-cn">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.93.2" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>使用 singleflight 代替传统的并发锁 &middot; 杂鱼君的博客</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://blog.zakokun.com/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+</head>
+
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://blog.zakokun.com/"><h1>杂鱼君的博客</h1></a>
+      <p class="lead">
+       好吃懒做，眼高手低 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="/"> 首页 </a></li><li><a href="/categories.html"> 分类 </a></li><li><a href="/about/about.html"> 关于我 </a></li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2022.Powered by <a target="_blank" href="https://gohugo.io/">Hugo</a> </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>使用 singleflight 代替传统的并发锁</h1>
+  <time datetime=2017-06-12T17:39:20Z class="post-date">2017-06-12 17:39</time>
+  <p>一般来说高并发，或者 sql 查询很重的业务，缓存都是少不了的。业务代码中，读取缓存的时候一般会这样处理：</p>
+<pre tabindex="0"><code>data = getCache(key)
+if !data {
+    data = selectDB(key)
+}
+</code></pre><p>但是有些时候光做缓存还是不够，我们还要担心缓存失效导致的集中查 DB 的问题，这时候就需要考虑加锁的问题了。</p>
+<h2 id="传统的-mc-锁">传统的 Mc 锁</h2>
+<p>一般加锁的思路都是依靠一个标志位，可以是另外一个 Mc 的 key，或者是一个锁文件。代码往往是这样的：</p>
+<pre tabindex="0"><code>func checkAccess(key) bool {
+    startTime = time.now()
+    for true {
+        if isLock(key) == false {
+            setLock(key)
+            return true
+        }
+        if (time.now() - startTime) &gt; _maxLockTime {
+             return false
+        }
+        time.sleep(20ms)
+    }
+}
+</code></pre><p>在读取缓存失败，查询 DB 之前，先来一个锁判断，如果锁不存在，那么就加把锁，再去查 DB。如果锁存在，那么就等待，然后回头再去读 Mc 或者进入 DB 查询。</p>
+<h2 id="使用-singleflight">使用 singleflight</h2>
+<p>上面的代码使用起来没什么问题，但是依靠无限循环 + sleep 实现的方法比较低效。而在 go 语言中，借助非常轻量和高效的协程，可以很优雅的实现这种功能，这就是<code>singleflight</code>。</p>
+<h3 id="使用方法">使用方法</h3>
+<p>使用方法很简单，可以参考其<a href="https://github.com/golang/groupcache/blob/master/singleflight/singleflight_test.go">test</a> ：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#069;font-weight:bold">func</span> <span style="color:#c0f">TestDo</span>(t <span style="color:#555">*</span>testing.T) {
+</span></span><span style="display:flex;"><span>    <span style="color:#069;font-weight:bold">var</span> g Group
+</span></span><span style="display:flex;"><span>    v, err <span style="color:#555">:=</span> g.<span style="color:#c0f">Do</span>(<span style="color:#c30">&#34;key&#34;</span>, <span style="color:#069;font-weight:bold">func</span>() (<span style="color:#069;font-weight:bold">interface</span>{}, <span style="color:#078;font-weight:bold">error</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#069;font-weight:bold">return</span> <span style="color:#c30">&#34;bar&#34;</span>, <span style="color:#069;font-weight:bold">nil</span>
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>    <span style="color:#069;font-weight:bold">if</span> got, want <span style="color:#555">:=</span> fmt.<span style="color:#c0f">Sprintf</span>(<span style="color:#c30">&#34;%v (%T)&#34;</span>, v, v), <span style="color:#c30">&#34;bar (string)&#34;</span>; got <span style="color:#555">!=</span> want {
+</span></span><span style="display:flex;"><span>        t.<span style="color:#c0f">Errorf</span>(<span style="color:#c30">&#34;Do = %v; want %v&#34;</span>, got, want)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#069;font-weight:bold">if</span> err <span style="color:#555">!=</span> <span style="color:#069;font-weight:bold">nil</span> {
+</span></span><span style="display:flex;"><span>        t.<span style="color:#c0f">Errorf</span>(<span style="color:#c30">&#34;Do error = %v&#34;</span>, err)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>可见使用起来非常简单，对外只需要这个<code>Do</code> 函数，传入 Key 和获取缓存的回调函数，如此 singleflight 就能自动帮我们处理同时请求下游服务的问题了。</p>
+<p>那么这个<code>Do</code>函数到底做了什么事情？</p>
+<h3 id="源码分析">源码分析</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#069;font-weight:bold">type</span> call <span style="color:#069;font-weight:bold">struct</span> {
+</span></span><span style="display:flex;"><span>    wg sync.WaitGroup
+</span></span><span style="display:flex;"><span>    val <span style="color:#069;font-weight:bold">interface</span>{}
+</span></span><span style="display:flex;"><span>    err <span style="color:#078;font-weight:bold">error</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#069;font-weight:bold">type</span> Group <span style="color:#069;font-weight:bold">struct</span> {
+</span></span><span style="display:flex;"><span>    mu sync.Mutex       <span style="color:#09f;font-style:italic">// protects m
+</span></span></span><span style="display:flex;"><span><span style="color:#09f;font-style:italic"></span>    m  <span style="color:#069;font-weight:bold">map</span>[<span style="color:#078;font-weight:bold">string</span>]<span style="color:#555">*</span>call <span style="color:#09f;font-style:italic">// lazily initialized
+</span></span></span><span style="display:flex;"><span><span style="color:#09f;font-style:italic"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#069;font-weight:bold">func</span> (g <span style="color:#555">*</span>Group) <span style="color:#c0f">Do</span>(key <span style="color:#078;font-weight:bold">string</span>, fn <span style="color:#069;font-weight:bold">func</span>() (<span style="color:#069;font-weight:bold">interface</span>{}, <span style="color:#078;font-weight:bold">error</span>)) (v <span style="color:#069;font-weight:bold">interface</span>{}, err <span style="color:#078;font-weight:bold">error</span>, shared <span style="color:#078;font-weight:bold">bool</span>) {
+</span></span><span style="display:flex;"><span>    g.mu.<span style="color:#c0f">Lock</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#069;font-weight:bold">if</span> g.m <span style="color:#555">==</span> <span style="color:#069;font-weight:bold">nil</span> {
+</span></span><span style="display:flex;"><span>        g.m = <span style="color:#366">make</span>(<span style="color:#069;font-weight:bold">map</span>[<span style="color:#078;font-weight:bold">string</span>]<span style="color:#555">*</span>call)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#069;font-weight:bold">if</span> c, ok <span style="color:#555">:=</span> g.m[key]; ok {
+</span></span><span style="display:flex;"><span>        c.dups<span style="color:#555">++</span>
+</span></span><span style="display:flex;"><span>        g.mu.<span style="color:#c0f">Unlock</span>()
+</span></span><span style="display:flex;"><span>        c.wg.<span style="color:#c0f">Wait</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#069;font-weight:bold">return</span> c.val, c.err, <span style="color:#069;font-weight:bold">true</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    c <span style="color:#555">:=</span> <span style="color:#366">new</span>(call)
+</span></span><span style="display:flex;"><span>    c.wg.<span style="color:#c0f">Add</span>(<span style="color:#f60">1</span>)
+</span></span><span style="display:flex;"><span>    g.m[key] = c
+</span></span><span style="display:flex;"><span>    g.mu.<span style="color:#c0f">Unlock</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    g.<span style="color:#c0f">doCall</span>(c, key, fn)
+</span></span><span style="display:flex;"><span>    <span style="color:#069;font-weight:bold">return</span> c.val, c.err, c.dups &gt; <span style="color:#f60">0</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>go 的代码一直都很清晰易懂，可以看到先定义了结构体<code>group</code>和<code>call</code>，<code>group.mu</code>是保护<code>group.m</code>的互斥锁，<code>group.m</code>主要是保存请求的key，而<code>call</code>结构体是用来记录回调函数的结果。</p>
+<p>在<code>Do</code>函数中，函数先是判断这个 key 是否是第一次调用，如果是，就会进入<code>doCall</code>调用回调函数获取结果，后续的请求就会阻塞在<code>c.wg.Wait()</code>这里，等待回调函数返回以后，直接拿到结果。</p>
+<h3 id="singleflight-的应用">singleflight 的应用</h3>
+<p>所以依靠 singleflight ，针对并发缓存的更新，我们就可以这样实现：</p>
+<pre tabindex="0"><code>data = getCache(key)
+if !data {
+    data = g.Do(key, func(){
+        return selectDB(key)
+    })
+}
+</code></pre><p>这样是不是优雅很多呢？而且 singleflight 不仅仅可以用来当做 mc 锁，调用其他脆弱的下游业务同样可以发挥很大的作用。</p>
+</div>
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "evanszhang" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-62768625-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+  </body>
+</html>

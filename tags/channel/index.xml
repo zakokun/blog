@@ -2,21 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>channel on 杂鱼君的博客</title>
-    <link>https://blog.zakokun.com/tags/channel/</link>
+    <link>https://blog.zakokun.com/tags/channel.html</link>
     <description>Recent content in channel on 杂鱼君的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 19 Feb 2017 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://blog.zakokun.com/tags/channel/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 19 Feb 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.zakokun.com/tags/channel/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>通过带缓冲的channel来控制并发数</title>
-      <link>https://blog.zakokun.com/2017/goroutinue-number-control/</link>
+      <link>https://blog.zakokun.com/posts/goroutinue-number-control.html</link>
       <pubDate>Sun, 19 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://blog.zakokun.com/2017/goroutinue-number-control/</guid>
+      <guid>https://blog.zakokun.com/posts/goroutinue-number-control.html</guid>
       <description>&lt;p&gt;最近和搜索的同事一起用 golang 重构他们的 Elasticsearch 客户端.在用 Goroutines 去异步更新索引的时候并发量太大导致 ES
 进程挂掉的情况(真弱).因此在更新索引的时候考虑如何手动控制并发的协程数量.&lt;/p&gt;</description>
     </item>

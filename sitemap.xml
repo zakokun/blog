@@ -1,457 +1,343 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
-    <loc>https://blog.zakokun.com/2020/build-search-system-part-one-installation-and-deploy/</loc>
-    <lastmod>2020-10-22T14:27:26+08:00</lastmod>
+    <loc>https://blog.zakokun.com/categories.html</loc>
+    <lastmod>2020-12-28T19:26:34+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/posts/</loc>
-    <lastmod>2020-10-22T14:27:26+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/build-search-system-part-two-index-analyzer-and-chinese-search.html</loc>
+    <lastmod>2020-12-28T19:26:34+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts.html</loc>
+    <lastmod>2020-12-28T19:26:34+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.zakokun.com/categories/%E6%8A%80%E6%9C%AF.html</loc>
+    <lastmod>2020-12-28T19:26:34+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>https://blog.zakokun.com/</loc>
+    <lastmod>2020-12-28T19:26:34+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/build-search-system-part-one-installation-and-deploy.html</loc>
     <lastmod>2020-10-22T14:27:26+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/golang/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/golang.html</loc>
     <lastmod>2020-09-29T15:58:08+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/hugo/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/hugo.html</loc>
     <lastmod>2020-09-29T15:58:08+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags.html</loc>
     <lastmod>2020-09-29T15:58:08+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2020/change-blog-struct-again/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/change-blog-struct-again.html</loc>
     <lastmod>2020-09-29T15:58:08+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/android/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/android.html</loc>
     <lastmod>2018-01-12T10:54:30+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/iphone/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/iphone.html</loc>
     <lastmod>2018-01-12T10:54:30+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/xiaomi/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/xiaomi.html</loc>
     <lastmod>2018-01-12T10:54:30+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2018/buy-a-new-android-phone/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/buy-a-new-android-phone.html</loc>
     <lastmod>2018-01-12T10:54:30+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.zakokun.com/tags/index/</loc>
     <lastmod>2017-07-17T22:40:28+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/mysql/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/mysql.html</loc>
     <lastmod>2017-07-17T22:40:28+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/performance/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/performance.html</loc>
     <lastmod>2017-07-17T22:40:28+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/query/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/query.html</loc>
     <lastmod>2017-07-17T22:40:28+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2017/use-force-index/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/use-force-index.html</loc>
     <lastmod>2017-07-17T22:40:28+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/cache/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/cache.html</loc>
     <lastmod>2017-06-12T17:39:20+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/concurrence/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/concurrence.html</loc>
     <lastmod>2017-06-12T17:39:20+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/singleflight/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/singleflight.html</loc>
     <lastmod>2017-06-12T17:39:20+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2017/use-singleflight-instead-lock/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/use-singleflight-instead-lock.html</loc>
     <lastmod>2017-06-12T17:39:20+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/slow-query/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/slow-query.html</loc>
     <lastmod>2017-05-24T20:41:31+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2017/slow-query-with-clustered-index/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/slow-query-with-clustered-index.html</loc>
     <lastmod>2017-05-24T20:41:31+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2017/go-string-implode-diff-way/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/go-string-implode-diff-way.html</loc>
     <lastmod>2017-04-13T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/gfw/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/gfw.html</loc>
     <lastmod>2017-03-26T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/system/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/system.html</loc>
     <lastmod>2017-03-26T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2017/build-fluent-net-env/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/build-fluent-net-env.html</loc>
     <lastmod>2017-03-26T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/channel/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/channel.html</loc>
     <lastmod>2017-02-19T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2017/goroutinue-number-control/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/goroutinue-number-control.html</loc>
     <lastmod>2017-02-19T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/blog/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/blog.html</loc>
     <lastmod>2017-01-18T21:08:02+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2017/change-blog-system/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/change-blog-system.html</loc>
     <lastmod>2017-01-18T21:08:02+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2017/year-person-summarize/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/year-person-summarize.html</loc>
     <lastmod>2017-01-03T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/life/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/life.html</loc>
     <lastmod>2017-01-03T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/php/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/php.html</loc>
     <lastmod>2016-10-20T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2016/php-session-bug/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/php-session-bug.html</loc>
     <lastmod>2016-10-20T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/session/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/session.html</loc>
     <lastmod>2016-10-20T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/date/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/date.html</loc>
     <lastmod>2016-07-18T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2016/golang-time-package/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/golang-time-package.html</loc>
     <lastmod>2016-07-18T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/testing/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/testing.html</loc>
     <lastmod>2016-07-14T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2016/linux-pressure-testing-tool/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/linux-pressure-testing-tool.html</loc>
     <lastmod>2016-07-14T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/metting/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/metting.html</loc>
     <lastmod>2016-06-30T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2016/impression-about-phpcon-2016/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/impression-about-phpcon-2016.html</loc>
     <lastmod>2016-06-30T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2016/2015-year-person-summarize/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/2015-year-person-summarize.html</loc>
     <lastmod>2016-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/osx/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/categories/development.html</loc>
+    <lastmod>2016-01-01T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/osx.html</loc>
     <lastmod>2015-12-29T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2015/osx-lnmp/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/osx-lnmp.html</loc>
     <lastmod>2015-12-29T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2015/create-a-php-framework/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/create-a-php-framework.html</loc>
     <lastmod>2015-05-24T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/elementryos/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/elementryos.html</loc>
     <lastmod>2015-05-15T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2015/install-lnmp-on-elementary-os/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/install-lnmp-on-elementary-os.html</loc>
     <lastmod>2015-05-15T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/design-mode/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/design-mode.html</loc>
     <lastmod>2015-01-29T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2015/learn-design-patterns-observer/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/learn-design-patterns-observer.html</loc>
     <lastmod>2015-01-29T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2015/learn-design-patterns-singleton/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/learn-design-patterns-singleton.html</loc>
     <lastmod>2015-01-28T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/sort/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/sort.html</loc>
     <lastmod>2015-01-26T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2015/how-to-reorder-an-array-by-specific-rule/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/how-to-reorder-an-array-by-specific-rule.html</loc>
     <lastmod>2015-01-26T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2014/different-between-strtr-and-str_replace/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/different-between-strtr-and-str_replace.html</loc>
     <lastmod>2014-12-25T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2014/php-method-overload/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/php-method-overload.html</loc>
     <lastmod>2014-12-20T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2014/learn-php-redis/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/learn-php-redis.html</loc>
     <lastmod>2014-09-22T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/redis/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/redis.html</loc>
     <lastmod>2014-09-22T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/csv/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/csv.html</loc>
     <lastmod>2014-03-12T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2014/how-to-export-csv-file-by-php/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/how-to-export-csv-file-by-php.html</loc>
     <lastmod>2014-03-12T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/sublime-text/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/sublime-text.html</loc>
     <lastmod>2014-01-17T02:22:33+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2014/sublime-plugin-introduce/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/sublime-plugin-introduce.html</loc>
     <lastmod>2014-01-17T02:22:33+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/tags/tool/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/tags/tool.html</loc>
     <lastmod>2014-01-17T02:22:33+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/2014/how-to-print-all-five-letters-string-by-php/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/posts/how-to-print-all-five-letters-string-by-php.html</loc>
     <lastmod>2014-01-17T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/about/</loc>
+  </url><url>
+    <loc>https://blog.zakokun.com/about.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.zakokun.com/about/about.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/categories/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zakokun.com/about/about/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
 </urlset>
