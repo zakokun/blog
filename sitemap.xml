@@ -32,6 +32,11 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
+    <loc>https://blog.zakokun.com/posts/build-search-system-part-one-v2.html</loc>
+    <lastmod>2020-10-22T14:27:26+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>https://blog.zakokun.com/posts/change-blog-struct-again.html</loc>
     <lastmod>2020-09-29T15:58:08+08:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -117,12 +122,22 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
+    <loc>https://blog.zakokun.com/about.html</loc>
+    <lastmod>2016-01-01T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>https://blog.zakokun.com/tags/life.html</loc>
     <lastmod>2016-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>https://blog.zakokun.com/tags.html</loc>
+    <lastmod>2016-01-01T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.zakokun.com/about/about.html</loc>
     <lastmod>2016-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -184,14 +199,6 @@
   </url><url>
     <loc>https://blog.zakokun.com/posts/how-to-print-all-five-letters-string-by-php.html</loc>
     <lastmod>2014-01-17T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://blog.zakokun.com/about.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://blog.zakokun.com/about/about.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>

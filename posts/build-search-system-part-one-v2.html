@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>elasticsearch 在漫画搜索项目的应用（一）安装和部署搜索服务 &middot; 杂鱼君的博客</title>
+  <title>elasticsearch 在漫画搜索项目的应用（一）安装和部署搜索服务v2 &middot; 杂鱼君的博客</title>
   <meta name="description" content="" />
 
   
@@ -54,12 +54,11 @@
 
     <main class="content container">
     <div class="post">
-  <h1>elasticsearch 在漫画搜索项目的应用（一）安装和部署搜索服务</h1>
+  <h1>elasticsearch 在漫画搜索项目的应用（一）安装和部署搜索服务v2</h1>
   <time datetime=2020-10-22 class="post-date">2020-10-22</time>
   <p>早期的哔哩哔哩漫画搜索服务是由大数据部门提供的，很多功能上无法满足漫画自己业务的需求。我们在调研了一段时间 elasticsearch（后面简称ES）以后，动手搭建了一套功能齐全的搜索服务。探索的过程收获了不少东西，因此打算写几篇相关的文章记录一下。作为开篇，简单的讲一些ES的搭建过程和一些细节。</p>
 <p>The early Bilibili Manga search service is provided by Big Data department,and many functions could not meet the needs of our own business. After a period of investigation, we start to construct a functional search service. We got a lots of exprience in this process so I decide to white some article to record it. As a start, I will go into some details about set up a ES service.</p>
-<h2 id="前期准备">前期准备</h2>
-<h2 id="preparing">preparing</h2>
+<h1 id="前期准备">前期准备</h1>
 <p>在我们开始做调研的时候，ES的最新版本是7.6.1。作为一个没有历史包袱的项目，最新版本自然是最好的选择。对我们一般的用户来说，ES7相比之前的版本最大的改变是如下几点：</p>
 <ol>
 <li>删除type类型</li>
@@ -83,8 +82,8 @@
 <p>If you have a 128 GB memory machine, you can create two nodes at most 32 GB memory allocate to each node,which means no more than 64 GB of memory allocate to ES heaps memory,and rest is over 64 GB of memory for Lucene.</p>
 </blockquote>
 <p>具体说明在<a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/heap-sizing.html">这里</a></p>
-<p>Here is the deatail.</p>
-<h2 id="安装部署">安装部署</h2>
+<p>Here is the detail.</p>
+<h1 id="安装部署">安装部署</h1>
 <h2 id="install--deploy">install &amp; deploy</h2>
 <p>自带 JDK 的 ES 安装非常简单，保持着一贯以来的开箱即用原则。只要在构建集群的时候稍微注意一下集群的配置就可以了。</p>
 <p>The installation of ES with JDK is very simple,keeping with the usual out-of-the-box principles. We Just have to focus on the config when you build all the systems.</p>
@@ -98,31 +97,31 @@
 </span></span><span style="display:flex;"><span>./config/jvm.options     <span style="color:#09f;font-style:italic"># jvm 相关配置</span>
 </span></span></code></pre></div><p><code>elasticsearch.yml</code> 中几个重点的配置如下：</p>
 <p>the point of <code>elasticsearch.yml</code> is:</p>
-<p><strong>cluster.name</strong></p>
+<h2 id="重点配置项">重点配置项</h2>
+<h3 id="clustername">cluster.name</h3>
 <p>集群名称，同集群下的节点配置必须相同。</p>
 <p>The special name of cluster. Each node configuration must keep the same under a cluster.</p>
-<p><strong>node.name</strong></p>
+<h3 id="nodename">node.name</h3>
 <p>节点名称，同集群下不同节点名称不能相同。</p>
 <p>The special name of node. Each node configuration must keep different under a cluster.</p>
-<p><strong>node.data/node.master</strong></p>
+<h3 id="nodedata--nodemaster">node.data | node.master</h3>
 <p>节点类型。一般来说，一个节点要么是 master 节点，要么是 data 节点，这样拆分更合理。</p>
-<p>node type. generally, a node either a master node or a data node.
-It makes more sense to split it this way.</p>
-<p><strong>path.data/path.logs</strong></p>
+<p>node type. generally, a node either a master node or a data node. It makes more sense to split it this way.</p>
+<h3 id="pathdata--pathlogs">path.data | path.logs</h3>
 <p>数据文件和日志文件储存目录。</p>
 <p>The storage directory of data file and log file.</p>
-<p><strong>http.port</strong></p>
+<h3 id="httpport">http.port</h3>
 <p>搜索 API 服务端口号，默认9200。</p>
 <p>The port user for API service, deafult 9200.</p>
-<p><strong>transport.port</strong></p>
+<h3 id="transportport">transport.port</h3>
 <p>elasticsearch集群内数据通讯使用的端口，默认9300。</p>
 <p>The port user for data transport within the cluser, default 9300.</p>
-<p><strong>discovery.seed_hosts</strong></p>
+<h3 id="discoveryseed_hosts">discovery.seed_hosts</h3>
 <p>指定集群扫描的 IP 和端口号，便于发现集群节点纳入集群。</p>
 <p>Assign IP and PORT to cluster discovery for find out and include into cluster easily.</p>
 <p>因此一个完整的 master 节点配置文件内容如下：</p>
-<p>Therefore, the content of complete master node configuration file is as follows:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#309;font-weight:bold">cluster.name</span>:<span style="color:#bbb"> </span>my_cluster_name<span style="color:#bbb">
+<p>So, the content of complete master node configuration file is as follows:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#309;font-weight:bold">cluster.name</span>:<span style="color:#bbb"> </span>my_cluster_name<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">node.name</span>:<span style="color:#bbb"> </span>node1<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">node.master</span>:<span style="color:#bbb"> </span><span style="color:#069;font-weight:bold">true</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">node.data</span>:<span style="color:#bbb"> </span><span style="color:#069;font-weight:bold">false</span><span style="color:#bbb">
@@ -140,9 +139,13 @@ It makes more sense to split it this way.</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">thread_pool.write.queue_size</span>:<span style="color:#bbb"> </span><span style="color:#f60">1024</span><span style="color:#bbb">
 </span></span></span></code></pre></div><p>同理，一个 data 节点的配置文件如下：</p>
 <p>Similarly, the configuration file for a data node is as follows:</p>
-<p><em>注意node.master,node.data的区别</em></p>
-<p><em>notice the different of node.master and node.data</em></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#309;font-weight:bold">cluster.name</span>:<span style="color:#bbb"> </span>my_cluster_name<span style="color:#bbb">
+<aside>
+💡 注意 node.master 和 node.data 的区别
+</aside>
+<aside>
+💡 notice the different of node.master and node.data
+</aside>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#309;font-weight:bold">cluster.name</span>:<span style="color:#bbb"> </span>my_cluster_name<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">node.name</span>:<span style="color:#bbb"> </span>node2<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">node.master</span>:<span style="color:#bbb"> </span><span style="color:#069;font-weight:bold">false</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#309;font-weight:bold">node.data</span>:<span style="color:#bbb"> </span><span style="color:#069;font-weight:bold">true</span><span style="color:#bbb">
@@ -170,8 +173,8 @@ It makes more sense to split it this way.</p>
 </span></span><span style="display:flex;"><span>chown -R es:es elasticsearch
 </span></span></code></pre></div><p>不过一般来说第一次运行ES服务还会额外报一个错误：</p>
 <p>But if we run ES service at first time,we may get another error:</p>
-<pre tabindex="0"><code>max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
-</code></pre><p>参考stackoverflow上的这个<a href="https://stackoverflow.com/questions/51445846/elasticsearch-max-virtual-memory-areas-vm-max-map-count-65530-is-too-low-inc">回答</a>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>max virtual memory areas vm.max_map_count <span style="color:#555">[</span>65530<span style="color:#555">]</span> is too low, increase to at least <span style="color:#555">[</span>262144<span style="color:#555">]</span>
+</span></span></code></pre></div><p>参考stackoverflow上的这个<a href="https://stackoverflow.com/questions/51445846/elasticsearch-max-virtual-memory-areas-vm-max-map-count-65530-is-too-low-inc">回答</a>:</p>
 <p>We can refer to this answer in stackoverflow:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sysctl -w vm.max_map_count<span style="color:#555">=</span><span style="color:#f60">262144</span>
 </span></span></code></pre></div><p>或者一步到位，直接去修改系统的配置项，新增一行：</p>
@@ -180,6 +183,7 @@ It makes more sense to split it this way.</p>
 </span></span><span style="display:flex;"><span>vm.max_map_count<span style="color:#555">=</span><span style="color:#f60">262144</span>
 </span></span></code></pre></div><p>最后，直接执行 <code>bin/elasticsearch -d</code> 就可以了。</p>
 <p>After all set up, it is ok to execute <code>bin/elasticsearch -d</code> directly.</p>
+
 </div>
 
 <h2>Comments</h2>

@@ -28,6 +28,15 @@
     </item>
     
     <item>
+      <title>elasticsearch 在漫画搜索项目的应用（一）安装和部署搜索服务v2</title>
+      <link>https://blog.zakokun.com/posts/build-search-system-part-one-v2.html</link>
+      <pubDate>Thu, 22 Oct 2020 14:27:26 +0800</pubDate>
+      
+      <guid>https://blog.zakokun.com/posts/build-search-system-part-one-v2.html</guid>
+      <description>早期的哔哩哔哩漫画搜索服务是由大数据部门提供的，很多功能上无法满足漫画自己业务的需求。我们在调研了一段时间 elasticsearch（后面简</description>
+    </item>
+    
+    <item>
       <title>又又改了一下博客的架构</title>
       <link>https://blog.zakokun.com/posts/change-blog-struct-again.html</link>
       <pubDate>Tue, 29 Sep 2020 15:58:08 +0800</pubDate>

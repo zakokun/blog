@@ -3,7 +3,7 @@
 <head>
   <link href="https://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.93.2" />
+  <meta name="generator" content="Hugo 0.111.3">
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -48,13 +48,14 @@
       </ul>
     </nav>
 
-    <p>&copy; 2022.Powered by <a target="_blank" href="https://gohugo.io/">Hugo</a> </p>
+    <p>&copy; 2023.Powered by <a target="_blank" href="https://gohugo.io/">Hugo</a> </p>
   </div>
 </aside>
 
     <main class="content container">
     <div class="post">
   <h1>elasticsearch 在漫画搜索项目的应用（二）索引设计和管理</h1>
+  <time datetime=2020-12-28 class="post-date">2020-12-28</time>
   <p>索引相当于DB中的表，数据都是储存在索引中。正如数据库的表需要设计索引一样，ES的索引设计同样也有很多要注意的地方，否则就会发生查询速度过慢甚至查询不到数据的情况。本文整理一下自己在设计漫画搜索索引时候遇到的一些问题和细节。</p>
 <p><em>the Index just like Table in DB,the data is stored in the Index.Just like DB tables need to be indexed,the ES index also has pay attaton to many points,Otherwise,the query speed will be slow even the data can not be queried. In this post,I will sort out some of the problems and details I encountered when designing the comic search index.</em></p>
 <h2 id="索引结构">索引结构</h2>
@@ -259,14 +260,15 @@
 <script type="application/javascript">
 var doNotTrack = false;
 if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 	ga('create', 'UA-62768625-1', 'auto');
 	
 	ga('send', 'pageview');
 }
 </script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
     
   </body>
 </html>

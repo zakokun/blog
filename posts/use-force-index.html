@@ -3,7 +3,7 @@
 <head>
   <link href="https://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.93.2" />
+  <meta name="generator" content="Hugo 0.111.3">
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -48,13 +48,14 @@
       </ul>
     </nav>
 
-    <p>&copy; 2022.Powered by <a target="_blank" href="https://gohugo.io/">Hugo</a> </p>
+    <p>&copy; 2023.Powered by <a target="_blank" href="https://gohugo.io/">Hugo</a> </p>
   </div>
 </aside>
 
     <main class="content container">
     <div class="post">
   <h1>用 force index 调教 MySQL 查询优化器</h1>
+  <time datetime=2017-07-17 class="post-date">2017-07-17</time>
   <p>mysql 有查询优化器，在我们发起一个查询的时候， msql 会尝试分析他，看看是否能做一些优化手段来加快查询速度。最常见的比如说有个 (a,b)的联合索引，无论我们使用<code>SELECT * FROM t WHERE a=? AND b=?</code>还是<code>SELECT * FROM t WHERE b=? AND a=?</code>都能利用到<code>(a,b)</code>这个联合索引，又或者是在很多复杂的查询条件中，分析出使用哪个索引能最大化查询速度，这都是查询优化器做的事情。</p>
 <p>然而毕竟程序是死的，有的时候查询优化器并不如我们想象中的那么聪明。这时候就需要我们强制 mysql 按照我们的意愿去查询了。</p>
 <p>还是我大B站的弹幕系统(^_^)，我们给 UP主提供了『弹幕转移』的功能，方便他们在上传同一个视频的更高清的版本以后，能把之前视频的弹幕转移到新的视频下面来。因为分表分库加业务逻辑限制的原因，我们只能通过复制数据的方式来转移这些弹幕。为了减小对数据库造成的压力，我通过分页查询的方式来限制一次查询的数量：</p>
@@ -101,14 +102,15 @@
 <script type="application/javascript">
 var doNotTrack = false;
 if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 	ga('create', 'UA-62768625-1', 'auto');
 	
 	ga('send', 'pageview');
 }
 </script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
     
   </body>
 </html>
