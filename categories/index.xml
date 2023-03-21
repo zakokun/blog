@@ -2,35 +2,35 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on 杂鱼君的博客</title>
-    <link>https://blog.zakokun.com/categories.html</link>
+    <link>https://blog2.zakokun.com/categories.html</link>
     <description>Recent content in Categories on 杂鱼君的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 28 Dec 2020 19:26:34 +0800</lastBuildDate><atom:link href="https://blog.zakokun.com/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 28 Dec 2020 19:26:34 +0800</lastBuildDate><atom:link href="https://blog2.zakokun.com/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>技术</title>
-      <link>https://blog.zakokun.com/categories/%E6%8A%80%E6%9C%AF.html</link>
+      <link>https://blog2.zakokun.com/categories/%E6%8A%80%E6%9C%AF.html</link>
       <pubDate>Mon, 28 Dec 2020 19:26:34 +0800</pubDate>
       
-      <guid>https://blog.zakokun.com/categories/%E6%8A%80%E6%9C%AF.html</guid>
+      <guid>https://blog2.zakokun.com/categories/%E6%8A%80%E6%9C%AF.html</guid>
       <description></description>
     </item>
     
     <item>
       <title>生活</title>
-      <link>https://blog.zakokun.com/categories/%E7%94%9F%E6%B4%BB.html</link>
+      <link>https://blog2.zakokun.com/categories/%E7%94%9F%E6%B4%BB.html</link>
       <pubDate>Fri, 12 Jan 2018 10:54:30 +0000</pubDate>
       
-      <guid>https://blog.zakokun.com/categories/%E7%94%9F%E6%B4%BB.html</guid>
+      <guid>https://blog2.zakokun.com/categories/%E7%94%9F%E6%B4%BB.html</guid>
       <description></description>
     </item>
     
     <item>
       <title>工具</title>
-      <link>https://blog.zakokun.com/categories/%E5%B7%A5%E5%85%B7.html</link>
+      <link>https://blog2.zakokun.com/categories/%E5%B7%A5%E5%85%B7.html</link>
       <pubDate>Sun, 26 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://blog.zakokun.com/categories/%E5%B7%A5%E5%85%B7.html</guid>
+      <guid>https://blog2.zakokun.com/categories/%E5%B7%A5%E5%85%B7.html</guid>
       <description></description>
     </item>
     
